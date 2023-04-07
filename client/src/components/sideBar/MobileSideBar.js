@@ -2,6 +2,7 @@ import React from "react";
 import { logo } from "../../assets/images";
 import { categories } from "../../constants/constants";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
+import DashboardButtonMobile from "../utils/buttons/DashboardButtonMobile";
 import { useState } from "react";
 const MobileSideBar = () => {
     const [active, setActive] = useState(false);
@@ -13,7 +14,9 @@ const MobileSideBar = () => {
                 </a>{" "}
                 <RiBarChartHorizontalLine
                     onClick={() => setActive(!active)}
-                    class={`w-8 h-8 hover:cursor-pointer opacity-80 duration-150 text-white transform `}
+                    class={`w-8 h-8 hover:cursor-pointer opacity-80 duration-300 text-white  transform ${
+                        active ? "-rotate-90" : ""
+                    }`}
                 />
             </div>
             <ul
@@ -21,78 +24,15 @@ const MobileSideBar = () => {
                     active === false ? "hidden" : ""
                 }`}
             >
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="home"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Dashboard </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="box"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Menu Layout </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="inbox"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Inbox </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="hard-drive"></i>{" "}
-                        </div>
-                        <div class="menu__title"> File Manager </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="credit-card"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Point of Sale </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="message-square"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Chat </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="file-text"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Post </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu">
-                        <div class="menu__icon">
-                            {" "}
-                            <i data-feather="calendar"></i>{" "}
-                        </div>
-                        <div class="menu__title"> Calendar </div>
-                    </a>
-                </li>
+                {categories.map((categorie, i) => {
+                    return (
+                        <DashboardButtonMobile
+                            key={i}
+                            name={categorie.name}
+                            icon={categorie.icon}
+                        />
+                    );
+                })}
             </ul>
         </div>
     );

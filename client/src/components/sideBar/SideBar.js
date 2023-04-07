@@ -19,9 +19,11 @@ const SideBar = () => {
                     </a>
                     <div class="side-nav__devider my-6"></div>
                     <ul className="">
-                        {categories.map((categorie) => {
+                        {categories.map((categorie, i) => {
                             return (
                                 <DashboardButton
+                                    key={i}
+                                    path={categorie.path}
                                     name={categorie.name}
                                     icon={categorie.icon}
                                 />
@@ -29,11 +31,6 @@ const SideBar = () => {
                         })}
                     </ul>
                 </nav>
-
-                <div class="content">
-                    <div class="intro-y flex items-center mt-8"></div>
-                    <div class="intro-y grid grid-cols-12 gap-6 mt-5"></div>
-                </div>
             </div>
         </div>
     );
