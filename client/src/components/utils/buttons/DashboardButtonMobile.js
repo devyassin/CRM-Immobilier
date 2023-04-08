@@ -1,12 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setPageName } from "../../../store/selectedPageSlice";
 
-const DashboardButtonMobile = ({name,icon}) => {
+const DashboardButtonMobile = ({ name, icon, path }) => {
+    const selectedPage = useSelector(
+        (state) => state.selectedPage.selectedPage
+    );
+
+    const dispatch = useDispatch();
     return (
         <li>
-            <a href="" class="menu">
+            <Link
+                onClick={() => dispatch(setPageName({ name }))}
+                to={path}
+                class="menu"
+            >
                 <div class="menu__icon"> {icon}</div>
                 <div class="menu__title"> {name} </div>
-            </a>
+            </Link>
         </li>
     );
 };

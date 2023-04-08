@@ -1,5 +1,5 @@
 {
-  "name": "project_youtube_video_player",
+  "name": "project__crm__immobilier",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -7,11 +7,13 @@
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.3",
+    "@reduxjs/toolkit": "^1.9.3",
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-player": "^2.10.1",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1"
   },

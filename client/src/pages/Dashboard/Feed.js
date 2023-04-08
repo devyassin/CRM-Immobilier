@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const Feed = () => {
     return (
-        <div className="flex">
+        <div className="flex flex-col md:flex-row">
             <SideBar />
             <Wrapper>
                 <Outlet />

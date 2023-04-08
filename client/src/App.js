@@ -20,7 +20,8 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Feed />}>
-                    <Route path="dashboard" index element={<Dashborad />} />
+                    <Route index element={<Dashborad />} />
+                    <Route path="dashboard" element={<Dashborad />} />
                     <Route path="menu" element={<Menu />} />
                     <Route path="inbox" element={<Inbox />} />
                     <Route path="file" element={<FileManager />} />

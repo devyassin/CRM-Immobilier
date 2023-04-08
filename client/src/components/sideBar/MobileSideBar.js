@@ -3,6 +3,7 @@ import { logo } from "../../assets/images";
 import { categories } from "../../constants/constants";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import DashboardButtonMobile from "../utils/buttons/DashboardButtonMobile";
+
 import { useState } from "react";
 const MobileSideBar = () => {
     const [active, setActive] = useState(false);
@@ -20,7 +21,7 @@ const MobileSideBar = () => {
                 />
             </div>
             <ul
-                class={`border-t border-white/[0.08] py-5 ${
+                class={`border-t   border-white/[0.08]  ${
                     active === false ? "hidden" : ""
                 }`}
             >
@@ -28,6 +29,7 @@ const MobileSideBar = () => {
                     return (
                         <DashboardButtonMobile
                             key={i}
+                            path={categorie.path}
                             name={categorie.name}
                             icon={categorie.icon}
                         />
