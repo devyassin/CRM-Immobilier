@@ -21,7 +21,7 @@ const MobileSideBar = () => {
                 />
             </div>
             <ul
-                class={`border-t   border-white/[0.08]  ${
+                class={`border-t border-white/[0.08]  ${
                     active === false ? "hidden" : ""
                 }`}
             >

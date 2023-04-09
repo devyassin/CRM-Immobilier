@@ -8,6 +8,7 @@ import Inbox from "./Dashboard/Inbox";
 import PointSale from "./Dashboard/PointSale";
 import Menu from "./Dashboard/Menu";
 import Post from "./Dashboard/Post";
+import Error from "./Error";
 
 export {
     Login,
@@ -20,4 +21,5 @@ export {
     PointSale,
     Menu,
     Post,
+    Error,
 };

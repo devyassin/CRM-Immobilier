@@ -1,6 +1,5 @@
 import React from "react";
-import SideBar from "./components/sideBar/SideBar";
-import Wrapper from "./components/utils/Wrappers/Wrapper";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
     Login,
@@ -13,6 +12,7 @@ import {
     Inbox,
     PointSale,
     Post,
+    Error,
 } from "./pages";
 
 const App = () => {
@@ -31,6 +31,7 @@ const App = () => {
                     <Route path="calander" element={<Calander />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
+                <Route path="*" element={<Error />} />
             </Routes>
         </BrowserRouter>
     );
