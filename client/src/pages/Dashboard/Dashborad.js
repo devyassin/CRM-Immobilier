@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import SearchBar from "../../components/utils/searchbar/SearchBar";
 
 const Dashborad = () => {
-  return (
-    <div>Dashborad</div>
-  )
-}
+    return (
+        <div>
+            <SearchBar />
+        </div>
+    );
+};
 
-export default Dashborad
+export default Dashborad;
