@@ -15,7 +15,7 @@ class BonDeVisiteController extends Controller
      */
     public function index()
     {
-        //
+        return BonDeVisite::all();
     }
 
     /**
