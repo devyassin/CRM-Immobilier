@@ -13,8 +13,16 @@ class CreateRDVSTable extends Migration
      */
     public function up()
     {
-        Schema::create('r_d_v_s', function (Blueprint $table) {
+        Schema::create('rdvs', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->string('tel');
+            $table->string('status');
+            $table->string('description');
+            $table->date('date');
+            $table->string('lieu');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +34,6 @@ class CreateRDVSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('r_d_v_s');
+        Schema::dropIfExists('rdvs');
     }
 }

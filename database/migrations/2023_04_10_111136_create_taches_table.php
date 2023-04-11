@@ -15,6 +15,12 @@ class CreateTachesTable extends Migration
     {
         Schema::create('taches', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('status');
+            $table->string('description');
+            $table->date('deadline');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
