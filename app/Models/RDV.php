@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class RDV extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nom',
+        'tel',
+        'status',
+        'description',
+        'date',
+        'lieu',
+        'user_id',
+        'password',
+    ];
 }
