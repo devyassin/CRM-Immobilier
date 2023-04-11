@@ -15,6 +15,16 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('prix');
+            $table->string('mode_payement');
+            $table->string('comition');
+            $table->dateTime('date_transaction');
+            $table->bigInteger('bien_id')->unsigned();
+            $table->foreign('bien_id')->references('id')->on('biens');
+            $table->bigInteger('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -15,6 +15,15 @@ class CreateFacturesTable extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
+            $table->string('prix_total');
+            $table->dateTime('date');
+            $table->string('mode_payement');
+            $table->string('status');
+            $table->string('description');
+            $table->bigInteger('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
