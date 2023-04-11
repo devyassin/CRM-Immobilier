@@ -8,21 +8,39 @@ import {
     CiDeliveryTruck,
     CiUser,
 } from "react-icons/ci";
+
+import {
+    FaChartPie,
+    FaUsers,
+    FaUserPlus,
+    FaBuilding,
+    FaTasks,
+    FaFileContract,
+    FaPaste,
+    FaFileInvoiceDollar,
+    FaDollarSign,
+    FaPhoneAlt,
+    FaRegCalendar,
+} from "react-icons/fa";
+
 export const categories = [
-    { name: "Dashboard", path: "/dashboard", icon: <CiUser size={30} /> },
+    { name: "Dashboard", path: "/dashboard", icon: <FaChartPie size={25} /> },
     {
-        name: "Menu Layout",
-        path: "/menu",
-        icon: <CiDeliveryTruck size={30} />,
+        name: "Clients",
+        path: "/clients",
+        icon: <FaUsers size={25} />,
     },
-    { name: "Inbox", path: "/inbox", icon: <CiBitcoin size={30} /> },
-    { name: "File Manager", path: "/file", icon: <CiAlarmOn size={30} /> },
+    { name: "Leads", path: "/inbox", icon: <FaUserPlus size={25} /> },
+    { name: "Properties", path: "/file", icon: <FaBuilding size={22} /> },
     {
-        name: "Point of sale",
+        name: "Tasks",
         path: "/point",
-        icon: <CiCircleList size={30} />,
+        icon: <FaTasks size={22} />,
     },
-    { name: "chat", path: "/chat", icon: <CiChat1 size={30} /> },
-    { name: "post", path: "/post", icon: <CiBag1 size={30} /> },
-    { name: "Calander", path: "/calander", icon: <CiCalendar size={30} /> },
+    { name: "Devis", path: "/chat", icon: <FaFileContract size={23} /> },
+    { name: "Bon de visite", path: "/post", icon: <FaPaste size={23} /> },
+    { name: "Facture", path: "/post", icon: <FaFileInvoiceDollar size={23} /> },
+    { name: "Transaction", path: "/post", icon: <FaDollarSign size={23} /> },
+    { name: "Calander", path: "/calander", icon: <FaRegCalendar size={23} /> },
+    { name: "Rendez-vous", path: "/calander", icon: <FaPhoneAlt size={23} /> },
 ];

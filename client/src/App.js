@@ -5,7 +5,7 @@ import {
     Login,
     Feed,
     Dashborad,
-    Menu,
+    Clients,
     Calander,
     Chat,
     FileManager,
@@ -22,7 +22,7 @@ const App = () => {
                 <Route path="/" element={<Feed />}>
                     <Route index element={<Dashborad />} />
                     <Route path="dashboard" element={<Dashborad />} />
-                    <Route path="menu" element={<Menu />} />
+                    <Route path="clients" element={<Clients />} />
                     <Route path="inbox" element={<Inbox />} />
                     <Route path="file" element={<FileManager />} />
                     <Route path="point" element={<PointSale />} />
