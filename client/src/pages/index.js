@@ -6,7 +6,7 @@ import Dashborad from "./Dashboard/Dashborad";
 import FileManager from "./Dashboard/FileManager";
 import Inbox from "./Dashboard/Inbox";
 import PointSale from "./Dashboard/PointSale";
-import Menu from "./Dashboard/Menu";
+import Clients from "./Dashboard/Clients";
 import Post from "./Dashboard/Post";
 import Error from "./Error";
 
@@ -19,7 +19,7 @@ export {
     FileManager,
     Inbox,
     PointSale,
-    Menu,
+    Clients,
     Post,
     Error,
 };

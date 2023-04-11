@@ -9,7 +9,7 @@ const MobileSideBar = () => {
     const [active, setActive] = useState(false);
     return (
         <div class="mobile-menu md:hidden">
-            <div class="mobile-menu-bar">
+            <div class="mobile-menu-bar ">
                 <a href="" class="flex mr-auto">
                     <img alt="dddd" className="w-6" src={logo} />
                 </a>{" "}
@@ -23,7 +23,7 @@ const MobileSideBar = () => {
             <ul
                 class={`border-t border-white/[0.08]  ${
                     active === false ? "hidden" : ""
-                }`}
+                } flex space-x-6 overflow-scroll mobileScroll overflow-y-hidden`}
             >
                 {categories.map((categorie, i) => {
                     return (

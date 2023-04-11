@@ -17,7 +17,7 @@ const DashboardButtonMobile = ({ name, icon, path }) => {
                 class="menu"
             >
                 <div class="menu__icon"> {icon}</div>
-                <div class="menu__title"> {name} </div>
+                <div class="menu__title min-w-[fit-content]"> {name} </div>
             </Link>
         </li>
     );

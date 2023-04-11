@@ -2,8 +2,8 @@ import React from "react";
 
 const SearchBar = () => {
     return (
-        <div class="max-w-md mx-auto mt-10 ">
-            <div class="relative flex  items-center w-full h-12 rounded-lg  bg-white overflow-hidden">
+        <div class="max-w-md ">
+            <div class="relative flex  items-center w-64 md:w-96 h-12 rounded-lg  bg-white overflow-hidden">
                 <div class="grid place-items-center h-full w-12 text-gray-300 hover:cursor-pointer duration-150 opacity-60  hover:opacity-100 ">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ const SearchBar = () => {
                     class=" h-full w-full focus:outline-none text-sm text-gray-700 border-none pr-2"
                     type="text"
                     id="search"
-                    placeholder="Search something.."
+                    placeholder="Search client.."
                 />
             </div>
         </div>
