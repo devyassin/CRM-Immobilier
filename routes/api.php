@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('v1')->group(function () {
+    Route::get('clients', [ClientController::class, 'index']);
+    Route::get('clients/{client}', [ClientController::class, 'show']);
+    Route::post('clients', [ClientController::class, 'store']);
+    
+    
 });

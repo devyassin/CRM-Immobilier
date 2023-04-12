@@ -1,10 +1,9 @@
-import { red } from "@mui/material/colors";
 import React from "react";
 import { MdDelete, MdEmail, MdCreate } from "react-icons/md";
 
 const TableOne = () => {
     return (
-        <div class="relative overflow-x-auto overflow-scroll tableScroll h-80 md:h-[400px] mt-10 shadow-md sm:rounded-lg">
+        <div class="relative  overflow-x-auto overflow-scroll tableScroll h-80 md:h-[400px] mt-10 shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left  text-gray-500 ">
                 <thead class="text-md text-blue-400  bg-gray-50 ">
                     <tr>
@@ -40,7 +39,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -50,17 +49,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -70,7 +69,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -80,17 +79,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -100,7 +99,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -110,17 +109,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -130,7 +129,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -140,17 +139,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -160,7 +159,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -170,17 +169,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -190,7 +189,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -200,17 +199,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -220,7 +219,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -230,17 +229,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -250,7 +249,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -260,17 +259,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -280,7 +279,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -290,17 +289,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -310,7 +309,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -320,17 +319,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />
@@ -340,7 +339,7 @@ const TableOne = () => {
                         <td class="px-6 py-4">Lamouadden</td>
                         <td class="px-6 py-4">Yassine</td>
                         <td class="px-6 py-4">
-                            <p className=" bg-red-500 w-32 text-white opacity-90 text-center rounded-lg py-2">
+                            <p className="w-32 py-2 text-center text-white bg-red-500 rounded-lg opacity-90">
                                 personal business
                             </p>
                         </td>
@@ -350,17 +349,17 @@ const TableOne = () => {
                         <td class="px-6 py-4">10/04/2023</td>
                         <td class="px-6 py-4 flex space-x-2 mt-4">
                             <MdDelete
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="red"
                             />
                             <MdCreate
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="blue"
                             />
                             <MdEmail
-                                className="cursor-pointer hover:opacity-60 duration-150"
+                                className="duration-150 cursor-pointer hover:opacity-60"
                                 size={20}
                                 color="orange"
                             />

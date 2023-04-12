@@ -6,15 +6,30 @@ import FormClient from "../../components/utils/form/FormClient";
 import { IconStyleOne, IconStyleTwo } from "../../components/utils/icons";
 import { TfiImport, TfiExport, TfiPlus } from "react-icons/tfi";
 import TableOne from "../../components/utils/tables/TableOne";
+import { useEffect } from "react";
+import { fetchAllClients, fetchOneClient } from "../../store/clientSlice";
+import axios from "axios";
 
 const Clients = () => {
+    const dispatch = useDispatch();
+    const clients = useSelector((state) => state.clients.data);
+    const status = useSelector((state) => state.clients.status);
+    const error = useSelector((state) => state.clients.error);
+
+    useEffect(() => {
+        // dispatch(fetchAllClients());
+        dispatch(fetchOneClient(2));
+    }, [dispatch]);
+
+    console.log(clients);
+
     const title = useSelector((state) => state.selectedPage.selectedPage);
     const visibility = useSelector((state) => state.overlay.show);
 
     return (
         <div>
             <HeaderTitle title={title} />
-            <div className="flex space-x-4 items-center justify-end">
+            <div className="flex items-center justify-end space-x-4">
                 <SearchBar />
                 <IconStyleOne>
                     <TfiExport size={25} />

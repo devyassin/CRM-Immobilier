@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'nom',
         'prenom',
@@ -18,4 +19,20 @@ class Client extends Model
         'last_contacted',
         'user_id',
     ];
+
+    public function user(){
+        return $this->belongsTo(Client::class);
+    }
+    public function transaction(){
+        return $this->hasMany(Transaction::class);
+    }
+    public function biens(){
+        return $this->hasMany(Bien::class);
+    }
+    public function facture(){
+        return $this->hasMany(Facture::class);
+    }
+    public function devis(){
+        return $this->hasMany(Devis::class);
+    }
 }
