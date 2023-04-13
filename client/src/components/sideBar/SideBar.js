@@ -1,20 +1,20 @@
 import React from "react";
-import { logo } from "../../assets/images";
+import { logo,icon } from "../../assets/images";
 import MobileSideBar from "./MobileSideBar";
 import { categories } from "../../constants/constants";
 import DashboardButton from "../utils/buttons/DashboardButton";
 // h-[500px]  overflow-x-hidden w-[400px] overflow-y-scroll
 const SideBar = () => {
     return (
-        <div className="pl-8 pt-6 ">
+        <div className="pt-6 pl-8 ">
             <MobileSideBar />
             <div class="flex ">
                 <nav class="side-nav scroolbar">
                     <a href="" class=" flex items-center pl-5 pt-4">
-                        <img alt="" class="w-6" src={logo} />
-                        <span class="hidden xl:block text-white text-lg ml-3">
+                        <img  class="w-10" src={icon} />
+                        <span class="hidden xl:block text-white text-xl ml-3">
                             {" "}
-                            Rubick{" "}
+                            Tiguemi{" "}
                         </span>
                     </a>
                     <div class="side-nav__devider my-6"></div>

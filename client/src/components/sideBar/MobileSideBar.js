@@ -5,13 +5,14 @@ import { RiBarChartHorizontalLine } from "react-icons/ri";
 import DashboardButtonMobile from "../utils/buttons/DashboardButtonMobile";
 
 import { useState } from "react";
+import { icon } from "../../assets/images";
 const MobileSideBar = () => {
     const [active, setActive] = useState(false);
     return (
         <div class="mobile-menu md:hidden">
             <div class="mobile-menu-bar ">
                 <a href="" class="flex mr-auto">
-                    <img alt="dddd" className="w-6" src={logo} />
+                    <img alt="icon" className="w-12" src={icon} />
                 </a>{" "}
                 <RiBarChartHorizontalLine
                     onClick={() => setActive(!active)}

@@ -3323,6 +3323,21 @@ select {
 .inline-block {
     display: inline-block;
 }
+
+.loading-spinner {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border: 10px solid rgba(230, 230, 230, .3);
+  border-radius: 50%;
+  border-top-color: #3dc9e5;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .inline {
     display: inline;
 }

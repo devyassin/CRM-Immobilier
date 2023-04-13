@@ -53,7 +53,7 @@ class ClientController extends Controller
             'tel' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email|max:255',
-            'last_contacted' => 'required|date_format:Y-m-d H:i:s',
+            'last_contacted' => 'required|date_format:Y-m-d',
             'user_id'=>'required'
             ]);    
             
@@ -123,6 +123,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        return response()->json(['client' => $client,'message' => 'Client deleted successfully']);
     }
 }

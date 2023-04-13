@@ -1,5 +1,5 @@
 import React from "react";
-import { illustration, logo } from "../assets/images";
+import { illustration, logo, icon } from "../assets/images";
 import LoginInput from "../components/utils/form/LoginInput";
 import LoginButton from "../components/utils/buttons/LoginButton";
 
@@ -9,15 +9,15 @@ const Login = () => {
             <div class="container sm:px-10">
                 <div class="block xl:grid grid-cols-2 gap-4">
                     <div class="hidden xl:flex flex-col min-h-screen">
-                        <a href="" class="-intro-x flex items-center pt-5">
+                        <a href="" class="-intro-x flex  items-center pt-5">
                             <img
                                 alt="Rubick Tailwind HTML Admin Template"
-                                class="w-6"
-                                src={logo}
+                                class="w-12"
+                                src={icon}
                             />
-                            <span class="text-white text-lg ml-3">
+                            <span class="text-white text-xl ml-3">
                                 {" "}
-                                Rubick{" "}
+                                Tiguemi{" "}
                             </span>
                         </a>
                         <div class="my-auto">
