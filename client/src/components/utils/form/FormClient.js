@@ -1,8 +1,9 @@
 import React from "react";
 import LoginInput from "./LoginInput";
 import { AiFillCloseCircle } from "react-icons/ai";
+import SelectMultipleChoices from "./SelectMultipleChoices";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
 import {
     clearClientUpdate,
@@ -12,7 +13,7 @@ import {
 
 const FormClient = ({ client }) => {
     const dispatch = useDispatch();
-
+    const status = useSelector((state) => state.clients.status);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -36,11 +37,19 @@ const FormClient = ({ client }) => {
                 />
             </div>
 
+            {status === "loading" && (
+                <div className="bg-green-400 rounded-lg py-4">
+                    <h1 className="text-center text-2xl text-gray-700 opacity-70">
+                        Client en cours d'ajout .....
+                    </h1>
+                </div>
+            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     if (!client.id) {
                         dispatch(addClient(client));
+
                         dispatch(clearClientUpdate());
                         dispatch(hide());
                     }
@@ -48,6 +57,7 @@ const FormClient = ({ client }) => {
                 className="grid grid-cols-2 gap-4 md:grid-cols-3"
             >
                 <input
+                    required
                     onChange={handleChange}
                     name="nom"
                     value={client.nom}
@@ -56,6 +66,7 @@ const FormClient = ({ client }) => {
                     placeholder="First Name"
                 />
                 <input
+                    required
                     onChange={handleChange}
                     name="prenom"
                     value={client.prenom}
@@ -67,20 +78,10 @@ const FormClient = ({ client }) => {
                 <label for="underline_select" class="sr-only">
                     Underline select
                 </label>
-                <select
-                    onChange={handleChange}
-                    value={client.type}
-                    name="type"
-                    id="underline_select"
-                    class="block  pt-6 px-0 w-full text-sm text-gray-400 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                >
-                    <option value="Buyer">Buyer</option>
-                    <option value="Seller">Seller</option>
-                    <option value="Renter">Renter</option>
-                    <option value="Big company">Big company</option>
-                </select>
 
+                <SelectMultipleChoices client={client} />
                 <input
+                    required
                     onChange={handleChange}
                     name="tel"
                     value={client.tel}
@@ -89,6 +90,7 @@ const FormClient = ({ client }) => {
                     placeholder="Phone"
                 />
                 <input
+                    required
                     onChange={handleChange}
                     name="address"
                     value={client.address}
@@ -98,15 +100,17 @@ const FormClient = ({ client }) => {
                 />
 
                 <input
+                    required
                     onChange={handleChange}
                     name="email"
                     value={client.email}
                     type="email"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
                     placeholder="Email"
                 />
 
                 <input
+                    required
                     onChange={handleChange}
                     type="date"
                     value={client.last_contacted.substring(0, 10)}

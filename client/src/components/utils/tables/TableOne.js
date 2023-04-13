@@ -57,15 +57,17 @@ const TableOne = () => {
                 <tbody>
                     {clients.map((client) => {
                         const type = client.type;
+                        let rank = client.type.split(",").length;
+
                         let color = "";
-                        switch (type) {
-                            case "Renter":
+                        switch (rank) {
+                            case 1:
                                 color = "bg-red-500";
                                 break;
-                            case "Seller":
+                            case 2:
                                 color = "bg-blue-500";
                                 break;
-                            case "Buyer":
+                            case 3:
                                 color = "bg-green-500";
                                 break;
                             default:
@@ -82,9 +84,9 @@ const TableOne = () => {
                                 <td class="px-6 py-4">{client.prenom}</td>
                                 <td class="px-6 py-4">
                                     <p
-                                        className={`w-32 py-2 text-center text-white ${color} rounded-lg opacity-90`}
+                                        className={`w-44 py-2 text-center text-white ${color} rounded-lg opacity-90`}
                                     >
-                                        {client.type}
+                                        {client.type.replaceAll(",", " ")}
                                     </p>
                                 </td>
                                 <td class="px-6 py-4">{client.tel}</td>

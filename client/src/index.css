@@ -2496,9 +2496,7 @@ select {
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
 }
-.input-group > .form-control {
-    z-index: 10;
-}
+
 .modal {
     margin-top: -10000px;
     margin-left: -10000px;

@@ -90,6 +90,7 @@ const clientSlice = createSlice({
             .addCase(fetchOneClient.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
+                console.log(action);
             })
             .addCase(addClient.pending, (state) => {
                 state.status = "loading";
@@ -101,6 +102,7 @@ const clientSlice = createSlice({
             })
             .addCase(addClient.rejected, (state, action) => {
                 state.status = "failed";
+                console.log(action.error +"-----");
                 state.error = action.error.message;
             })
             .addCase(deleteClient.pending, (state) => {

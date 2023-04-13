@@ -14,10 +14,11 @@ class ClientFactory extends Factory
      */
     public function definition()
     {
+        $count = $this->faker->numberBetween($min = 1, $max = 4);
         return [
             'nom' => $this->faker->firstName,
             'prenom' => $this->faker->lastName,
-            'type' => $this->faker->randomElement(['Buyer', 'Seller','Renter','Big company']),
+            'type' => implode(',', $this->faker->randomElements(['Buyer', 'Seller', 'Renter', 'Big company'], $count)),
             'tel' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
             'email' => $this->faker->email,
