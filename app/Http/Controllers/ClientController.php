@@ -62,10 +62,10 @@ class ClientController extends Controller
             $errorMessages = [];
             foreach ($errors as $field => $messages) {
                 foreach ($messages as $message) {
-                    $errorMessages[] = "{$field}: {$message}";
+                    $errorMessages[] = "{$message}";
                 }
             }
-            return response()->json(['errors' => $errorMessages], 400);
+            return response()->json(['errors' => $errorMessages],400);
         }
         
 
@@ -100,7 +100,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        
     }
 
     /**
@@ -110,9 +110,35 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(Request $request, Client $client)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'type' => 'required|string|max:255',
+                'tel' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'email' => 'required|email|max:255|unique:clients,email,'.$client->id,
+                'user_id'=>'required'
+            ]);
+    
+            $client->update($validatedData);
+    
+            return response()->json([
+                'data' => $client,
+            ], 200);
+    
+        } catch (ValidationException $exception) {
+            $errors = $exception->validator->errors()->getMessages();
+            $errorMessages = [];
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $errorMessages[] = "{$message}";
+                }
+            }
+            return response()->json(['errors' => $errorMessages], 400);
+        }
     }
 
     /**

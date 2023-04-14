@@ -4,15 +4,12 @@ import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import SearchBar from "../../components/utils/searchbar/SearchBar";
 import FormClient from "../../components/utils/form/FormClient";
 import { IconStyleOne, IconStyleTwo } from "../../components/utils/icons";
+import { CSVLink } from "react-csv";
 
 import { TfiImport, TfiExport, TfiPlus } from "react-icons/tfi";
 import TableOne from "../../components/utils/tables/TableOne";
 import { useEffect } from "react";
-import {
-    fetchAllClients,
-    fetchOneClient,
-    addClient,
-} from "../../store/clientSlice";
+import { fetchAllClients } from "../../store/clientSlice";
 import IconUserStyle from "../../components/utils/icons/IconUserStyle";
 
 const Clients = () => {
@@ -22,20 +19,10 @@ const Clients = () => {
     const error = useSelector((state) => state.clients.error);
     const client = useSelector((state) => state.clients.client);
     const searchClient = useSelector((state) => state.clients.searchClient);
-    // const client = {
-    //     nom: "hamid",
-    //     prenom: "Cartwright",
-    //     type: "Big company",
-    //     tel: "+1-608-665-7593",
-    //     address: "90612 Richard Loaf\nKaseyberg, NV 64191",
-    //     email: "hamid88@yahoo.com",
-    //     last_contacted: "2023-03-08 20:17:28",
-    //     user_id: 1,
-    // };
 
     useEffect(() => {
         dispatch(fetchAllClients(`${searchClient}`));
-    }, [dispatch, searchClient]);
+    }, [searchClient]);
 
     console.log("clients---------------1");
 
@@ -65,13 +52,14 @@ const Clients = () => {
                 <div className="flex items-center justify-center mt-40">
                     <div class="loading-spinner"></div>
                 </div>
+                {visibility && <FormClient client={client} />}
             </div>
         );
     }
 
-    if (status === "failed") {
-        return <div>Error: {error}</div>;
-    }
+    // if (status === "failed") {
+    //     return <div>Error: {error}</div>;
+    // }
 
     if (status === "succeeded") {
         return (
@@ -83,9 +71,11 @@ const Clients = () => {
 
                 <div className="flex items-center justify-end space-x-4">
                     <SearchBar />
-                    <IconStyleOne>
-                        <TfiExport size={25} />
-                    </IconStyleOne>
+                    <CSVLink data={clients.clients} filename="clients.csv">
+                        <IconStyleOne>
+                            <TfiExport size={25} />
+                        </IconStyleOne>
+                    </CSVLink>
                     <IconStyleOne>
                         <TfiImport size={25} />
                     </IconStyleOne>

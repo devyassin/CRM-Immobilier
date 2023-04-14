@@ -23,8 +23,13 @@ export const fetchOneClient = createAsyncThunk(
 
 // Add a new client
 export const addClient = createAsyncThunk("clients/add", async (client) => {
-    const response = await axios.post(`${API_URL}/clients`, client);
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/clients`, client);
+        return response.data;
+    } catch (error) {
+        const errorMessages = error.response.data.errors;
+        throw new Error(errorMessages);
+    }
 });
 
 // Delete a  client
@@ -33,9 +38,30 @@ export const deleteClient = createAsyncThunk("clients/delete", async (id) => {
     return response.data;
 });
 
+// Update one client
+export const UpdateOneClient = createAsyncThunk(
+    "clients/updateOne",
+    async ([id, client]) => {
+        try {
+            const response = await axios.put(
+                `${API_URL}/clients/${id}`,
+                client
+            );
+            return response.data;
+        } catch (error) {
+            const errorMessages = error.response.data.errors;
+            throw new Error(errorMessages);
+        }
+    }
+);
+
 const initialState = {
     data: [],
     status: "idle",
+    showAlert: false,
+    showAlertUpdate: false,
+    statusAddClient: "",
+    statusUpdateClient: "",
     client: {
         nom: "",
         prenom: "",
@@ -65,6 +91,18 @@ const clientSlice = createSlice({
             const { name, value } = payload;
             state.client[name] = value;
         },
+        showAlert: (state) => {
+            state.showAlert = true;
+        },
+        closeAlert: (state) => {
+            state.showAlert = false;
+        },
+        showAlertUpdate: (state) => {
+            state.showAlertUpdate = true;
+        },
+        closeAlertUpdate: (state) => {
+            state.showAlertUpdate = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -93,16 +131,30 @@ const clientSlice = createSlice({
                 console.log(action);
             })
             .addCase(addClient.pending, (state) => {
-                state.status = "loading";
+                state.statusAddClient = "loading";
             })
-            .addCase(addClient.fulfilled, (state, {payload}) => {
-                state.status = "succeeded";
-               console.log(payload);
-                // state.data.clients.push(payload.data); // Add the new client to the list
+            .addCase(addClient.fulfilled, (state, { payload }) => {
+                state.statusAddClient = "succeeded";
+                state.client = initialState.client;
+                // state.data.clients = state.data.clients.push(state.client); // Add the new client to the list
+                state.data.count = state.data.count + 1;
             })
             .addCase(addClient.rejected, (state, action) => {
-                state.status = "failed";
-                console.log(action.error +"-----");
+                // state.status = "failed";
+                // console.log(action.payload + "-----");
+                // // state.error = action.error.message;
+                // state.error = action.payload;
+                state.statusAddClient = "failed";
+                state.error = action.error.message;
+            })
+            .addCase(UpdateOneClient.pending, (state) => {
+                state.statusUpdateClient = "loading";
+            })
+            .addCase(UpdateOneClient.fulfilled, (state, { payload }) => {
+                state.statusUpdateClient = "succeeded";
+            })
+            .addCase(UpdateOneClient.rejected, (state, action) => {
+                state.statusUpdateClient = "failed";
                 state.error = action.error.message;
             })
             .addCase(deleteClient.pending, (state) => {
@@ -123,6 +175,13 @@ const clientSlice = createSlice({
     },
 });
 
-export const { setNameClient, clearClientUpdate, handleClientForm } =
-    clientSlice.actions;
+export const {
+    setNameClient,
+    clearClientUpdate,
+    handleClientForm,
+    showAlert,
+    closeAlert,
+    showAlertUpdate,
+    closeAlertUpdate,
+} = clientSlice.actions;
 export default clientSlice.reducer;

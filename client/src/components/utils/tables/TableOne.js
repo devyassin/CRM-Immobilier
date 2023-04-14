@@ -5,6 +5,7 @@ import { deleteClient, fetchOneClient } from "../../../store/clientSlice";
 import { show } from "../../../store/overlaySlice";
 import { notFound } from "../../../assets/images";
 
+
 const TableOne = () => {
     const dispatch = useDispatch();
     const clientsGlobal = useSelector((state) => state.clients.data);
