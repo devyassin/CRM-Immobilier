@@ -11,7 +11,7 @@ class Facture extends Model
     protected $fillable = [
         'prix_total',
         'date',
-        'mode_payement',
+        'mode_payment',
         'status',
         'description',
         'client_id',

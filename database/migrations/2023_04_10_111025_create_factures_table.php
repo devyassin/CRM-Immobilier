@@ -17,7 +17,7 @@ class CreateFacturesTable extends Migration
             $table->id();
             $table->string('prix_total');
             $table->dateTime('date');
-            $table->string('mode_payement');
+            $table->string('mode_payment');
             $table->string('status');
             $table->string('description');
             $table->bigInteger('client_id')->unsigned();
