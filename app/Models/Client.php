@@ -21,7 +21,7 @@ class Client extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class);
     }
     public function transaction(){
         return $this->hasMany(Transaction::class);

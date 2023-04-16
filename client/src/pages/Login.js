@@ -2,8 +2,42 @@ import React from "react";
 import { illustration, logo, icon } from "../assets/images";
 import LoginInput from "../components/utils/form/LoginInput";
 import LoginButton from "../components/utils/buttons/LoginButton";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { loginUser } from "../store/userSlice";
+import AlertForm from "../components/utils/alerts/AlertForm";
+import { showAlert, closeAlert } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const dispatch = useDispatch();
+    const alertVisibility = useSelector((state) => state.user.showAlertLogin);
+    const error = useSelector((state) => state.user.error);
+    const navigate = useNavigate();
+    const status = useSelector((state) => state.user.statusLogin);
+
+    useEffect(() => {
+        if (status === "succeeded") {
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 3000);
+        }
+    }, [status]);
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        dispatch(showAlert());
+        setTimeout(() => {
+            dispatch(closeAlert());
+        }, 3000);
+        if (!email || !password) {
+            return;
+        }
+        dispatch(loginUser({ email, password }));
+    };
     return (
         <div className="login ">
             <div class="container sm:px-10">
@@ -38,17 +72,51 @@ const Login = () => {
                     </div>
 
                     <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
-                        <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
-                            <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                        <form
+                            onSubmit={onSubmitHandler}
+                            class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto"
+                        >
+                            <h2 class=" pb-2 intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                                 Sign In
                             </h2>
+                            {alertVisibility && status === "" && (
+                                <AlertForm
+                                    message="Veuillez remplir toutes les champs"
+                                    type="failed"
+                                />
+                            )}
+
+                            {alertVisibility && status === "failed" && (
+                                <AlertForm message={error} type="failed" />
+                            )}
+
+                            {alertVisibility && status === "loading" && (
+                                <AlertForm
+                                    message="en cours ...."
+                                    type="success"
+                                />
+                            )}
+                            {alertVisibility && status === "succeeded" && (
+                                <AlertForm message="Bonjour !" type="success" />
+                            )}
                             <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">
                                 A few more clicks to sign in to your account.
                                 Manage all your e-commerce accounts in one place
                             </div>
                             <div class="intro-x mt-8">
-                                <LoginInput type="email" placeholder="Email" />
                                 <LoginInput
+                                    onChangeHandler={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    value={email}
+                                    type="email"
+                                    placeholder="Email"
+                                />
+                                <LoginInput
+                                    onChangeHandler={(e) => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    value={password}
                                     type="password"
                                     placeholder="Password"
                                 />
@@ -88,7 +156,7 @@ const Login = () => {
                                     Privacy Policy
                                 </a>{" "}
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

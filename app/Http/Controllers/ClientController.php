@@ -18,11 +18,12 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
         $name = $request->input('name');
-
-        $clients = Client::where('nom', 'like', "%$name%")->get();
+        
+        $clients = $user->clients()->where('nom', 'like', "%$name%")->get();
         $count = $clients->count();
-
+        
         return response()->json(['count' => $count,'clients' => $clients], Response::HTTP_OK);
     }
 
@@ -85,8 +86,9 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        if (!$client) {
-            return response()->json(['error' => 'Client not found'], 404);
+            // Check if the authenticated user owns the client
+        if (auth()->user()->id !== $client->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     
         return response()->json($client);

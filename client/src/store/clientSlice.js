@@ -2,12 +2,22 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_URL = "/api/v1";
+const user = JSON.parse(localStorage.getItem("user"));
+const token = localStorage.getItem("token");
+
+const instance = axios.create({
+    baseURL: API_URL,
+    headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+    },
+});
 
 // Fetch all clients
 export const fetchAllClients = createAsyncThunk(
     "clients/fetchAll",
     async (name) => {
-        const response = await axios.get(`${API_URL}/clients?name=${name}`);
+        const response = await instance.get(`/clients?name=${name}`);
         return response.data;
     }
 );
@@ -16,7 +26,7 @@ export const fetchAllClients = createAsyncThunk(
 export const fetchOneClient = createAsyncThunk(
     "clients/fetchOne",
     async (id) => {
-        const response = await axios.get(`${API_URL}/clients/${id}`);
+        const response = await instance.get(`/clients/${id}`);
         return response.data;
     }
 );
@@ -24,7 +34,7 @@ export const fetchOneClient = createAsyncThunk(
 // Add a new client
 export const addClient = createAsyncThunk("clients/add", async (client) => {
     try {
-        const response = await axios.post(`${API_URL}/clients`, client);
+        const response = await instance.post(`/clients`, client);
         return response.data;
     } catch (error) {
         const errorMessages = error.response.data.errors;
@@ -34,7 +44,7 @@ export const addClient = createAsyncThunk("clients/add", async (client) => {
 
 // Delete a  client
 export const deleteClient = createAsyncThunk("clients/delete", async (id) => {
-    const response = await axios.delete(`${API_URL}/clients/${id}`);
+    const response = await instance.delete(`/clients/${id}`);
     return response.data;
 });
 
@@ -43,10 +53,7 @@ export const UpdateOneClient = createAsyncThunk(
     "clients/updateOne",
     async ([id, client]) => {
         try {
-            const response = await axios.put(
-                `${API_URL}/clients/${id}`,
-                client
-            );
+            const response = await instance.put(`/clients/${id}`, client);
             return response.data;
         } catch (error) {
             const errorMessages = error.response.data.errors;
@@ -70,7 +77,7 @@ const initialState = {
         address: "",
         email: "",
         last_contacted: "",
-        user_id: 1,
+        user_id: user?.id || "",
     },
     error: null,
     searchClient: "",
@@ -135,15 +142,11 @@ const clientSlice = createSlice({
             })
             .addCase(addClient.fulfilled, (state, { payload }) => {
                 state.statusAddClient = "succeeded";
+                state.data.clients = [...state.data.clients, state.client];
                 state.client = initialState.client;
-                // state.data.clients = state.data.clients.push(state.client); // Add the new client to the list
                 state.data.count = state.data.count + 1;
             })
             .addCase(addClient.rejected, (state, action) => {
-                // state.status = "failed";
-                // console.log(action.payload + "-----");
-                // // state.error = action.error.message;
-                // state.error = action.payload;
                 state.statusAddClient = "failed";
                 state.error = action.error.message;
             })
@@ -151,6 +154,10 @@ const clientSlice = createSlice({
                 state.statusUpdateClient = "loading";
             })
             .addCase(UpdateOneClient.fulfilled, (state, { payload }) => {
+                const index = state.data.clients.findIndex(
+                    (element) => element.id === state.client.id
+                );
+                state.data.clients[index] = state.client;
                 state.statusUpdateClient = "succeeded";
             })
             .addCase(UpdateOneClient.rejected, (state, action) => {

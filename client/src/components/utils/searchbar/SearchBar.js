@@ -1,10 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setNameClient } from "../../../store/clientSlice";
+import { useSelector } from "react-redux";
 
-const SearchBar = () => {
-    const dispatch = useDispatch();
-    const searchClient = useSelector((state) => state.clients.searchClient);
+const SearchBar = ({ dipatcherFunction, searchValue, placeHolder }) => {
     return (
         <div class="max-w-md ">
             <div class="relative flex  items-center w-64 md:w-96 h-12 rounded-lg  bg-white overflow-hidden">
@@ -29,12 +26,9 @@ const SearchBar = () => {
                     class=" h-full w-full focus:outline-none text-sm text-gray-700 border-none pr-2"
                     type="text"
                     id="search"
-                    placeholder="Search client.."
-                    value={searchClient}
-                    onChange={(e) => {
-                        let searchClient = e.target.value;
-                        dispatch(setNameClient({ searchClient }));
-                    }}
+                    placeholder={placeHolder}
+                    value={searchValue}
+                    onChange={dipatcherFunction}
                 />
             </div>
         </div>

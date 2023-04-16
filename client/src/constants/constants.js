@@ -1,15 +1,4 @@
 import {
-    CiCalendar,
-    CiBag1,
-    CiChat1,
-    CiCircleList,
-    CiAlarmOn,
-    CiBitcoin,
-    CiDeliveryTruck,
-    CiUser,
-} from "react-icons/ci";
-
-import {
     FaChartPie,
     FaUsers,
     FaUserPlus,
@@ -30,7 +19,7 @@ export const categories = [
         path: "/clients",
         icon: <FaUsers size={25} />,
     },
-    { name: "prospect", path: "/inbox", icon: <FaUserPlus size={25} /> },
+    { name: "Prospect", path: "/leads", icon: <FaUserPlus size={25} /> },
     { name: "Properties", path: "/file", icon: <FaBuilding size={22} /> },
     {
         name: "Tasks",
