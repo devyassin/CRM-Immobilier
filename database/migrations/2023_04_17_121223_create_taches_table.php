@@ -16,8 +16,7 @@ class CreateTachesTable extends Migration
         Schema::create('taches', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('status');
-            $table->string('order');
+            $table->enum('status', ['À faire', 'En cours', 'Terminé']);
             $table->string('description');
             $table->date('deadline');
             $table->bigInteger('user_id')->unsigned();

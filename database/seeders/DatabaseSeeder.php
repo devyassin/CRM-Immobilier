@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Lead;
+use App\Models\Tache;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $user_id = 1;
 
         // Client::factory(20)->create(['user_id' => $user_id]);
-        Lead::factory(20)->create(['user_id'=>$user_id]);
+        // Lead::factory(20)->create(['user_id'=>$user_id]);
+        Tache::factory(20)->create(['user_id'=>$user_id]);
     }
 }

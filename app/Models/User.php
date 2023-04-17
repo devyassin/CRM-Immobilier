@@ -38,8 +38,8 @@ class User extends Authenticatable
     public function leads(){
         return $this->hasMany(Lead::class);
     }
-    public function tache(){
-        return $this->hasMany(Lead::class);
+    public function taches(){
+        return $this->hasMany(Tache::class);
     }
     // public function bonDeVisits(){
     //     return $this->hasMany(BonDeVisite::class);

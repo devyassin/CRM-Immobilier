@@ -6,7 +6,7 @@ import Chat from "./Dashboard/Chat";
 import Dashborad from "./Dashboard/Dashborad";
 import FileManager from "./Dashboard/FileManager";
 import Leads from "./Dashboard/Leads";
-import PointSale from "./Dashboard/PointSale";
+import Taches from "./Dashboard/Taches";
 import Clients from "./Dashboard/Clients";
 import Post from "./Dashboard/Post";
 import Error from "./Error";
@@ -20,7 +20,7 @@ export {
     Dashborad,
     FileManager,
     Leads,
-    PointSale,
+    Taches,
     Clients,
     Post,
     Error,

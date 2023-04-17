@@ -10,7 +10,7 @@ import {
     Calander,
     Chat,
     FileManager,
-    PointSale,
+    Taches,
     Post,
     Error,
     Leads,
@@ -33,7 +33,7 @@ const App = () => {
                     <Route path="clients" element={<Clients />} />
                     <Route path="leads" element={<Leads />} />
                     <Route path="file" element={<FileManager />} />
-                    <Route path="point" element={<PointSale />} />
+                    <Route path="taches" element={<Taches />} />
                     <Route path="chat" element={<Chat />} />
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />
