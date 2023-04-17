@@ -17,6 +17,7 @@ class CreateTachesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('status');
+            $table->string('order');
             $table->string('description');
             $table->date('deadline');
             $table->bigInteger('user_id')->unsigned();

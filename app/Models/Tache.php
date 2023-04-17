@@ -11,8 +11,13 @@ class Tache extends Model
     protected $fillable = [
         'title',
         'status',
+        'order',
         'description',
         'deadline',
         'user_id',
     ];
+
+public function user(){
+    return $this->belongsTo(User::class);
+}
 }

@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tache;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Requests\StoreTacheRequest;
 use App\Http\Requests\UpdateTacheRequest;
+use Illuminate\Validation\ValidationException;
 
 class TacheController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = auth()->user();
+        $title = $request->input('title');
+        
+        $clients = $user->taches()->where('title', 'like', "%$title%")->get();
+        $count = $clients->count();
+        
+        return response()->json(['count' => $count,'clients' => $clients], Response::HTTP_OK);
     }
 
     /**
@@ -31,56 +35,116 @@ class TacheController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTacheRequest  $request
+     * @param  \App\Http\Requests\StoreClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTacheRequest $request)
+    public function store(Request $request)
     {
-        //
+        try{
+
+            $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'order' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'deadline' => 'required|date|max:255',
+            'user_id'=>'required'
+            ]);    
+            
+        }catch (ValidationException $exception) {
+            $errors = $exception->validator->errors()->getMessages();
+            $errorMessages = [];
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $errorMessages[] = "{$message}";
+                }
+            }
+            return response()->json(['errors' => $errorMessages],400);
+        }
+        
+
+            $tache = Tache::create($validatedData);
+          
+    
+        return response()->json([
+            'data' => $tache,
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tache  $tache
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Tache $tache)
+    public function show(Tache $client)
     {
-        //
+            // Check if the authenticated user owns the client
+        if (auth()->user()->id !== $client->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    
+        return response()->json($client);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tache  $tache
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function edit(Tache $tache)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTacheRequest  $request
-     * @param  \App\Models\Tache  $tache
+     * @param  \App\Http\Requests\UpdateClientRequest  $request
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTacheRequest $request, Tache $tache)
+    public function update(Request $request, Tache $tache)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'status' => 'required|string|max:255',
+                'order' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
+                'deadline' => 'required|string|max:255',
+                'user_id'=>'required'
+                ]);
+    
+            $tache->update($validatedData);
+    
+            return response()->json([
+                'data' => $tache,
+            ], 200);
+    
+        } catch (ValidationException $exception) {
+            $errors = $exception->validator->errors()->getMessages();
+            $errorMessages = [];
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $errorMessages[] = "{$message}";
+                }
+            }
+            return response()->json(['errors' => $errorMessages], 400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tache  $tache
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function destroy(Tache $tache)
     {
-        //
+        $tache->delete();
+
+        return response()->json(['tache' => $tache,'message' => 'Client deleted successfully']);
     }
 }

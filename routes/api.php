@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\TacheController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,14 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('leads', [LeadController::class, 'store']);
     Route::put('leads/{lead}', [LeadController::class, 'update']);
     Route::delete('leads/{lead}', [LeadController::class, 'destroy']);
+
+    //tache Route 
+
+    Route::get('taches', [TacheController::class, 'index']);
+    Route::get('taches/{tache}', [TacheController::class, 'show']);
+    Route::post('taches', [TacheController::class, 'store']);
+    Route::put('taches/{tache}', [TacheController::class, 'update']);
+    Route::delete('taches/{tache}', [TacheController::class, 'destroy']);
 
 });
 
