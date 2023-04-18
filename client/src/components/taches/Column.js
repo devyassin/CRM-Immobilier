@@ -1,7 +1,8 @@
 import React from "react";
 import Tache from "./Tache";
 
-const Column = ({ title, number, type }) => {
+const Column = ({ title, number, type, list }) => {
+ 
     return (
         <div className="flex flex-col drop-shadow-xl  ">
             {/* titre */}
@@ -34,11 +35,9 @@ const Column = ({ title, number, type }) => {
             </div>
             {/* taches */}
             <div className="flex flex-col p-2 space-y-2 overflow-x-auto overflow-scroll tableScroll  bg-blue-100 h-[400px]">
-                <Tache type={type} />
-                <Tache type={type} />
-                <Tache type={type} />
-                <Tache type={type} />
-                <Tache type={type} />
+                {list.map((tache) => {
+                    return <Tache key={tache.id} tache={tache} type={type} />;
+                })}
             </div>
         </div>
     );

@@ -1,9 +1,26 @@
 import React from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
-const Tache = ({ type }) => {
+import { deleteTache } from "../../store/tacheSlice";
+import { useDispatch } from "react-redux";
+import { fetchOneTache, setOldTache } from "../../store/tacheSlice";
+import { show } from "../../store/overlaySlice";
+const Tache = ({
+    type,
+    tache: { id, title, status, deadline, description },
+}) => {
+    const dispatch = useDispatch();
     return (
         <div
-            className={`flex flex-col ${
+            onClick={() => {
+                dispatch(fetchOneTache(id));
+
+                //need some changes
+                setTimeout(() => {
+                    dispatch(setOldTache());
+                }, 1000);
+                dispatch(dispatch(show()));
+            }}
+            className={`flex flex-col cursor-grab ${
                 type === "todo"
                     ? "bg-red-200"
                     : type === "progress"
@@ -16,24 +33,21 @@ const Tache = ({ type }) => {
             <div className="flex justify-between">
                 <div></div>
                 <AiFillCloseCircle
+                    onClick={() => {
+                        dispatch(deleteTache(id));
+                    }}
                     className="cursor-pointer text-red-500 hover:text-red-400 duration-150 "
                     size={25}
                 />
             </div>
 
-            <h1 className="text-lg font-bold ">Prendre un Rendez-vous</h1>
+            <h1 className="text-lg font-bold ">{title}</h1>
             <div className="flex items-center space-x-2 mb-3">
                 <h1 className="text-lg">Date :</h1>
-                <p className="opacity-60 mt-[2px]">2023-03-08</p>
+                <p className="opacity-60 mt-[2px]">{deadline}</p>
             </div>
 
-            <p className="text-[12px] opacity-70 leading-4">
-                Le processus implique la prise de contact avec le client, la
-                compréhension de ses besoins et de ses préférences en matière
-                d'immobilier, la recherche d'un agent immobilier approprié pour
-                répondre à ces besoins, et la fixation d'un rendez-vous pour le
-                client avec l'agent immobilier.
-            </p>
+            <p className="text-[12px] opacity-70 leading-4">{description}</p>
         </div>
     );
 };

@@ -64,7 +64,7 @@ export const deleteTache = createAsyncThunk("taches/delete", async (id) => {
 
 // Update one tache
 export const UpdateOneTache = createAsyncThunk(
-    "leads/updateOne",
+    "taches /updateOne",
     async ([id, tache]) => {
         try {
             const response = await instance.put(`/taches/${id}`, tache);
@@ -96,6 +96,7 @@ const initialState = {
         email: "",
         user_id: user?.id || "",
     },
+    oldtache: null,
     error: null,
 };
 
@@ -107,7 +108,7 @@ const tacheSlice = createSlice({
             state.tache = initialState.tache;
         },
 
-        handleLeadForm: (state, { payload }) => {
+        handleTacheForm: (state, { payload }) => {
             const { name, value } = payload;
             state.tache[name] = value;
         },
@@ -123,6 +124,9 @@ const tacheSlice = createSlice({
         },
         closeAlertUpdate: (state) => {
             state.showAlertUpdate = false;
+        },
+        setOldTache: (state) => {
+            state.oldtache = state.tache;
         },
     },
     extraReducers: (builder) => {
@@ -176,6 +180,7 @@ const tacheSlice = createSlice({
             })
             .addCase(addTache.fulfilled, (state, { payload }) => {
                 state.statusAddTache = "succeeded";
+
                 if (state.tache.status === "À faire") {
                     state.todo.taches = [...state.todo.taches, state.tache];
                     state.todo.count = state.todo.count + 1;
@@ -190,24 +195,50 @@ const tacheSlice = createSlice({
                     state.done.count = state.done.count + 1;
                 }
 
-                state.lead = initialState.lead;
+                state.tache = initialState.tache;
             })
             .addCase(addTache.rejected, (state, action) => {
                 state.statusAddTache = "failed";
                 state.error = action.error.message;
             })
             .addCase(UpdateOneTache.pending, (state) => {
-                state.statusUpdateLead = "loading";
+                state.statusUpdateTache = "loading";
             })
-            .addCase(UpdateOneTache.fulfilled, (state, { payload }) => {
-                const index = state.data.leads.findIndex(
-                    (element) => element.id === state.lead.id
-                );
-                state.data.leads[index] = state.lead;
-                state.statusUpdateLead = "succeeded";
+            .addCase(UpdateOneTache.fulfilled, (state, action) => {
+                state.statusUpdateTache = "succeeded";
+
+                if (state.tache.status === "À faire") {
+                    if (state.oldtache.status === "En cours") {
+                        state.progress.taches = state.progress.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.todo.taches = [...state.todo.taches, state.tache];
+                        state.progress.count = state.progress.count - 1;
+                        state.todo.count = state.todo.count + 1;
+                    } else if (state.oldtache.status === "Terminé") {
+                    } else {
+                        const index = state.todo.taches.findIndex(
+                            (element) => element.id === state.tache.id
+                        );
+
+                        state.todo.taches[index] = state.tache;
+                    }
+                } else if (state.tache.status === "En cours") {
+                    const index = state.progress.taches.findIndex(
+                        (element) => element.id === state.tache.id
+                    );
+                    state.progress.taches[index] = state.tache;
+                } else {
+                    const index = state.done.taches.findIndex(
+                        (element) => element.id === state.tache.id
+                    );
+                    state.done.taches[index] = state.tache;
+                }
             })
             .addCase(UpdateOneTache.rejected, (state, action) => {
-                state.statusUpdateLead = "failed";
+                state.statusUpdateTache = "failed";
                 state.error = action.error.message;
             })
             .addCase(deleteTache.pending, (state) => {
@@ -215,11 +246,27 @@ const tacheSlice = createSlice({
             })
             .addCase(deleteTache.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
-                const id = payload.lead.id;
-                state.data.leads = state.data.leads.filter((lead) => {
-                    return lead.id !== id;
-                });
-                state.data.count = state.data.count - 1;
+                const id = payload.tache.id;
+                const status = payload.tache.status;
+
+                if (status === "À faire") {
+                    state.todo.taches = state.todo.taches.filter((tache) => {
+                        return tache.id !== id;
+                    });
+                    state.todo.count = state.todo.count - 1;
+                } else if (status === "En cours") {
+                    state.progress.taches = state.progress.taches.filter(
+                        (tache) => {
+                            return tache.id !== id;
+                        }
+                    );
+                    state.progress.count = state.progress.count - 1;
+                } else {
+                    state.done.taches = state.done.taches.filter((tache) => {
+                        return tache.id !== id;
+                    });
+                    state.done.count = state.done.count - 1;
+                }
             })
             .addCase(deleteTache.rejected, (state, action) => {
                 state.status = "failed";
@@ -228,4 +275,13 @@ const tacheSlice = createSlice({
     },
 });
 
+export const {
+    clearTacheUpdate,
+    closeAlert,
+    closeAlertUpdate,
+    handleTacheForm,
+    showAlert,
+    showAlertUpdate,
+    setOldTache,
+} = tacheSlice.actions;
 export default tacheSlice.reducer;
