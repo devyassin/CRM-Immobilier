@@ -7,6 +7,7 @@ use App\Http\Controllers\TacheController;
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,14 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('devis', [DevisController::class, 'store']);
     Route::put('devis/{devis}', [DevisController::class, 'update']);
     Route::delete('devis/{devis}', [DevisController::class, 'destroy']);
+
+    //transaction Route 
+
+    Route::get('transactions', [TransactionController::class, 'index']);
+    Route::get('transactions/{transaction}', [TransactionController::class, 'show']);
+    Route::post('transactions', [TransactionController::class, 'store']);
+    Route::put('transactions/{transaction}', [TransactionController::class, 'update']);
+    Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy']);
 
 });
 

@@ -16,10 +16,10 @@ class TacheController extends Controller
         $user = auth()->user();
         $status = $request->input('status');
         
-        $clients = $user->taches()->where('title', 'like', "%$title%")->get();
-        $count = $clients->count();
+        $taches = $user->taches()->where('status', 'like', "%$status%")->get();
+        $count = $taches->count();
         
-        return response()->json(['count' => $count,'taches' => $taches], Response::HTTP_OK);
+        return response()->json(['coount' => $count,'taches' => $taches], Response::HTTP_OK);
     }
 
     /**

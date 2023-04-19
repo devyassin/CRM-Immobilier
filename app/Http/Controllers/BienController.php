@@ -19,7 +19,7 @@ class BienController extends Controller
         $user = auth()->user();
         $address = $request->input('address');
         
-        $biens = $user->biens->where('address', 'like', "%$address%");
+        $biens = $user->biens()->where('address', 'like', "%$address%");
         $count = $biens->count();
         
         return response()->json(['count' => $count,'biens' => $biens], Response::HTTP_OK);
