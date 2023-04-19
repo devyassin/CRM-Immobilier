@@ -33,7 +33,8 @@ const Tache = ({
             <div className="flex justify-between">
                 <div></div>
                 <AiFillCloseCircle
-                    onClick={() => {
+                    onClick={(event) => {
+                        event.stopPropagation();
                         dispatch(deleteTache(id));
                     }}
                     className="cursor-pointer text-red-500 hover:text-red-400 duration-150 "

@@ -218,6 +218,14 @@ const tacheSlice = createSlice({
                         state.progress.count = state.progress.count - 1;
                         state.todo.count = state.todo.count + 1;
                     } else if (state.oldtache.status === "Terminé") {
+                        state.done.taches = state.done.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.todo.taches = [...state.todo.taches, state.tache];
+                        state.done.count = state.done.count - 1;
+                        state.todo.count = state.todo.count + 1;
                     } else {
                         const index = state.todo.taches.findIndex(
                             (element) => element.id === state.tache.id
@@ -226,15 +234,61 @@ const tacheSlice = createSlice({
                         state.todo.taches[index] = state.tache;
                     }
                 } else if (state.tache.status === "En cours") {
-                    const index = state.progress.taches.findIndex(
-                        (element) => element.id === state.tache.id
-                    );
-                    state.progress.taches[index] = state.tache;
+                    if (state.oldtache.status === "À faire") {
+                        state.todo.taches = state.todo.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.progress.taches = [
+                            ...state.progress.taches,
+                            state.tache,
+                        ];
+                        state.todo.count = state.todo.count - 1;
+                        state.progress.count = state.progress.count + 1;
+                    } else if (state.oldtache.status === "Terminé") {
+                        state.done.taches = state.done.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.progress.taches = [
+                            ...state.progress.taches,
+                            state.tache,
+                        ];
+                        state.done.count = state.done.count - 1;
+                        state.progress.count = state.progress.count + 1;
+                    } else {
+                        const index = state.progress.taches.findIndex(
+                            (element) => element.id === state.tache.id
+                        );
+                        state.progress.taches[index] = state.tache;
+                    }
                 } else {
-                    const index = state.done.taches.findIndex(
-                        (element) => element.id === state.tache.id
-                    );
-                    state.done.taches[index] = state.tache;
+                    if (state.oldtache.status === "À faire") {
+                        state.todo.taches = state.todo.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.done.taches = [...state.done.taches, state.tache];
+                        state.todo.count = state.todo.count - 1;
+                        state.done.count = state.done.count + 1;
+                    } else if (state.oldtache.status === "En cours") {
+                        state.progress.taches = state.progress.taches.filter(
+                            (tache) => {
+                                return tache.id !== state.oldtache.id;
+                            }
+                        );
+                        state.done.taches = [...state.done.taches, state.tache];
+                        state.progress.count = state.progress.count - 1;
+                        state.done.count = state.done.count + 1;
+                    } else {
+                        const index = state.done.taches.findIndex(
+                            (element) => element.id === state.tache.id
+                        );
+                        state.done.taches[index] = state.tache;
+                    }
                 }
             })
             .addCase(UpdateOneTache.rejected, (state, action) => {
