@@ -20,6 +20,8 @@ class CreateDevisTable extends Migration
             $table->string('reference');
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

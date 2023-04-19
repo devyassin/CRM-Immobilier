@@ -32,10 +32,9 @@ class Bien extends Model
     public function transaction(){
         return $this->hasMany(Transaction::class);
     }
-    public function devis(){
-        return $this->belongsTo(Devis::class);
+    public function facture_biens(){
+        return $this->hasMany(Facture_biens::class);
     }
-    public function facture(){
-        return $this->belongsTo(Facture::class);
-    }
+    public function devis_biens(){
+        return $this->hasMany(Devis_biens::class);}
 }

@@ -13,6 +13,7 @@ class Devis extends Model
         'description',
         'reference',
         'client_id',
+        'user_id',
     ];
     public function client(){
         return $this->belongsTo(Client::class);

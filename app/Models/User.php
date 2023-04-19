@@ -38,14 +38,14 @@ class User extends Authenticatable
     public function devis(){
         return $this->hasMany(Devis::class);
     }
-    public function facture(){
+    public function factures(){
         return $this->hasMany(Facture::class);
     }
     public function leads(){
         return $this->hasMany(Lead::class);
     }
 
-    public function bien(){
+    public function biens(){
         return $this->hasMany(Bien::class);
     }
 

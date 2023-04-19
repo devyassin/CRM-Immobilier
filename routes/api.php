@@ -8,7 +8,8 @@ use App\Http\Controllers\BienController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DevisBiensController;
+use App\Http\Controllers\FactureBiensController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +90,22 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('transactions', [TransactionController::class, 'store']);
     Route::put('transactions/{transaction}', [TransactionController::class, 'update']);
     Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy']);
+
+    //facture_biens  Route 
+
+    Route::get('facture_biens', [FacturebiensController::class, 'index']);
+    Route::get('facture_biens/{facture_bien}', [FacturebiensController::class, 'show']);
+    Route::post('facture_biens', [FacturebiensController::class, 'store']);
+    Route::put('facture_biens/{facture_bien}', [FacturebiensController::class, 'update']);
+    Route::delete('facture_biens/{facture_bien}', [FacturebiensController::class, 'destroy']);
+
+    //Devis_Biens Route 
+
+    Route::get('devis_biens', [DevisBiensController::class, 'index']);
+    Route::get('devis_biens/{devis_bien}', [DevisBiensController::class, 'show']);
+    Route::post('devis_biens', [DevisBiensController::class, 'store']);
+    Route::put('devis_biens/{devis_bien}', [DevisBiensController::class, 'update']);
+    Route::delete('devis_biens/{devis_bien}', [DevisBiensController::class, 'destroy']);
 
 });
 

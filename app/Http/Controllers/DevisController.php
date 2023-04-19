@@ -45,6 +45,7 @@
                     'description' => 'required|string|max:255',
                     'reference' => 'required|string|max:255',
                     'client_id' => 'required',
+                    'user_id' => 'required',
                     ]);    
                     
                 }catch (ValidationException $exception) {
@@ -82,6 +83,7 @@
                         'description' => 'required|string|max:255',
                         'reference' => 'required|string|max:255',
                         'client_id' => 'required',
+                        'user_id' => 'required',
                         ]); 
             
                     $Devis->update($validatedData);

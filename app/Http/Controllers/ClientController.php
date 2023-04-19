@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
 use Illuminate\Validation\ValidationException;
 
 class ClientController extends Controller
