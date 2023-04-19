@@ -22,8 +22,8 @@ export const categories = [
     { name: "Prospect", path: "/leads", icon: <FaUserPlus size={25} /> },
     { name: "Properties", path: "/file", icon: <FaBuilding size={22} /> },
     {
-        name: "Tasks",
-        path: "/point",
+        name: "Taches",
+        path: "/taches",
         icon: <FaTasks size={22} />,
     },
     { name: "Devis", path: "/chat", icon: <FaFileContract size={23} /> },

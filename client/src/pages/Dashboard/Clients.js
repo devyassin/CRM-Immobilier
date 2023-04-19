@@ -33,6 +33,8 @@ const Clients = () => {
         dispatch(setNameClient({ searchClient }));
     };
 
+    
+
     if (status === "loading") {
         return (
             <div>

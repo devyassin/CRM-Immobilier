@@ -14,10 +14,10 @@ class TacheController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $title = $request->input('title');
+        $status = $request->input('status');
         
-        $taches = $user->taches->where('title', 'like', "%$title%")->get();
-        $count = $taches->count();
+        $clients = $user->taches()->where('title', 'like', "%$title%")->get();
+        $count = $clients->count();
         
         return response()->json(['count' => $count,'taches' => $taches], Response::HTTP_OK);
     }
@@ -33,9 +33,8 @@ class TacheController extends Controller
         try{
 
             $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'order' => 'required|string|max:255',
+            'title' => 'required|string|max:40',
+            'status' => 'required|string|in:À faire,En cours,Terminé',
             'description' => 'required|string|max:255',
             'deadline' => 'required|date|max:255',
             'user_id'=>'required'
@@ -61,9 +60,16 @@ class TacheController extends Controller
         ], 201);
     }
 
-    public function show(Tache $tache)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Tache $client)
     {
-        if (auth()->user()->id !== $tache->user_id) {
+            // Check if the authenticated user owns the client
+        if (auth()->user()->id !== $client->user_id) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     
@@ -76,8 +82,7 @@ class TacheController extends Controller
         try {
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
-                'status' => 'required|string|max:255',
-                'order' => 'required|string|max:255',
+                'status' => 'required|string|in:À faire,En cours,Terminé',
                 'description' => 'required|string|max:255',
                 'deadline' => 'required|string|max:255',
                 'user_id'=>'required'
@@ -105,6 +110,6 @@ class TacheController extends Controller
     {
         $tache->delete();
 
-        return response()->json(['tache' => $tache,'message' => 'tache deleted successfully']);
+        return response()->json(['tache' => $tache,'message' => 'Client deleted successfully']);
     }
 }

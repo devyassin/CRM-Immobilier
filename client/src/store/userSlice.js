@@ -9,9 +9,10 @@ const token = localStorage.getItem("token");
 export const loginUser = createAsyncThunk("user/login", async (user) => {
     try {
         const response = await axios.post(`${API_URL}/login`, user);
-        console.log(response.data);
         return response.data;
     } catch (error) {
+        console.log("error");
+        console.log(user);
         const errorMessages = error.response.data.errors;
         throw new Error(errorMessages);
     }

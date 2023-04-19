@@ -10879,12 +10879,13 @@ html body {
 .content {
     /* border-radius: 30px; */
     padding: 22px 22px;
-    min-height: 100vh;
+    height: 100vh;
     min-width: 0px;
     flex: 1 1 0%;
     --tw-bg-opacity: 1;
     background-color: rgb(var(--color-slate-100) / var(--tw-bg-opacity));
     padding-bottom: 2.5rem;
+    overflow-y: scroll;
 }
 .dark .content {
     --tw-bg-opacity: 1;

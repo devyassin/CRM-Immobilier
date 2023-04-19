@@ -4,6 +4,7 @@ import overlaySlice from "./overlaySlice";
 import clientSlice from "./clientSlice";
 import userSlice from "./userSlice";
 import leadSlice from "./leadSlice";
+import tacheSlice from "./tacheSlice";
 
 const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
         overlay: overlaySlice,
         clients: clientSlice,
         leads: leadSlice,
+        taches: tacheSlice,
         user: userSlice,
     },
 });

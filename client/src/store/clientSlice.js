@@ -170,6 +170,7 @@ const clientSlice = createSlice({
             .addCase(deleteClient.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
                 const id = payload.client.id;
+               
                 state.data.clients = state.data.clients.filter((client) => {
                     return client.id !== id;
                 });
