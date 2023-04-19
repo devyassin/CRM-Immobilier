@@ -19,7 +19,7 @@ class BienController extends Controller
         $user = auth()->user();
         $address = $request->input('address');
         
-        $biens = $user->biens->where('address', 'like', "%$address%")->get();
+        $biens = $user->biens->where('address', 'like', "%$address%");
         $count = $biens->count();
         
         return response()->json(['count' => $count,'biens' => $biens], Response::HTTP_OK);
@@ -48,7 +48,7 @@ class BienController extends Controller
             'location' => 'required|string|max:255',
             'price' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'commission' => 'required|string|max:255',
+            'comission' => 'required|string|max:255',
             'client_id' => 'required',
             'devis_id' => 'required',
             'facture_id' => 'required',
@@ -101,7 +101,7 @@ class BienController extends Controller
                 'location' => 'required|string|max:255',
                 'price' => 'required|string|max:255',
                 'status' => 'required|string|max:255',
-                'commission' => 'required|string|max:255',
+                'comission' => 'required|string|max:255',
                 'client_id' => 'required',
                 'devis_id' => 'required',
                 'facture_id' => 'required',

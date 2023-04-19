@@ -5,6 +5,7 @@
         use App\Models\Devis;
         use Illuminate\Http\Request;
         use Illuminate\Http\Response;
+        use Illuminate\Support\Facades\DB;
         use Illuminate\Validation\ValidationException;
         
         class DevisController extends Controller
@@ -16,12 +17,16 @@
              */
             public function index(Request $request)
             {
-                $user = auth()->user();
-                $client = $request->input('nom');
-                $clients = $user->clients->where('nom', 'like', "%$client%")->get();
-                $devis = devis::orderBy('id', 'desc')->where('client_id',$clients->id);
 
+                $client = $request->input('nom');
+
+                $devis = DB::table('devis')
+                ->join('clients', 'devis.client_id', '=', 'clients.id')
+                ->select('devis.*', 'clients.*')
+                ->where('nom', 'like', "%$client%")
+                ->get();
                 $count = $devis->count();
+                
                 
                 return response()->json(['count' => $count,'Devis' => $devis], Response::HTTP_OK);
             }

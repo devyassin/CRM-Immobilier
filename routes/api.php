@@ -4,6 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TacheController;
+use App\Http\Controllers\BienController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\DevisController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +56,30 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('taches', [TacheController::class, 'store']);
     Route::put('taches/{tache}', [TacheController::class, 'update']);
     Route::delete('taches/{tache}', [TacheController::class, 'destroy']);
+
+    //bien Route 
+
+    Route::get('biens', [BienController::class, 'index']);
+    Route::get('biens/{bien}', [BienController::class, 'show']);
+    Route::post('biens', [BienController::class, 'store']);
+    Route::put('biens/{bien}', [BienController::class, 'update']);
+    Route::delete('biens/{bien}', [BienController::class, 'destroy']);
+
+    //facture Route 
+
+    Route::get('factures', [FactureController::class, 'index']);
+    Route::get('factures/{facture}', [FactureController::class, 'show']);
+    Route::post('factures', [FactureController::class, 'store']);
+    Route::put('factures/{facture}', [FactureController::class, 'update']);
+    Route::delete('factures/{facture}', [FactureController::class, 'destroy']);
+
+    //Devis Route 
+
+    Route::get('devis', [DevisController::class, 'index']);
+    Route::get('devis/{devis}', [DevisController::class, 'show']);
+    Route::post('devis', [DevisController::class, 'store']);
+    Route::put('devis/{devis}', [DevisController::class, 'update']);
+    Route::delete('devis/{devis}', [DevisController::class, 'destroy']);
 
 });
 

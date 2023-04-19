@@ -5,6 +5,7 @@
         use App\Models\Facture;
         use Illuminate\Http\Request;
         use Illuminate\Http\Response;
+        use Illuminate\Support\Facades\DB;
         use Illuminate\Validation\ValidationException;
 
         
@@ -17,13 +18,13 @@
              */
             public function index(Request $request)
             {
-                $user = auth()->user();
                 $client = $request->input('nom');
-                $clients = $user->clients->where('nom', 'like', "%$client%")->get();
-                $Facture = Facture::orderBy('id', 'desc')
-                                ->where('client_id',$clients->id)
-                                ->where('user_id',$user->id);
 
+                $Facture = DB::table('factures')
+                ->join('clients', 'factures.client_id', '=', 'clients.id')
+                ->select('factures.*', 'clients.*')
+                ->where('nom', 'like', "%$client%")
+                ->get();
                 $count = $Facture->count();
                 
                 return response()->json(['count' => $count,'Facture' => $Facture], Response::HTTP_OK);
