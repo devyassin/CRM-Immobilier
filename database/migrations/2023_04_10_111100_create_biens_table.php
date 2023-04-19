@@ -16,7 +16,7 @@ class CreateBiensTable extends Migration
         Schema::create('biens', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->bigInteger('type');
+            $table->string('type');
             $table->string('espace');
             $table->longText('description');
             $table->string('image');

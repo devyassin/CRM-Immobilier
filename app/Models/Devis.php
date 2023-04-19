@@ -14,4 +14,10 @@ class Devis extends Model
         'reference',
         'client_id',
     ];
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
+    public function bien(){
+        return $this->hasMany(Bien::class);
+    }
 }

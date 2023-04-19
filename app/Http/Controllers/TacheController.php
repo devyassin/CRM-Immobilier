@@ -16,8 +16,8 @@ class TacheController extends Controller
         $user = auth()->user();
         $status = $request->input('status');
         
-        $taches = $user->taches()->where('status', 'like', "%$status%")->get();
-        $count = $taches->count();
+        $clients = $user->taches()->where('title', 'like', "%$title%")->get();
+        $count = $clients->count();
         
         return response()->json(['count' => $count,'taches' => $taches], Response::HTTP_OK);
     }
@@ -27,17 +27,7 @@ class TacheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreClientRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         try{
@@ -76,34 +66,17 @@ class TacheController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Tache $tache)
+    public function show(Tache $client)
     {
             // Check if the authenticated user owns the client
-        if (auth()->user()->id !== $tache->user_id) {
+        if (auth()->user()->id !== $client->user_id) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     
         return response()->json($tache);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tache $tache)
-    {
-        
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateClientRequest  $request
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Tache $tache)
     {
         try {
@@ -133,16 +106,10 @@ class TacheController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Tache $tache)
     {
         $tache->delete();
 
-        return response()->json(['tache' => $tache,'message' => 'Tache deleted successfully']);
+        return response()->json(['tache' => $tache,'message' => 'Client deleted successfully']);
     }
 }
