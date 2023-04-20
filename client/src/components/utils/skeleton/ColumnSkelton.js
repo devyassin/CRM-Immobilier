@@ -7,7 +7,7 @@ const ColumnSkelton = ({ type }) => {
         <SkeletonTheme
             highlightColor={`${
                 type === "red"
-                    ? "##ffe3e3"
+                    ? "#ff8787"
                     : type === "blue"
                     ? "#91a7ff"
                     : type === "green"

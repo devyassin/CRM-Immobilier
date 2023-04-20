@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bien;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Lead;
@@ -25,8 +26,9 @@ class DatabaseSeeder extends Seeder
         // });
         $user_id = 1;
 
-        // Client::factory(20)->create(['user_id' => $user_id]);
-        // Lead::factory(20)->create(['user_id'=>$user_id]);
+        Client::factory(20)->create(['user_id' => $user_id]);
+        Lead::factory(20)->create(['user_id'=>$user_id]);
         Tache::factory(20)->create(['user_id'=>$user_id]);
+        Bien::factory(40)->create(['user_id' => $user_id]);
     }
 }
