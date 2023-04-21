@@ -9,7 +9,7 @@ import {
     Clients,
     Calander,
     Chat,
-    FileManager,
+    Biens,
     Taches,
     Post,
     Error,
@@ -32,7 +32,7 @@ const App = () => {
                     <Route path="dashboard" element={<Dashborad />} />
                     <Route path="clients" element={<Clients />} />
                     <Route path="leads" element={<Leads />} />
-                    <Route path="file" element={<FileManager />} />
+                    <Route path="biens" element={<Biens />} />
                     <Route path="taches" element={<Taches />} />
                     <Route path="chat" element={<Chat />} />
                     <Route path="post" element={<Post />} />
