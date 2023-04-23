@@ -82,7 +82,17 @@ const initialState = {
     showAlertUpdate: false,
     statusAddBien: "",
     statusUpdateBien: "",
-    bien: null,
+    bien: {
+        address: "",
+        type: "",
+        description: "",
+        location: "",
+        price: "",
+        status: "",
+        comission: "",
+        user_id: user?.id || "",
+        client_email: "",
+    },
     error: null,
     filterName: "",
     filterStatus: "",
@@ -97,12 +107,22 @@ const bienSlice = createSlice({
         setFilterName: (state, { payload }) => {
             state.filterName = payload.filterName;
         },
+        setFilterStatus: (state, { payload }) => {
+            state.filterStatus = payload.sortStatus;
+        },
+        setFilterPrice: (state) => {
+            state.filterPrice = "price";
+        },
+        setFilterOrder: (state, { payload }) => {
+            state.filterOrder = payload.sortOrder;
+        },
         clearBienUpdate: (state) => {
             state.bien = initialState.bien;
         },
 
         handleBienForm: (state, { payload }) => {
             const { name, value } = payload;
+
             state.bien[name] = value;
         },
         showAlert: (state) => {
@@ -147,7 +167,7 @@ const bienSlice = createSlice({
             })
             .addCase(addBien.fulfilled, (state, { payload }) => {
                 state.statusAddBien = "succeeded";
-                state.data.biens = [...state.data.biens, state.bien];
+                state.data.biens = [...state.data.biens, payload.data];
                 state.bien = initialState.bien;
                 state.data.count = state.data.count + 1;
             })
@@ -190,6 +210,9 @@ const bienSlice = createSlice({
 
 export const {
     setFilterName,
+    setFilterOrder,
+    setFilterPrice,
+    setFilterStatus,
     clearBienUpdate,
     closeAlert,
     closeAlertUpdate,

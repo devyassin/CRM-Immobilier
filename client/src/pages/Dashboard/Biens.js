@@ -4,9 +4,10 @@ import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import SearchBar from "../../components/utils/searchbar/SearchBar";
 import { TfiExport, TfiPlus, TfiFilter } from "react-icons/tfi";
 import { IconStyleOne, IconStyleTwo } from "../../components/utils/icons";
+import FormBien from "../../components/utils/form/FormBien";
 import TableBien from "../../components/utils/tables/TableBien";
 import { tableBienFields } from "../../constants/tablesConstants";
-
+import FilterBien from "../../components/utils/filters/FilterBien";
 import IconBienStyle from "../../components/utils/icons/IconBienStyle";
 
 import { CSVLink } from "react-csv";
@@ -17,13 +18,14 @@ const Biens = () => {
     const biens = useSelector((state) => state.biens.data);
     const status = useSelector((state) => state.biens.status);
     const error = useSelector((state) => state.biens.error);
-    const bien = useSelector((state) => state.biens.client);
+    const bien = useSelector((state) => state.biens.bien);
     const filterName = useSelector((state) => state.biens.filterName);
     const filterStatus = useSelector((state) => state.biens.filterStatus);
     const filterPrice = useSelector((state) => state.biens.filterPrice);
     const filterOrder = useSelector((state) => state.biens.filterOrder);
     const title = useSelector((state) => state.selectedPage.selectedPage);
     const visibility = useSelector((state) => state.overlay.show);
+    const visibilityFilter = useSelector((state) => state.overlay.showFilter);
 
     useEffect(() => {
         dispatch(
@@ -63,6 +65,7 @@ const Biens = () => {
                 <div className="flex items-center justify-center mt-40">
                     <div class="loading-spinner"></div>
                 </div>
+                {visibility && <FormBien bien={bien} />}
             </div>
         );
     }
@@ -81,7 +84,7 @@ const Biens = () => {
                         searchValue={filterName}
                         placeHolder="Chercher un client ..."
                     />
-                    <IconStyleOne>
+                    <IconStyleOne type="filter">
                         <TfiFilter size={25} />
                     </IconStyleOne>
                     <CSVLink data={biens.biens} filename="biens.csv">
@@ -94,6 +97,8 @@ const Biens = () => {
                     </IconStyleTwo>
                 </div>
                 <TableBien fields={tableBienFields} />
+                {visibility && <FormBien bien={bien} />}
+                {visibilityFilter && <FilterBien />}
             </div>
         );
     }

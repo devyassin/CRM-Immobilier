@@ -17,7 +17,7 @@ class BienFactory extends Factory
     {
         return [
             'address' => $this->faker->address,
-            'type' => $this->faker->randomElement(['Appartement', 'Maison individuelle', 'Maison mitoyenne', 'Maison de ville', 'Maison de campagne', 'Ferme', 'Studio', 'Duplex', 'Triplex', 'Loft', 'Penthouse', 'Château', 'Manoir', 'Villa', 'Bungalow', 'Terrain', 'Garage', 'Parking']),
+            'type' => $this->faker->randomElement(['Appartement', 'Maison individuelle', 'Maison mitoyenne', 'Maison de ville', 'Maison de campagne', 'Ferme', 'Studio', 'Duplex', 'Triplex', 'Loft', 'Penthouse', 'Château', 'Manoir', 'Villa', 'Bungalow', 'Terrain', 'Garage', 'Parking','Autres']),
             'description' => $this->faker->paragraphs(1, true),
             'location' => $this->faker->city,
             'price' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 10000, $max = 1000000),

@@ -73,7 +73,7 @@ const TableBien = ({ fields }) => {
                                 <td class="px-6 py-4">{bien.price + "DH"}</td>
                                 <td class="px-6 py-4">{bien.location}</td>
                                 <td class="px-6 py-4">{bien.comission}</td>
-                                <td class="px-6 py-4">{bien.created_at}</td>
+                                <td class="px-6 py-4">{bien.created_at.substring(0,10)}</td>
                                 <td class="px-6 py-4 flex space-x-2 mt-4">
                                     <MdDelete
                                         className="duration-150 cursor-pointer hover:opacity-60"

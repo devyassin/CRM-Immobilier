@@ -16,7 +16,7 @@ class CreateBiensTable extends Migration
         Schema::create('biens', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->enum('type', ['Appartement', 'Maison individuelle', 'Maison mitoyenne', 'Maison de ville', 'Maison de campagne', 'Ferme', 'Studio', 'Duplex', 'Triplex', 'Loft', 'Penthouse', 'Château', 'Manoir', 'Villa', 'Bungalow', 'Terrain', 'Garage', 'Parking']);
+            $table->enum('type', ['Appartement', 'Maison individuelle', 'Maison mitoyenne', 'Maison de ville', 'Maison de campagne', 'Ferme', 'Studio', 'Duplex', 'Triplex', 'Loft', 'Penthouse', 'Château', 'Manoir', 'Villa', 'Bungalow', 'Terrain', 'Garage', 'Parking','Autres']);
             $table->text('description');
             $table->string('location');
             $table->string('price');

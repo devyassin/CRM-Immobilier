@@ -82,7 +82,7 @@ class BienController extends Controller
 
             // If the client is not found, return an error response
             if (!$client) {
-                return response()->json(['error' => 'Client not found'], 404);
+                return response()->json(['errors' => "Email n'appartient a aucune client"], 404);
             }
 
             // Create the bien and associate it with the client
@@ -91,7 +91,7 @@ class BienController extends Controller
             $bien->save();
 
             return response()->json([
-                'data' => $bien,
+                'data' => $bien->load('client'),
             ], 201);
     }
 
