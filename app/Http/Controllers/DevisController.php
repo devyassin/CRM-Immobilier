@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Validation\ValidationException;
+
         namespace App\Http\Controllers;
         
         use App\Models\Devis;
@@ -17,18 +19,17 @@
              */
             public function index(Request $request)
             {
-
-                $client = $request->input('nom');
-
-                $devis = DB::table('devis')
-                ->join('clients', 'devis.client_id', '=', 'clients.id')
-                ->select('devis.*', 'clients.*')
-                ->where('nom', 'like', "%$client%")
-                ->get();
-                $count = $devis->count();
+                $userId = $request->user()->id;
+    
+                $devis = Devis::with('client', 'biens')
+                            ->where('user_id', $userId)
+                            ->whereHas('client', function ($query) use ($request) {
+                                $query->where('nom', 'LIKE', '%'.$request->input('nom').'%');
+                            })
+                            ->get();
                 
-                
-                return response()->json(['count' => $count,'Devis' => $devis], Response::HTTP_OK);
+                return response()->json(['data' => $devis], 200);
+               
             }
         
             /**
@@ -38,58 +39,70 @@
              */
             public function store(Request $request)
             {
-                try{
-        
-                    $validatedData = $request->validate([
-                    'estimation' => 'required|string|max:255',
-                    'description' => 'required|string|max:255',
-                    'reference' => 'required|string|max:255',
-                    'client_id' => 'required',
-                    'user_id' => 'required',
-                    ]);    
-                    
-                }catch (ValidationException $exception) {
-                    $errors = $exception->validator->errors()->getMessages();
-                    $errorMessages = [];
-                    foreach ($errors as $field => $messages) {
-                        foreach ($messages as $message) {
-                            $errorMessages[] = "{$message}";
-                        }
-                    }
-                    return response()->json(['errors' => $errorMessages],400);
-                }
-                
-        
-                    $Devis = Devis::create($validatedData);
-                  
-            
-                return response()->json([
-                    'data' => $Devis,
-                ], 201);
+                            // Validate the request data
+                $validatedData = $request->validate([
+                    'estimation' => 'required|string',
+                    'description' => 'required|string',
+                    'reference' => 'required|string',
+                    'client_id' => 'required|integer|exists:clients,id',
+                    'user_id' => 'required|integer|exists:users,id',
+                    'biens' => 'required|array',
+                    'biens.*' => 'integer|exists:biens,id'
+                ]);
+
+                // Create a new devis instance
+                $devis = new Devis();
+                $devis->estimation = $validatedData['estimation'];
+                $devis->description = $validatedData['description'];
+                $devis->reference = $validatedData['reference'];
+                $devis->client_id = $validatedData['client_id'];
+                $devis->user_id = $validatedData['user_id'];
+                $devis->save();
+
+                // Attach the biens to the devis
+                $devis->biens()->attach($validatedData['biens']);
+
+                // Return a response indicating success
+                return response()->json(['message' => 'Devis created successfully'], 201);
             }
         
             
             public function show(Devis $Devis)
             {      
-                return response()->json($Devis);
+                $devis = Devis::with('client', 'biens')->find($Devis);
+    
+                if (!$devis) {
+                    return response()->json(['message' => 'Devis not found'], 404);
+                }
+                
+                return response()->json(['data' => $devis], 200);
             }
         
            
             public function update(Request $request, Devis $Devis)
             {
+
                 try {
                     $validatedData = $request->validate([
-                        'estimation' => 'required|string|max:255',
-                        'description' => 'required|string|max:255',
-                        'reference' => 'required|string|max:255',
-                        'client_id' => 'required',
-                        'user_id' => 'required',
-                        ]); 
+                        'estimation' => 'string',
+                        'description' => 'string',
+                        'reference' => 'string',
+                        'client_id' => 'integer|exists:clients,id',
+                        'user_id' => 'integer|exists:users,id',
+                        'biens' => 'array',
+                        'biens.*' => 'integer|exists:biens,id'
+                    ]);
             
                     $Devis->update($validatedData);
-            
+                   // Update the biens of the Devis
+                        if (isset($validatedData['biens'])) {
+                            $Devis->biens()->sync($validatedData['biens']);
+                                }
+                 // Return the updated Devis with its Client and biens data
+                    $updatedDevis = Devis::with('client', 'biens')->find($Devis->id);
+                    
                     return response()->json([
-                        'data' => $Devis,
+                        'data' => $updatedDevis,
                     ], 200);
             
                 } catch (ValidationException $exception) {
@@ -102,10 +115,15 @@
                     }
                     return response()->json(['errors' => $errorMessages], 400);
                 }
+
+
             }
         
             public function destroy(Devis $Devis)
             {
+            
+
+                $Devis->devis_biens()->delete();
                 $Devis->delete();
         
                 return response()->json(['Devis' => $Devis,'message' => 'Devis  deleted successfully']);

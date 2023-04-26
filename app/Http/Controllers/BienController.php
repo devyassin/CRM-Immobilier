@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bien;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -18,8 +19,24 @@ class BienController extends Controller
     {
         $user = auth()->user();
         $address = $request->input('address');
+        $clientName = $request->input('client_name');
+        $status = $request->input('status');
+        $sort = $request->input('sort');
+        $order = $request->input('order');
         
-        $biens = $user->biens()->where('address', 'like', "%$address%")->get();
+        $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
+            $query->where('nom', 'like', "%$clientName%");
+        })->with('client')->where('address', 'like', "%$address%");
+        
+        if ($status) {
+            $biens = $biens->where('status', $status);
+        }
+        
+        if ($sort && $order) {
+            $biens = $biens->orderBy($sort, $order);
+        }
+        
+        $biens = $user->biens->where('address', 'like', "%$address%");
         $count = $biens->count();
         
         return response()->json(['count' => $count,'biens' => $biens], Response::HTTP_OK);
@@ -37,8 +54,7 @@ class BienController extends Controller
 
     public function store(Request $request)
     {
-        try{
-
+        try {
             $validatedData = $request->validate([
             'address' => 'required|string|max:255',
             'type' => 'required|string|max:255',
@@ -50,10 +66,11 @@ class BienController extends Controller
             'status' => 'required|string|max:255',
             'comission' => 'required|string|max:255',
             'client_id' => 'required',
+            'devis_id' => 'required',
+            'facture_id' => 'required',
             'user_id'=>'required'
             ]);    
-            
-        }catch (ValidationException $exception) {
+        } catch (ValidationException $exception) {
             $errors = $exception->validator->errors()->getMessages();
             $errorMessages = [];
             foreach ($errors as $field => $messages) {
@@ -61,26 +78,38 @@ class BienController extends Controller
                     $errorMessages[] = "{$message}";
                 }
             }
-            return response()->json(['errors' => $errorMessages],400);
+            return response()->json(['errors' => $errorMessages], 400);
         }
-        
-
-            $bien = Bien::create($validatedData);
-          
     
-        return response()->json([
-            'data' => $bien,
-        ], 201);
+            // Find the client based on the provided client email
+            $client = Client::where('email', $validatedData['client_email'])->first();
+
+            // If the client is not found, return an error response
+            if (!$client) {
+                return response()->json(['errors' => "Email n'appartient a aucune client"], 404);
+            }
+
+            // Create the bien and associate it with the client
+            $bien = new Bien($validatedData);
+            $bien->client()->associate($client);
+            $bien->save();
+
+            return response()->json([
+                'data' => $bien->load('client'),
+            ], 201);
     }
 
     
     public function show(Bien $bien)
     {
+    
         if (auth()->user()->id !== $bien->user_id) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     
-        return response()->json($bien);
+        $bienWithClient = $bien->load('client');
+
+        return response()->json($bienWithClient);
     }
 
     
@@ -93,14 +122,14 @@ class BienController extends Controller
             $validatedData = $request->validate([
                 'address' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
-                'espace' => 'required|string|max:255',
                 'description' => 'required|string|max:255',
-                'image' => 'required|string|max:255',
                 'location' => 'required|string|max:255',
                 'price' => 'required|string|max:255',
                 'status' => 'required|string|max:255',
                 'comission' => 'required|string|max:255',
                 'client_id' => 'required',
+                'devis_id' => 'required',
+                'facture_id' => 'required',
                 'user_id'=>'required'
                 ]);
     

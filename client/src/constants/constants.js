@@ -20,7 +20,7 @@ export const categories = [
         icon: <FaUsers size={25} />,
     },
     { name: "Prospect", path: "/leads", icon: <FaUserPlus size={25} /> },
-    { name: "Properties", path: "/file", icon: <FaBuilding size={22} /> },
+    { name: "Biens", path: "/biens", icon: <FaBuilding size={22} /> },
     {
         name: "Taches",
         path: "/taches",

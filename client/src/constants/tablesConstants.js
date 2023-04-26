@@ -19,3 +19,17 @@ export const tableLeadFields = [
     "Source",
     "Action",
 ];
+
+export const tableBienFields = [
+    "Nom Client",
+    "Email",
+    "Address",
+    "Status",
+    "Description",
+    "type",
+    "Prix",
+    "Location",
+    "Comission",
+    "Date d'ajout",
+    "Action",
+];

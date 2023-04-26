@@ -4,7 +4,7 @@ import Feed from "./Dashboard/Feed";
 import Calander from "./Dashboard/Calander";
 import Chat from "./Dashboard/Chat";
 import Dashborad from "./Dashboard/Dashborad";
-import FileManager from "./Dashboard/FileManager";
+import Biens from "./Dashboard/Biens";
 import Leads from "./Dashboard/Leads";
 import Taches from "./Dashboard/Taches";
 import Clients from "./Dashboard/Clients";
@@ -18,7 +18,7 @@ export {
     Calander,
     Chat,
     Dashborad,
-    FileManager,
+    Biens,
     Leads,
     Taches,
     Clients,

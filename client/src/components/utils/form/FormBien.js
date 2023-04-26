@@ -1,46 +1,43 @@
 import React from "react";
 
 import { AiFillCloseCircle } from "react-icons/ai";
-import SelectMultipleChoices from "./SelectMultipleChoices";
+
 import AlertForm from "../alerts/AlertForm";
 import { motion } from "framer-motion";
-
+import SelectOneChoiceBien from "./SelectOneChoiceBien";
+import SelectOneChoiceBienStatus from "./SelectOneChoiceBienStatus";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
 import {
-    clearClientUpdate,
-    addClient,
-    handleClientForm,
-    UpdateOneClient,
+    clearBienUpdate,
+    addBien,
+    handleBienForm,
+    UpdateOneBien,
     showAlert,
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
-} from "../../../store/clientSlice";
-
-const FormClient = ({ client }) => {
+} from "../../../store/bienSlice";
+const FormBien = ({ bien }) => {
     const dispatch = useDispatch();
-
-    const statusAddClient = useSelector(
-        (state) => state.clients.statusAddClient
+    const statusAddBien = useSelector((state) => state.biens.statusAddBien);
+    const statusUpdateBien = useSelector(
+        (state) => state.biens.statusUpdateBien
     );
-    const statusUpdateClient = useSelector(
-        (state) => state.clients.statusUpdateClient
-    );
-    const alertVisibility = useSelector((state) => state.clients.showAlert);
+    const alertVisibility = useSelector((state) => state.biens.showAlert);
     const alertUpdateVisibility = useSelector(
-        (state) => state.clients.showAlertUpdate
+        (state) => state.biens.showAlertUpdate
     );
-    const errorMessage = useSelector((state) => state.clients.error);
+    const errorMessage = useSelector((state) => state.biens.error);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        dispatch(handleClientForm({ name, value }));
+        dispatch(handleBienForm({ name, value }));
     };
     return (
         <motion.div
             animate={{
-                y: "-70%",
+                y: "-60%",
                 scale: 1,
             }}
             initial={{
@@ -56,13 +53,13 @@ const FormClient = ({ client }) => {
         >
             <div className="flex items-center justify-between mb-10">
                 <h1 className="text-2xl text-blue-500">
-                    {client.id ? "Modifier Client" : "Ajouter un client"}
+                    {bien?.id ? "Modifier Bien" : "Ajouter un bien"}
                 </h1>
                 <AiFillCloseCircle
                     onClick={() => {
                         dispatch(hide());
-                        if (client.id) {
-                            dispatch(clearClientUpdate());
+                        if (bien?.id) {
+                            dispatch(clearBienUpdate());
                         }
                     }}
                     className="text-red-500 duration-150 cursor-pointer hover:opacity-75"
@@ -70,43 +67,42 @@ const FormClient = ({ client }) => {
                 />
             </div>
 
-            {statusAddClient === "loading" && alertVisibility && (
+            {statusAddBien === "loading" && alertVisibility && (
                 <AlertForm
-                    message="Client en cours d'ajout ....."
+                    message="Bien en cours d'ajout ....."
                     type="success"
                 />
             )}
 
-            {statusAddClient === "succeeded" && alertVisibility && (
-                <AlertForm message="Client Ajouter !" type="success" />
+            {statusAddBien === "succeeded" && alertVisibility && (
+                <AlertForm message="Bien Ajouter !" type="success" />
             )}
-            {statusAddClient === "failed" && alertVisibility && (
+            {statusAddBien === "failed" && alertVisibility && (
                 <AlertForm message={errorMessage} type="failed" />
             )}
 
-            {statusUpdateClient === "loading" && alertUpdateVisibility && (
+            {statusUpdateBien === "loading" && alertUpdateVisibility && (
                 <AlertForm
-                    message="Client en cours de modification ....."
+                    message="Bien en cours de modification ....."
                     type="success"
                 />
             )}
 
-            {statusUpdateClient === "succeeded" && alertUpdateVisibility && (
-                <AlertForm message="Client Modifier !" type="success" />
+            {statusUpdateBien === "succeeded" && alertUpdateVisibility && (
+                <AlertForm message="Bien Modifier !" type="success" />
             )}
 
-            {statusUpdateClient === "failed" && alertUpdateVisibility && (
+            {statusUpdateBien === "failed" && alertUpdateVisibility && (
                 <AlertForm message={errorMessage} type="failed" />
             )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    if (!client.id) {
-                        dispatch(addClient(client));
+                    if (!bien?.id) {
+                        dispatch(addBien(bien));
                         dispatch(showAlert());
                     } else {
-                        console.log(client);
-                        dispatch(UpdateOneClient([client.id, client]));
+                        dispatch(UpdateOneBien([bien.id, bien]));
                         dispatch(showAlertUpdate());
                     }
 
@@ -120,59 +116,68 @@ const FormClient = ({ client }) => {
                 <input
                     required
                     onChange={handleChange}
-                    name="nom"
-                    value={client.nom}
-                    type="text"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="First Name"
-                />
-                <input
-                    required
-                    onChange={handleChange}
-                    name="prenom"
-                    value={client.prenom}
-                    type="text"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="Last Name"
-                />
-
-                <SelectMultipleChoices client={client} />
-                <input
-                    required
-                    onChange={handleChange}
-                    name="tel"
-                    value={client.tel}
-                    type="tel"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="Phone"
-                />
-                <input
-                    required
-                    onChange={handleChange}
                     name="address"
-                    value={client.address}
+                    value={bien.address}
                     type="text"
                     class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
                     placeholder="Address"
                 />
-
                 <input
                     required
                     onChange={handleChange}
-                    name="email"
-                    value={client.email}
-                    type="email"
-                    class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="Email"
+                    name="price"
+                    value={bien.price}
+                    type="number"
+                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    placeholder="Prix en Dirham"
                 />
 
+                <SelectOneChoiceBien bien={bien} />
+
+                <textarea
+                    onChange={handleChange}
+                    rows="4"
+                    maxlength="1000"
+                    className="col-span-3 "
+                    name="description"
+                    value={bien.description}
+                    placeholder="Description"
+                    required
+                ></textarea>
                 <input
                     required
                     onChange={handleChange}
-                    type="date"
-                    value={client.last_contacted.substring(0, 10)}
-                    name="last_contacted"
+                    name="location"
+                    value={bien.location}
+                    type="text"
+                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    placeholder="Location"
                 />
+                <SelectOneChoiceBienStatus bien={bien} />
+                <input
+                    required
+                    onChange={handleChange}
+                    max="0.4"
+                    min="0"
+                    step="0.01"
+                    name="comission"
+                    value={bien.comission}
+                    type="number"
+                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    placeholder="Comission"
+                />
+                {!bien?.id && (
+                    <input
+                        required
+                        onChange={handleChange}
+                        name="client_email"
+                        value={bien.client_email}
+                        type="email"
+                        class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                        placeholder="Client email"
+                    />
+                )}
+
                 <div></div>
                 <div></div>
 
@@ -180,11 +185,11 @@ const FormClient = ({ client }) => {
                     type="submit"
                     class="btn btn-primary mt-8 py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"
                 >
-                    {client.id ? "Modifier" : "Ajouter"}
+                    {bien?.id ? "Modifier" : "Ajouter"}
                 </button>
             </form>
         </motion.div>
     );
 };
 
-export default FormClient;
+export default FormBien;

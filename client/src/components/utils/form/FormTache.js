@@ -4,6 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 
 import AlertForm from "../alerts/AlertForm";
 import SelectOneChoiceTache from "./SelectOneChoiceTache";
+import { motion } from "framer-motion";
 
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
@@ -35,7 +36,22 @@ const FormTache = ({ tache }) => {
         dispatch(handleTacheForm({ name, value }));
     };
     return (
-        <div className="absolute z-40 w-full p-6 -translate-x-1/2 bg-white rounded-lg shadow-lg md:max-w-3xl top-1/2 left-1/2 -translate-y-2/3">
+        <motion.div
+            animate={{
+                y: "-70%",
+                scale: 1,
+            }}
+            initial={{
+                y: 0,
+                x: "-50%",
+                scale: 0.8,
+            }}
+            transition={{
+                type: "spring",
+                stiffness: 120,
+            }}
+            className="absolute z-40 w-full p-6 -translate-x-1/2 bg-white rounded-lg shadow-lg md:max-w-3xl top-1/2 left-1/2 -translate-y-2/3"
+        >
             <div className="flex items-center justify-between mb-10">
                 <h1 className="text-2xl text-blue-500">
                     {tache.id ? "Modifier Tache" : "Ajouter une Tache"}
@@ -137,7 +153,7 @@ const FormTache = ({ tache }) => {
                     {tache.id ? "Modifier" : "Ajouter"}
                 </button>
             </form>
-        </div>
+        </motion.div>
     );
 };
 
