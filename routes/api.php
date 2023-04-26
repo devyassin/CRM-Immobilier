@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BonDeVisiteController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\RDVController;
@@ -124,6 +125,14 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('rdvs', [RDVController::class, 'store']);
     Route::put('rdvs/{rdv}', [RDVController::class, 'update']);
     Route::delete('rdvs/{rdv}', [RDVController::class, 'destroy']);
+
+    //Bo de visite Route 
+
+    Route::get('bondevisites', [BonDeVisiteController::class, 'index']);
+    Route::get('bondevisites/{bondevisite}', [BonDeVisiteController::class, 'show']);
+    Route::post('bondevisites', [BonDeVisiteController::class, 'store']);
+    Route::put('bondevisites/{bondevisite}', [BonDeVisiteController::class, 'update']);
+    Route::delete('bondevisites/{bondevisite}', [BonDeVisiteController::class, 'destroy']);
 
 });
 

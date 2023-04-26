@@ -66,8 +66,6 @@ class BienController extends Controller
             'status' => 'required|string|max:255',
             'comission' => 'required|string|max:255',
             'client_id' => 'required',
-            'devis_id' => 'required',
-            'facture_id' => 'required',
             'user_id'=>'required'
             ]);    
         } catch (ValidationException $exception) {
@@ -128,8 +126,6 @@ class BienController extends Controller
                 'status' => 'required|string|max:255',
                 'comission' => 'required|string|max:255',
                 'client_id' => 'required',
-                'devis_id' => 'required',
-                'facture_id' => 'required',
                 'user_id'=>'required'
                 ]);
     
