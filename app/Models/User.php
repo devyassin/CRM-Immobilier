@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
+/**
+ * Summary of User
+ */
 class User extends Authenticatable 
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -51,6 +54,16 @@ class User extends Authenticatable
 
     public function taches(){
         return $this->hasMany(Tache::class);
+    }
+    public function agendas(){
+        return $this->hasMany(Agenda::class);
+    }
+    /**
+     * Summary of rdvs
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rdvs(){
+        return $this->hasMany(Rdv::class);
     }
     // public function bonDeVisits(){
     //     return $this->hasMany(BonDeVisite::class);

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\RDVController;
 use App\Http\Controllers\TacheController;
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\FactureController;
@@ -106,6 +108,22 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('devis_biens', [DevisBiensController::class, 'store']);
     Route::put('devis_biens/{devis_bien}', [DevisBiensController::class, 'update']);
     Route::delete('devis_biens/{devis_bien}', [DevisBiensController::class, 'destroy']);
+
+    //Agenda Route 
+
+    Route::get('agendas', [AgendaController::class, 'index']);
+    Route::get('agendas/{agenda}', [AgendaController::class, 'show']);
+    Route::post('agendas', [AgendaController::class, 'store']);
+    Route::put('agendas/{agenda}', [AgendaController::class, 'update']);
+    Route::delete('agendas/{agenda}', [AgendaController::class, 'destroy']);
+
+    //Rdv Route 
+
+    Route::get('rdvs', [RDVController::class, 'index']);
+    Route::get('rdvs/{rdv}', [RDVController::class, 'show']);
+    Route::post('rdvs', [RDVController::class, 'store']);
+    Route::put('rdvs/{rdv}', [RDVController::class, 'update']);
+    Route::delete('rdvs/{rdv}', [RDVController::class, 'destroy']);
 
 });
 
