@@ -37,7 +37,7 @@
                 $validatedData = $request->validate([
                     'nom' => 'required|string',
                     'tel' => 'required|string',
-                    'status' => 'required|string',
+                    'status' => 'required|in:confirmed,canceled',
                     'description' => 'required|string',
                     'lieu' => 'required|string',
                     'date' => 'required|date_format:Y-m-d',
@@ -77,7 +77,7 @@
                     $validatedData = $request->validate([
                         'nom' => 'string',
                         'tel' => 'string',
-                        'status' => 'string',
+                        'status' => 'in:confirmed,canceled',
                         'description' => 'string',
                         'lieu' => 'string',
                         'date' => 'date_format:Y-m-d',

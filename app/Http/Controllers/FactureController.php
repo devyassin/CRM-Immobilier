@@ -18,16 +18,16 @@
              */
             public function index(Request $request)
             {
-                $client = $request->input('nom');
-
-                $Facture = DB::table('factures')
-                ->join('clients', 'factures.client_id', '=', 'clients.id')
-                ->select('factures.*', 'clients.*')
-                ->where('nom', 'like', "%$client%")
-                ->get();
-                $count = $Facture->count();
+                $userId = $request->user()->id;
+    
+                $facture = Facture::with('client', 'biens')
+                            ->where('user_id', $userId)
+                            ->whereHas('client', function ($query) use ($request) {
+                                $query->where('nom', 'LIKE', '%'.$request->input('nom').'%');
+                            })
+                            ->get();
                 
-                return response()->json(['count' => $count,'Facture' => $Facture], Response::HTTP_OK);
+                return response()->json(['data' => $facture], 200);
             }
         
             /**
@@ -37,17 +37,39 @@
              */
             public function store(Request $request)
             {
-                try{
+                     try{       // Validate the request data
+                            $validatedData = $request->validate([
+                                'prix_total' => 'required|string|max:255',
+                                'date' => 'required|date_format:Y-m-d',
+                                'mode_payment' => 'required|in:cash,credit card,bank transfer,other',
+                                'status' => 'required|in:paid,unpaid',
+                                'description' => 'required|string|max:255',
+                                'client_id' => 'required|exists:clients,id',
+                                'user_id' => 'required|exists:users,id',
+                                'biens' => 'required|array',
+                                'biens.*' => 'integer|exists:biens,id'
+                                ]);    
+            
+                            // Create a new devis instance
+                            $facture = new Facture();
+                            $facture->prix_total = $validatedData['prix_total'];
+                            $facture->date = $validatedData['date'];
+                            $facture->mode_payment = $validatedData['mode_payment'];
+                            $facture->status = $validatedData['status'];
+                            $facture->description = $validatedData['description'];
+                            $facture->client_id = $validatedData['client_id'];
+                            $facture->user_id = $validatedData['user_id'];
+                            $facture->save();
+            
+                            // Attach the biens to the devis
+                            $facture->biens()->attach($validatedData['biens']);
+            
+                            // Return a response indicating success
+                            return response()->json(['message' => 'Fature created successfully'], 201);
+
+                
         
-                    $validatedData = $request->validate([
-                    'prix_total' => 'required|string|max:255',
-                    'date' => 'required|date_format:Y-m-d',
-                    'mode_payment' => 'required|string|max:255',
-                    'status' => 'required|string|max:255',
-                    'description' => 'required|string|max:255',
-                    'client_id' => 'required',
-                    'user_id' => 'required',
-                    ]);    
+
                     
                 }catch (ValidationException $exception) {
                     $errors = $exception->validator->errors()->getMessages();
@@ -82,21 +104,28 @@
             {
                 try {
                     $validatedData = $request->validate([
-                        'prix_total' => 'required|string|max:255',
-                        'date' => 'required|date_format:Y-m-d',
-                        'mode_payment' => 'required|string|max:255',
-                        'status' => 'required|string|max:255',
-                        'description' => 'required|string|max:255',
-                        'client_id' => 'required',
-                        'user_id' => 'required',
+                        'prix_total' => 'string|max:255',
+                        'date' => 'date_format:Y-m-d',
+                        'mode_payment' => 'in:cash,credit card,bank transfer,other',
+                        'status' => 'in:paid,unpaid',
+                        'description' => 'string|max:255',
+                        'client_id' => 'exists:clients,id',
+                        'user_id' => 'exists:users,id',
+                        'biens' => 'array',
+                        'biens.*' => 'integer|exists:biens,id'
                         ]);  
             
                     $Facture->update($validatedData);
-            
-                    return response()->json([
-                        'data' => $Facture,
-                    ], 200);
-            
+                            // Update the biens of the Devis
+                            if (isset($validatedData['biens'])) {
+                                $Facture->biens()->sync($validatedData['biens']);
+                                    }
+                    // Return the updated Devis with its Client and biens data
+                        $updatedFacture = Facture::with('client', 'biens')->find($Facture->id);
+                        
+                        return response()->json([
+                            'data' => $updatedFacture,
+                        ], 200);
                 } catch (ValidationException $exception) {
                     $errors = $exception->validator->errors()->getMessages();
                     $errorMessages = [];
@@ -110,7 +139,8 @@
             }
         
             public function destroy(Facture $Facture)
-            {
+            {   
+                $Facture->facture_biens()->delete();
                 $Facture->delete();
         
                 return response()->json(['Facture' => $Facture,'message' => 'Facture  deleted successfully']);

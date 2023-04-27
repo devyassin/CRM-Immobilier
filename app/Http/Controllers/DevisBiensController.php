@@ -41,8 +41,8 @@
                 try{
         
                     $validatedData = $request->validate([
-                    'devis_id' => 'required',
-                    'bien_id' => 'required',
+                    'devis_id' => 'required|exists:devis,id',
+                    'bien_id' => 'required|exists:biens,id',
                     ]);    
                     
                 }catch (ValidationException $exception) {
@@ -76,8 +76,8 @@
             {
                 try {
                     $validatedData = $request->validate([
-                        'facture_id' => 'required',
-                        'bien_id' => 'required',
+                        'devis_id' => 'exists:devis,id',
+                        'bien_id' => 'exists:biens,id',
                         ]);   
             
                     $devis_biens->update($validatedData);

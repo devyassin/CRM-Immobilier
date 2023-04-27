@@ -46,14 +46,14 @@ class ClientController extends Controller
         try{
 
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            'type' => 'required|in:buyer,seller,renter,big company,personel business',
             'tel' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email|max:255',
             'last_contacted' => 'required|date_format:Y-m-d',
-            'user_id'=>'required'
+            'user_id'=>'required|exists:users,id'
             ]);    
             
         }catch (ValidationException $exception) {
@@ -114,13 +114,13 @@ class ClientController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
-                'prenom' => 'required|string|max:255',
-                'type' => 'required|string|max:255',
-                'tel' => 'required|string|max:255',
-                'address' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:clients,email,'.$client->id,
-                'user_id'=>'required'
+                'nom' => 'string|max:255',
+                'prenom' => 'string|max:255',
+                'type' => 'string|max:255',
+                'tel' => 'string|max:255',
+                'address' => 'string|max:255',
+                'email' => 'email|max:255|unique:clients,email,'.$client->id,
+                'user_id'=>'exists:users,id'
             ]);
     
             $client->update($validatedData);

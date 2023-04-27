@@ -42,12 +42,12 @@
         
                     $validatedData = $request->validate([
                     'prix' => 'required|string|max:255',
-                    'mode_payment' => 'required|string|max:255',
+                    'mode_payment' => 'required|in:cache,en ligne',
                     'comition' => 'required|string|max:255',
                     'date_transaction' => 'required|date_format:Y-m-d',
-                    'bien_id' => 'required',
-                    'client_id' => 'required',
-                    'user_id' => 'required',
+                    'bien_id' => 'required|exists:biens,id',
+                    'client_id' => 'required|exists:clients,id',
+                    'user_id' => 'required|exists:users,id',
                     ]);    
                     
                 }catch (ValidationException $exception) {
@@ -81,13 +81,13 @@
             {
                 try {
                     $validatedData = $request->validate([
-                        'prix' => 'required|string|max:255',
-                        'mode_payment' => 'required|string|max:255',
-                        'comition' => 'required|string|max:255',
-                        'date_transaction' => 'required|date_format:Y-m-d',
-                        'bien_id' => 'required',
-                        'client_id' => 'required',
-                        'user_id' => 'required',
+                        'prix' => 'string|max:255',
+                        'mode_payment' => 'in:cache,en ligne',
+                        'comition' => 'string|max:255',
+                        'date_transaction' => 'date_format:Y-m-d',
+                        'bien_id' => 'exists:biens,id',
+                        'client_id' => 'exists:clients,id',
+                        'user_id' => 'exists:users,id',
                         ]);  
             
                     $Transaction->update($validatedData);

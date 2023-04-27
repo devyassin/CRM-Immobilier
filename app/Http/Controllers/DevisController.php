@@ -62,7 +62,7 @@
                 $devis->biens()->attach($validatedData['biens']);
 
                 // Return a response indicating success
-                return response()->json(['message' => 'Devis created successfully'], 201);
+                return response()->json(['message' => 'Devis created successfully','data'=>$devis], 201);
             }
         
             

@@ -23,16 +23,6 @@ class TacheController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreClientRequest  $request
@@ -47,7 +37,7 @@ class TacheController extends Controller
             'status' => 'required|string|in:À faire,En cours,Terminé',
             'description' => 'required|string|max:255',
             'deadline' => 'required|date|max:255',
-            'user_id'=>'required'
+            'user_id'=>'required|exists:users,id'
             ]);    
             
         }catch (ValidationException $exception) {
@@ -108,11 +98,11 @@ class TacheController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'status' => 'required|string|in:À faire,En cours,Terminé',
-                'description' => 'required|string|max:255',
-                'deadline' => 'required|string|max:255',
-                'user_id'=>'required'
+                'title' => 'string|max:255',
+                'status' => 'string|in:À faire,En cours,Terminé',
+                'description' => 'string|max:255',
+                'deadline' => 'string|max:255',
+                'user_id'=>'exists:users,id'
                 ]);
     
             $tache->update($validatedData);

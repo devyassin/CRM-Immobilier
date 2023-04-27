@@ -126,7 +126,7 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::put('rdvs/{rdv}', [RDVController::class, 'update']);
     Route::delete('rdvs/{rdv}', [RDVController::class, 'destroy']);
 
-    //Bo de visite Route 
+    //Bon de visite Route 
 
     Route::get('bondevisites', [BonDeVisiteController::class, 'index']);
     Route::get('bondevisites/{bondevisite}', [BonDeVisiteController::class, 'show']);

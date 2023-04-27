@@ -27,15 +27,6 @@ class LeadController extends Controller
         return response()->json(['count' => $count,'leads' => $leads], Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,14 +39,14 @@ class LeadController extends Controller
         try{
 
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'tel' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'email' => 'required|email|unique:leads,email|max:255',
             'status' => 'required|string|max:255',
             'lead_source' => 'required|in:référence,en ligne,médias sociaux,portes ouvertes',
-            'user_id'=>'required'
+            'user_id'=>'required|exists:users,id'
             ]);    
             
         }catch (ValidationException $exception) {
@@ -117,14 +108,14 @@ class LeadController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
-                'prenom' => 'required|string|max:255',
-                'tel' => 'required|string|max:255',
-                'address' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:leads,email,'.$lead->id,
-                'status' => 'required|string|max:255',
-                'lead_source' => 'required|in:référence,en ligne,médias sociaux,portes ouvertes',
-                'user_id'=>'required'
+                'nom' => 'string|max:255',
+                'prenom' => 'string|max:255',
+                'tel' => 'string|max:255',
+                'address' => 'string|max:255',
+                'email' => 'email|max:255|unique:leads,email,'.$lead->id,
+                'status' => 'string|max:255',
+                'lead_source' => 'in:référence,en ligne,médias sociaux,portes ouvertes',
+                'user_id'=>'exists:users,id'
             ]);
     
             $lead->update($validatedData);

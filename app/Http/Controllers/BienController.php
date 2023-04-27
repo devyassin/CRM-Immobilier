@@ -47,27 +47,24 @@ class BienController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     public function store(Request $request)
     {
         try {
             $validatedData = $request->validate([
             'address' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
-            'espace' => 'required|string|max:255',
+            'type' => 'required|string',
             'description' => 'required|string|max:255',
-            'image' => 'required|string|max:255',
+           // 'image' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'price' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'status' => 'required|string',
             'comission' => 'required|string|max:255',
-            'client_id' => 'required',
-            'user_id'=>'required'
+            'client_email' => 'required|string',
+            'user_id'=>'required|exists:users,id'
             ]);    
+ 
+
         } catch (ValidationException $exception) {
             $errors = $exception->validator->errors()->getMessages();
             $errorMessages = [];
@@ -118,15 +115,16 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'address' => 'required|string|max:255',
-                'type' => 'required|string|max:255',
-                'description' => 'required|string|max:255',
-                'location' => 'required|string|max:255',
-                'price' => 'required|string|max:255',
-                'status' => 'required|string|max:255',
-                'comission' => 'required|string|max:255',
-                'client_id' => 'required',
-                'user_id'=>'required'
+                'address' => 'string|max:255',
+                'type' => 'string',
+                'description' => 'string|max:255',
+                'location' => 'string|max:255',
+                'price' => 'string|max:255',
+             //   'image' => 'string|max:255',
+                'status' => 'string',
+                'comission' => 'string|max:255',
+                'client_id' => 'exists:clients,id',
+                'user_id'=>'exists:users,id'
                 ]);
     
             $bien->update($validatedData);

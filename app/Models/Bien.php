@@ -13,6 +13,7 @@ class Bien extends Model
         'type',
         'description',
         'location',
+       // 'image',
         'price',
         'status',
         'comission',
@@ -26,6 +27,8 @@ class Bien extends Model
     }
     public function client(){
         return $this->belongsTo(Client::class);
+    }    public function devis(){
+        return $this->belongsTo(Devis::class);
     }
     public function transaction(){
         return $this->hasMany(Transaction::class);
