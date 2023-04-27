@@ -9,6 +9,7 @@ class Bien extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'NomBien',
         'address',
         'type',
         'description',

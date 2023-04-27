@@ -36,6 +36,11 @@ const userSlice = createSlice({
         closeAlert: (state) => {
             state.showAlertLogin = false;
         },
+        setUserAndToken: (state, { payload }) => {
+            const { user, token } = payload;
+            state.user = user;
+            state.token = token;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -44,10 +49,10 @@ const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, { payload }) => {
                 state.statusLogin = "succeeded";
-                state.user = payload.user;
-                state.token = payload.token;
                 localStorage.setItem("user", JSON.stringify(payload.user));
                 localStorage.setItem("token", payload.token);
+                state.user = payload.user;
+                state.token = payload.token;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.statusLogin = "failed";
@@ -56,5 +61,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { showAlert, closeAlert } = userSlice.actions;
+export const { showAlert, closeAlert, setUserAndToken } = userSlice.actions;
 export default userSlice.reducer;

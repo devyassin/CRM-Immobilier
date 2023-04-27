@@ -23,15 +23,32 @@ const Biens = () => {
     const filterStatus = useSelector((state) => state.biens.filterStatus);
     const filterPrice = useSelector((state) => state.biens.filterPrice);
     const filterOrder = useSelector((state) => state.biens.filterOrder);
+    const filterMinPrice = useSelector((state) => state.biens.filterMinPrice);
+    const filterMaxPrice = useSelector((state) => state.biens.filterMaxPrice);
+
     const title = useSelector((state) => state.selectedPage.selectedPage);
     const visibility = useSelector((state) => state.overlay.show);
     const visibilityFilter = useSelector((state) => state.overlay.showFilter);
 
     useEffect(() => {
         dispatch(
-            fetchAllBiens([filterName, filterStatus, filterPrice, filterOrder])
+            fetchAllBiens([
+                filterName,
+                filterStatus,
+                filterPrice,
+                filterOrder,
+                filterMinPrice,
+                filterMaxPrice,
+            ])
         );
-    }, [filterName, filterStatus, filterPrice, filterOrder]);
+    }, [
+        filterName,
+        filterStatus,
+        filterPrice,
+        filterOrder,
+        filterMinPrice,
+        filterMaxPrice,
+    ]);
 
     const searchClientDispatcher = (e) => {
         let filterName = e.target.value;

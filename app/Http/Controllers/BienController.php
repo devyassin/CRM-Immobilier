@@ -23,22 +23,32 @@ class BienController extends Controller
         $status = $request->input('status');
         $sort = $request->input('sort');
         $order = $request->input('order');
-        
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+    
         $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
             $query->where('nom', 'like', "%$clientName%");
         })->with('client')->where('address', 'like', "%$address%");
-        
+    
         if ($status) {
             $biens = $biens->where('status', $status);
         }
-        
+    
+        if ($minPrice) {
+            $biens = $biens->where('price', '>=', $minPrice);
+        }
+    
+        if ($maxPrice) {
+            $biens = $biens->where('price', '<=', $maxPrice);
+        }
+    
         if ($sort && $order) {
             $biens = $biens->orderBy($sort, $order);
         }
-        
+    
         $biens = $biens->get();
         $count = $biens->count();
-        
+    
         return response()->json(['count' => $count,'biens' => $biens], Response::HTTP_OK);
     }
 
@@ -56,6 +66,7 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
+                'NomBien' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
                 'description' => 'required|string|max:255',
@@ -116,6 +127,7 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
+                'NomBien' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
                 'description' => 'required|string|max:255',

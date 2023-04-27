@@ -26,7 +26,7 @@ export const categories = [
         path: "/taches",
         icon: <FaTasks size={22} />,
     },
-    { name: "Devis", path: "/chat", icon: <FaFileContract size={23} /> },
+    { name: "Devis", path: "/devis", icon: <FaFileContract size={23} /> },
     { name: "Bon de visite", path: "/post", icon: <FaPaste size={23} /> },
     { name: "Facture", path: "/post", icon: <FaFileInvoiceDollar size={23} /> },
     { name: "Transaction", path: "/post", icon: <FaDollarSign size={23} /> },

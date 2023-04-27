@@ -21,6 +21,22 @@ export const tableLeadFields = [
 ];
 
 export const tableBienFields = [
+    "Nom Bien",
+    "Nom Client",
+    "Numero",
+    "Email",
+    "Address",
+    "Status",
+    "Description",
+    "type",
+    "Prix",
+    "Location",
+    "Comission",
+    "Date d'ajout",
+    "Action",
+];
+
+export const tableDevisFields = [
     "Nom Client",
     "Email",
     "Address",

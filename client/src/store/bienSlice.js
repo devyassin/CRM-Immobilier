@@ -16,7 +16,7 @@ const instance = axios.create({
 // Fetch all biens
 export const fetchAllBiens = createAsyncThunk(
     "biens/fetchAll",
-    async ([name, status, price, order]) => {
+    async ([name, status, price, order, min, max]) => {
         console.log();
         let queryString = "/biens?";
         if (name !== "") {
@@ -30,6 +30,12 @@ export const fetchAllBiens = createAsyncThunk(
         }
         if (order) {
             queryString += `order=${order}&`;
+        }
+        if (min !== "") {
+            queryString += `min_price=${min}&`;
+        }
+        if (max !== "") {
+            queryString += `max_price=${max}&`;
         }
         queryString = queryString.slice(0, -1).replaceAll(",", "");
         console.log(queryString);
@@ -83,6 +89,7 @@ const initialState = {
     statusAddBien: "",
     statusUpdateBien: "",
     bien: {
+        NomBien: "",
         address: "",
         type: "",
         description: "",
@@ -97,6 +104,8 @@ const initialState = {
     filterName: "",
     filterStatus: "",
     filterPrice: "",
+    filterMinPrice: "",
+    filterMaxPrice: "",
     filterOrder: "Asc",
 };
 
@@ -108,13 +117,25 @@ const bienSlice = createSlice({
             state.filterName = payload.filterName;
         },
         setFilterStatus: (state, { payload }) => {
-            state.filterStatus = payload.sortStatus;
+            if (payload.sortStatus === "Default") {
+                state.filterStatus = initialState.filterStatus;
+                state.filterOrder = "";
+            } else {
+                state.filterStatus = payload.sortStatus;
+            }
         },
+
         setFilterPrice: (state) => {
             state.filterPrice = "price";
         },
         setFilterOrder: (state, { payload }) => {
             state.filterOrder = payload.sortOrder;
+        },
+        setFilterMinPrice: (state, { payload }) => {
+            state.filterMinPrice = payload.min;
+        },
+        setFilterMaxPrice: (state, { payload }) => {
+            state.filterMaxPrice = payload.max;
         },
         clearBienUpdate: (state) => {
             state.bien = initialState.bien;
@@ -213,6 +234,8 @@ export const {
     setFilterOrder,
     setFilterPrice,
     setFilterStatus,
+    setFilterMinPrice,
+    setFilterMaxPrice,
     clearBienUpdate,
     closeAlert,
     closeAlertUpdate,
