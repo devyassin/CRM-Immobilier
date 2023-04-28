@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const selectedPage = localStorage.getItem("route");
 const initialState = {
-    selectedPage: "Dashboard",
+    selectedPage: selectedPage,
 };
 
 const selectedPageSlice = createSlice({
@@ -9,10 +9,10 @@ const selectedPageSlice = createSlice({
     initialState,
     reducers: {
         setPageName: (state, { payload }) => {
-            state.selectedPage = payload.name;
+            state.selectedPage = localStorage.getItem("route");
         },
     },
 });
 
-export const {setPageName} = selectedPageSlice.actions;
+export const { setPageName } = selectedPageSlice.actions;
 export default selectedPageSlice.reducer;

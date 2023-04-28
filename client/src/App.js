@@ -13,6 +13,7 @@ import {
     Taches,
     Post,
     Error,
+    DevisDetail,
     Leads,
 } from "./pages";
 
@@ -34,7 +35,11 @@ const App = () => {
                     <Route path="leads" element={<Leads />} />
                     <Route path="biens" element={<Biens />} />
                     <Route path="taches" element={<Taches />} />
-                    <Route path="devis" element={<Devis />} />
+                   
+                    <Route path="devis">
+                        <Route path="/devis" element={<Devis />} />
+                        <Route path=":id" element={<DevisDetail />} />
+                    </Route>
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />
                 </Route>

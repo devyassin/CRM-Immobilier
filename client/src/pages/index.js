@@ -9,6 +9,7 @@ import Leads from "./Dashboard/Leads";
 import Taches from "./Dashboard/Taches";
 import Clients from "./Dashboard/Clients";
 import Post from "./Dashboard/Post";
+import DevisDetail from "./NestedRoutes/DevisDetail";
 import Error from "./Error";
 
 export {
@@ -23,5 +24,6 @@ export {
     Taches,
     Clients,
     Post,
+    DevisDetail,
     Error,
 };

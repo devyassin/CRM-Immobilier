@@ -13,7 +13,12 @@ import {
 } from "react-icons/fa";
 
 export const categories = [
-    { name: "Dashboard", path: "/dashboard", icon: <FaChartPie size={25} /> },
+    {
+        name: "Dashboard",
+        hover: "/dashboard",
+        path: "/dashboard",
+        icon: <FaChartPie size={25} />,
+    },
     {
         name: "Clients",
         path: "/clients",

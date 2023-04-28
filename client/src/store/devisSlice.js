@@ -42,7 +42,7 @@ export const addDevis = createAsyncThunk("devis/add", async (devis) => {
 // Delete a  devis
 export const deleteDevis = createAsyncThunk("devis/delete", async (id) => {
     const response = await instance.delete(`/devis/${id}`);
-    return response.data;
+    return { id, data: response.data };
 });
 
 // Update one devis
@@ -163,9 +163,9 @@ const devisSlice = createSlice({
             })
             .addCase(deleteDevis.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
-                const id = payload.devis.id;
-                state.data.devis = state.data.devis.filter((devis) => {
-                    return devis.id !== id;
+                const {id}=payload;
+                state.data.devis = state.data.devis.filter((devi) => {
+                    return devi.id !== id;
                 });
                 state.data.count = state.data.count - 1;
             })

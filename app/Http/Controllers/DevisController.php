@@ -67,17 +67,18 @@ use Illuminate\Validation\ValidationException;
             }
         
             
-            public function show(Devis $Devis)
-            {      
-                $devis = Devis::with('client', 'biens')->find($Devis);
-    
+            public function show(Devis $devis)
+            {
+                $devis = Devis::with('client', 'biens')
+                            ->where('id', $devis->id)
+                            ->first();
+            
                 if (!$devis) {
                     return response()->json(['message' => 'Devis not found'], 404);
                 }
-                
+            
                 return response()->json($devis, 200);
             }
-        
            
             public function update(Request $request, Devis $Devis)
             {

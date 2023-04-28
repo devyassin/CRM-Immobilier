@@ -124,7 +124,7 @@ const FormClient = ({ client }) => {
                     value={client.nom}
                     type="text"
                     class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="First Name"
+                    placeholder="Nom"
                 />
                 <input
                     required
@@ -133,7 +133,7 @@ const FormClient = ({ client }) => {
                     value={client.prenom}
                     type="text"
                     class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
-                    placeholder="Last Name"
+                    placeholder="Prenom"
                 />
 
                 <SelectMultipleChoices client={client} />

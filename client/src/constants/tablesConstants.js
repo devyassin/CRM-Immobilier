@@ -37,15 +37,13 @@ export const tableBienFields = [
 ];
 
 export const tableDevisFields = [
+    "Reference",
     "Nom Client",
+    "Numero",
     "Email",
-    "Address",
-    "Status",
+    "Estimation",
     "Description",
-    "type",
-    "Prix",
-    "Location",
-    "Comission",
-    "Date d'ajout",
+    "Total Biens",
+    "Date",
     "Action",
 ];
