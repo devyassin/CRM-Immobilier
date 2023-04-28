@@ -20,6 +20,7 @@ class CreateBiensTable extends Migration
             $table->text('description');
             $table->string('location');
             $table->string('price');
+            $table->string('image');
             $table->enum('status',['disponible','en location','vendu']);
             $table->string('comission');
             $table->bigInteger('client_id')->unsigned();

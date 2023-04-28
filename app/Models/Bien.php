@@ -13,7 +13,7 @@ class Bien extends Model
         'type',
         'description',
         'location',
-       // 'image',
+        'image',
         'price',
         'status',
         'comission',
