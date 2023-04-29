@@ -26,8 +26,8 @@
                                 $query->where('nom', 'LIKE', '%'.$request->input('nom').'%');
                             })
                             ->get();
-                
-                return response()->json(['data' => $devis], 200);
+                $count=$devis->count();
+                return response()->json(['count' => $count,'devis' => $devis], 200);
                
             }
         
@@ -74,7 +74,7 @@
                     return response()->json(['message' => 'Devis not found'], 404);
                 }
                 
-                return response()->json(['data' => $devis], 200);
+                return response()->json($devis, 200);
             }
         
            

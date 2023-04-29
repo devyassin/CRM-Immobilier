@@ -26,7 +26,7 @@ const TableBien = ({ fields }) => {
                     <tr>
                         {fields.map((item, i) => {
                             return (
-                                <th key={i} scope="col" class="px-6 py-3">
+                                <th key={i} scope="col" class="px-6 py-3 whitespace-nowrap">
                                     {item}
                                 </th>
                             );
@@ -56,7 +56,9 @@ const TableBien = ({ fields }) => {
                                 key={bien.id}
                                 class="bg-white border-b hover:bg-gray-100 duration-150 "
                             >
+                                <td class="px-6 py-4 whitespace-nowrap">{bien.NomBien}</td>
                                 <td class="px-6 py-4">{bien.client.nom}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{bien.client.tel}</td>
                                 <td class="px-6 py-4">{bien.client.email}</td>
                                 <td class="px-6 py-4 ">{bien.address}</td>
                                 <td class="px-6 py-4">

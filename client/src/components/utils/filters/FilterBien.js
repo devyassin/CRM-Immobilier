@@ -11,17 +11,21 @@ import {
     setFilterPrice,
     setFilterStatus,
     setFilterOrder,
+    setFilterMaxPrice,
+    setFilterMinPrice,
+    showAllFilter,
 } from "../../../store/bienSlice";
 
 const FilterBien = () => {
     const dispatch = useDispatch();
     const [sortOrder, setSortOrder] = useState("Asc");
     const [sortStatus, setSortStatus] = useState("");
-    const bien = useSelector((state) => state.biens.bien);
+    const [min, setMin] = useState("");
+    const [max, setMax] = useState("");
     return (
         <motion.div
             animate={{
-                y: "-100%",
+                y: "-70%",
                 scale: 1,
             }}
             initial={{
@@ -31,7 +35,7 @@ const FilterBien = () => {
             }}
             transition={{
                 type: "spring",
-                stiffness: 80,
+                stiffness: 50,
             }}
             className="absolute z-40 w-full p-6 -translate-x-1/2 bg-white rounded-lg shadow-lg md:max-w-3xl top-1/2 left-1/2 -translate-y-2/3"
         >
@@ -49,8 +53,10 @@ const FilterBien = () => {
                 onSubmit={(e) => {
                     e.preventDefault();
                     dispatch(setFilterPrice());
-                    dispatch(setFilterOrder({sortOrder}));
-                    dispatch(setFilterStatus({sortStatus}));
+                    dispatch(setFilterOrder({ sortOrder }));
+                    dispatch(setFilterStatus({ sortStatus }));
+                    dispatch(setFilterMinPrice({ min }));
+                    dispatch(setFilterMaxPrice({ max }));
                     dispatch(hideFilter());
                 }}
                 className="grid grid-cols-2 gap-4 md:grid-cols-3"
@@ -118,6 +124,47 @@ const FilterBien = () => {
                     />
                     Vendu
                 </label>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Default"
+                        checked={sortStatus === "Default"}
+                        onChange={(e) => {
+                            setSortStatus(e.target.value);
+                        }}
+                    />
+                    Default
+                </label>
+                <div></div>
+                <div></div>
+                <hr className="col-span-3" />
+                <h1 className="col-span-3">Budget :</h1>
+
+                <input
+                    className="mr-4"
+                    type="number"
+                    placeholder="min"
+                    class="login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    value={min}
+                    max={max}
+                    onChange={(e) => {
+                        setMin(e.target.value);
+                    }}
+                />
+
+                <input
+                    className="mr-4"
+                    type="number"
+                    value={max}
+                    min={min}
+                    class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    placeholder="max"
+                    onChange={(e) => {
+                        setMax(e.target.value);
+                    }}
+                />
+                <div></div>
                 <button
                     type="submit"
                     class="btn btn-primary mt-8 py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"

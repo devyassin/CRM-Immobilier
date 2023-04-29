@@ -8,7 +8,7 @@ import {
     Dashborad,
     Clients,
     Calander,
-    Chat,
+    Devis,
     Biens,
     Taches,
     Post,
@@ -34,7 +34,7 @@ const App = () => {
                     <Route path="leads" element={<Leads />} />
                     <Route path="biens" element={<Biens />} />
                     <Route path="taches" element={<Taches />} />
-                    <Route path="chat" element={<Chat />} />
+                    <Route path="devis" element={<Devis />} />
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />
                 </Route>

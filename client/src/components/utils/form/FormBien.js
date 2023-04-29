@@ -116,6 +116,15 @@ const FormBien = ({ bien }) => {
                 <input
                     required
                     onChange={handleChange}
+                    name="NomBien"
+                    value={bien.NomBien}
+                    type="text"
+                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    placeholder="Nom Bien"
+                />
+                <input
+                    required
+                    onChange={handleChange}
                     name="address"
                     value={bien.address}
                     type="text"
@@ -134,23 +143,13 @@ const FormBien = ({ bien }) => {
 
                 <SelectOneChoiceBien bien={bien} />
 
-                <textarea
-                    onChange={handleChange}
-                    rows="4"
-                    maxlength="1000"
-                    className="col-span-3 "
-                    name="description"
-                    value={bien.description}
-                    placeholder="Description"
-                    required
-                ></textarea>
                 <input
                     required
                     onChange={handleChange}
                     name="location"
                     value={bien.location}
                     type="text"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
                     placeholder="Location"
                 />
                 <SelectOneChoiceBienStatus bien={bien} />
@@ -163,7 +162,7 @@ const FormBien = ({ bien }) => {
                     name="comission"
                     value={bien.comission}
                     type="number"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                    class="login__input form-control py-3 px-4 block mt-4 focus:outline-none"
                     placeholder="Comission"
                 />
                 {!bien?.id && (
@@ -173,13 +172,20 @@ const FormBien = ({ bien }) => {
                         name="client_email"
                         value={bien.client_email}
                         type="email"
-                        class="intro-x login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                        class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
                         placeholder="Client email"
                     />
                 )}
-
-                <div></div>
-                <div></div>
+                <textarea
+                    onChange={handleChange}
+                    rows="4"
+                    maxlength="1000"
+                    className="col-span-3 "
+                    name="description"
+                    value={bien.description}
+                    placeholder="Description"
+                    required
+                ></textarea>
 
                 <button
                     type="submit"

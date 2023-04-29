@@ -10,7 +10,7 @@ const SideBar = () => {
             <MobileSideBar />
             <div class="flex ">
                 <nav class="side-nav scroolbar">
-                    <a href="" class=" flex items-center pl-5 pt-4">
+                    <a href="dashboard" class=" flex items-center pl-5 pt-4">
                         <img  class="w-10" src={icon} />
                         <span class="hidden xl:block text-white text-xl ml-3">
                             {" "}

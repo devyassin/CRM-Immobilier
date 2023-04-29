@@ -2,7 +2,7 @@ import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Feed from "./Dashboard/Feed";
 import Calander from "./Dashboard/Calander";
-import Chat from "./Dashboard/Chat";
+import Devis from "./Dashboard/Devis";
 import Dashborad from "./Dashboard/Dashborad";
 import Biens from "./Dashboard/Biens";
 import Leads from "./Dashboard/Leads";
@@ -16,7 +16,7 @@ export {
     ProtectedRoute,
     Feed,
     Calander,
-    Chat,
+    Devis,
     Dashborad,
     Biens,
     Leads,

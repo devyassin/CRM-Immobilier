@@ -39,6 +39,7 @@ const Clients = () => {
         return (
             <div>
                 <div className="flex items-center justify-between">
+                
                     <HeaderTitle title={title} />
                     <IconUserStyle number={clients.count} />
                 </div>

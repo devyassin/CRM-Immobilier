@@ -23,22 +23,32 @@ class BienController extends Controller
         $status = $request->input('status');
         $sort = $request->input('sort');
         $order = $request->input('order');
-        
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+    
         $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
             $query->where('nom', 'like', "%$clientName%");
         })->with('client')->where('address', 'like', "%$address%");
-        
+    
         if ($status) {
             $biens = $biens->where('status', $status);
         }
-        
+    
+        if ($minPrice) {
+            $biens = $biens->where('price', '>=', $minPrice);
+        }
+    
+        if ($maxPrice) {
+            $biens = $biens->where('price', '<=', $maxPrice);
+        }
+    
         if ($sort && $order) {
             $biens = $biens->orderBy($sort, $order);
         }
         
-        $biens = $user->biens->where('address', 'like', "%$address%");
+        $biens = $biens->get();
         $count = $biens->count();
-        
+    
         return response()->json(['count' => $count,'biens' => $biens], Response::HTTP_OK);
     }
 
@@ -52,16 +62,15 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
-            'address' => 'required|string|max:255',
-            'type' => 'required|string',
-            'description' => 'required|string|max:255',
-            'image' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'price' => 'required|string|max:255',
-            'status' => 'required|string',
-            'comission' => 'required|string|max:255',
-            'client_email' => 'required|string',
-            'user_id'=>'required|exists:users,id'
+                'address' => 'required|string|max:255',
+                'type' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
+                'location' => 'required|string|max:255',
+                'price' => 'required|string|max:255',
+                'status' => 'required|string|max:255',
+                'comission' => 'required|string|max:255',
+                'client_email' => 'string|email|max:255',
+                'user_id' => 'required',
             ]);    
  
 
@@ -115,16 +124,14 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'address' => 'string|max:255',
-                'type' => 'string',
-                'description' => 'string|max:255',
-                'location' => 'string|max:255',
-                'price' => 'string|max:255',
-                'image' => 'string|max:255',
-                'status' => 'string',
-                'comission' => 'string|max:255',
-                'client_id' => 'exists:clients,id',
-                'user_id'=>'exists:users,id'
+                'address' => 'required|string|max:255',
+                'type' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
+                'location' => 'required|string|max:255',
+                'price' => 'required|string|max:255',
+                'status' => 'required|string|max:255',
+                'comission' => 'required|string|max:255',
+                'user_id'=>'required'
                 ]);
     
             $bien->update($validatedData);
