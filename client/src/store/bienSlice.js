@@ -158,6 +158,10 @@ const bienSlice = createSlice({
         closeAlertUpdate: (state) => {
             state.showAlertUpdate = false;
         },
+        initialStatus: (state) => {
+            state.statusUpdateBien = initialState.statusUpdateBien;
+            state.statusAddBien = initialState.statusAddBien;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -242,6 +246,7 @@ export const {
     handleBienForm,
     showAlert,
     showAlertUpdate,
+    initialStatus,
 } = bienSlice.actions;
 
 export default bienSlice.reducer;

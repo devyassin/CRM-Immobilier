@@ -1,8 +1,8 @@
 import React from "react";
 
 import { AiFillCloseCircle } from "react-icons/ai";
-
-import AlertForm from "../alerts/AlertForm";
+import { useEffect } from "react";
+import { Toastsuccess, Toastfailed, ToastLoading } from "../toast/Toast";
 import { motion } from "framer-motion";
 import SelectOneChoiceBien from "./SelectOneChoiceBien";
 import SelectOneChoiceBienStatus from "./SelectOneChoiceBienStatus";
@@ -17,6 +17,7 @@ import {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } from "../../../store/bienSlice";
 const FormBien = ({ bien }) => {
     const dispatch = useDispatch();
@@ -24,16 +25,41 @@ const FormBien = ({ bien }) => {
     const statusUpdateBien = useSelector(
         (state) => state.biens.statusUpdateBien
     );
-    const alertVisibility = useSelector((state) => state.biens.showAlert);
-    const alertUpdateVisibility = useSelector(
-        (state) => state.biens.showAlertUpdate
-    );
+
     const errorMessage = useSelector((state) => state.biens.error);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         dispatch(handleBienForm({ name, value }));
     };
+
+    useEffect(() => {
+        if (statusAddBien === "succeeded") {
+            Toastsuccess("Bien Ajouter !");
+        }
+
+        if (statusAddBien === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusAddBien === "loading") {
+            ToastLoading("Bien en cours d'ajout .....");
+        }
+
+        if (statusUpdateBien === "succeeded") {
+            Toastsuccess("Bien Modifier !");
+        }
+
+        if (statusUpdateBien === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusUpdateBien === "loading") {
+            ToastLoading("Bien en cours de modification .....");
+        }
+
+        dispatch(initialStatus());
+    }, [statusAddBien, statusUpdateBien]);
     return (
         <motion.div
             animate={{
@@ -67,34 +93,6 @@ const FormBien = ({ bien }) => {
                 />
             </div>
 
-            {statusAddBien === "loading" && alertVisibility && (
-                <AlertForm
-                    message="Bien en cours d'ajout ....."
-                    type="success"
-                />
-            )}
-
-            {statusAddBien === "succeeded" && alertVisibility && (
-                <AlertForm message="Bien Ajouter !" type="success" />
-            )}
-            {statusAddBien === "failed" && alertVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
-
-            {statusUpdateBien === "loading" && alertUpdateVisibility && (
-                <AlertForm
-                    message="Bien en cours de modification ....."
-                    type="success"
-                />
-            )}
-
-            {statusUpdateBien === "succeeded" && alertUpdateVisibility && (
-                <AlertForm message="Bien Modifier !" type="success" />
-            )}
-
-            {statusUpdateBien === "failed" && alertUpdateVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

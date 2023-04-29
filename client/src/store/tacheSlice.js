@@ -128,6 +128,11 @@ const tacheSlice = createSlice({
         setOldTache: (state) => {
             state.oldtache = state.tache;
         },
+
+        initialStatus: (state) => {
+            state.statusUpdateTache = initialState.statusUpdateTache;
+            state.statusAddTache = initialState.statusAddTache;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -337,5 +342,6 @@ export const {
     showAlert,
     showAlertUpdate,
     setOldTache,
+    initialStatus,
 } = tacheSlice.actions;
 export default tacheSlice.reducer;

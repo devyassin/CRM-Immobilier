@@ -2,11 +2,13 @@ import React from "react";
 
 import { AiFillCloseCircle } from "react-icons/ai";
 import SelectMultipleChoices from "./SelectMultipleChoices";
-import AlertForm from "../alerts/AlertForm";
+import { useEffect } from "react";
+
 import { motion } from "framer-motion";
 
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
+import { Toastsuccess, Toastfailed, ToastLoading } from "../toast/Toast";
 import {
     clearClientUpdate,
     addClient,
@@ -16,6 +18,7 @@ import {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } from "../../../store/clientSlice";
 
 const FormClient = ({ client }) => {
@@ -27,16 +30,39 @@ const FormClient = ({ client }) => {
     const statusUpdateClient = useSelector(
         (state) => state.clients.statusUpdateClient
     );
-    const alertVisibility = useSelector((state) => state.clients.showAlert);
-    const alertUpdateVisibility = useSelector(
-        (state) => state.clients.showAlertUpdate
-    );
+
     const errorMessage = useSelector((state) => state.clients.error);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         dispatch(handleClientForm({ name, value }));
     };
+    useEffect(() => {
+        if (statusAddClient === "succeeded") {
+            Toastsuccess("Client Ajouter !");
+        }
+
+        if (statusAddClient === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusAddClient === "loading") {
+            ToastLoading("Client en cours d'ajout .....");
+        }
+
+        if (statusUpdateClient === "succeeded") {
+            Toastsuccess("Client Modifier !");
+        }
+
+        if (statusUpdateClient === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusUpdateClient === "loading") {
+            ToastLoading("Client en cours de modification .....");
+        }
+        dispatch(initialStatus());
+    }, [statusAddClient, statusUpdateClient]);
     return (
         <motion.div
             animate={{
@@ -70,42 +96,14 @@ const FormClient = ({ client }) => {
                 />
             </div>
 
-            {statusAddClient === "loading" && alertVisibility && (
-                <AlertForm
-                    message="Client en cours d'ajout ....."
-                    type="success"
-                />
-            )}
-
-            {statusAddClient === "succeeded" && alertVisibility && (
-                <AlertForm message="Client Ajouter !" type="success" />
-            )}
-            {statusAddClient === "failed" && alertVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
-
-            {statusUpdateClient === "loading" && alertUpdateVisibility && (
-                <AlertForm
-                    message="Client en cours de modification ....."
-                    type="success"
-                />
-            )}
-
-            {statusUpdateClient === "succeeded" && alertUpdateVisibility && (
-                <AlertForm message="Client Modifier !" type="success" />
-            )}
-
-            {statusUpdateClient === "failed" && alertUpdateVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
                     if (!client.id) {
                         dispatch(addClient(client));
+
                         dispatch(showAlert());
                     } else {
-                        console.log(client);
                         dispatch(UpdateOneClient([client.id, client]));
                         dispatch(showAlertUpdate());
                     }

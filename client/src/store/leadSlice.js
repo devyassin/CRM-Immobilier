@@ -108,6 +108,10 @@ const leadSlice = createSlice({
         closeAlertUpdate: (state) => {
             state.showAlertUpdate = false;
         },
+        initialStatus: (state) => {
+            state.statusUpdateLead = initialState.statusUpdateLead;
+            state.statusAddLead = initialState.statusAddLead;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -186,5 +190,6 @@ export const {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } = leadSlice.actions;
 export default leadSlice.reducer;

@@ -110,6 +110,10 @@ const clientSlice = createSlice({
         closeAlertUpdate: (state) => {
             state.showAlertUpdate = false;
         },
+        initialStatus: (state) => {
+            state.statusUpdateClient = initialState.statusUpdateClient;
+            state.statusAddClient = initialState.statusAddClient;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -170,7 +174,7 @@ const clientSlice = createSlice({
             .addCase(deleteClient.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
                 const id = payload.client.id;
-               
+
                 state.data.clients = state.data.clients.filter((client) => {
                     return client.id !== id;
                 });
@@ -191,5 +195,6 @@ export const {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } = clientSlice.actions;
 export default clientSlice.reducer;

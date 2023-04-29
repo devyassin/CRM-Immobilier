@@ -1,11 +1,10 @@
 import React from "react";
 
 import { AiFillCloseCircle } from "react-icons/ai";
-
-import AlertForm from "../alerts/AlertForm";
 import SelectOneChoiceTache from "./SelectOneChoiceTache";
 import { motion } from "framer-motion";
-
+import { Toastsuccess, Toastfailed, ToastLoading } from "../toast/Toast";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
 import {
@@ -17,6 +16,7 @@ import {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } from "../../../store/tacheSlice";
 
 const FormTache = ({ tache }) => {
@@ -25,16 +25,41 @@ const FormTache = ({ tache }) => {
     const statusUpdateTache = useSelector(
         (state) => state.taches.statusUpdateTache
     );
-    const alertVisibility = useSelector((state) => state.taches.showAlert);
-    const alertUpdateVisibility = useSelector(
-        (state) => state.taches.showAlertUpdate
-    );
+
     const errorMessage = useSelector((state) => state.taches.error);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         dispatch(handleTacheForm({ name, value }));
     };
+
+    useEffect(() => {
+        if (statusAddTache === "succeeded") {
+            Toastsuccess("Tache Ajouter !");
+        }
+
+        if (statusAddTache === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusAddTache === "loading") {
+            ToastLoading("Tache en cours d'ajout .....");
+        }
+
+        if (statusUpdateTache === "succeeded") {
+            Toastsuccess("Tache Modifier !");
+        }
+
+        if (statusUpdateTache === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusUpdateTache === "loading") {
+            ToastLoading("Tache en cours de modification .....");
+        }
+
+        dispatch(initialStatus());
+    }, [statusAddTache, statusUpdateTache]);
     return (
         <motion.div
             animate={{
@@ -68,34 +93,6 @@ const FormTache = ({ tache }) => {
                 />
             </div>
 
-            {statusAddTache === "loading" && alertVisibility && (
-                <AlertForm
-                    message="Tache en cours d'ajout ....."
-                    type="success"
-                />
-            )}
-
-            {statusAddTache === "succeeded" && alertVisibility && (
-                <AlertForm message="Tache Ajouter !" type="success" />
-            )}
-            {statusAddTache === "failed" && alertVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
-
-            {statusUpdateTache === "loading" && alertUpdateVisibility && (
-                <AlertForm
-                    message="Tache en cours de modification ....."
-                    type="success"
-                />
-            )}
-
-            {statusUpdateTache === "succeeded" && alertUpdateVisibility && (
-                <AlertForm message="Tache Modifier !" type="success" />
-            )}
-
-            {statusUpdateTache === "failed" && alertUpdateVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
