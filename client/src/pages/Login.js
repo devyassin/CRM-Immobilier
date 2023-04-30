@@ -5,39 +5,55 @@ import LoginButton from "../components/utils/buttons/LoginButton";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { loginUser } from "../store/userSlice";
-import AlertForm from "../components/utils/alerts/AlertForm";
+import {
+    ToastLoading,
+    Toastfailed,
+    Toastsuccess,
+    ToastWarn,
+} from "../components/utils/toast/Toast";
 import { showAlert, closeAlert } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
-    const alertVisibility = useSelector((state) => state.user.showAlertLogin);
     const error = useSelector((state) => state.user.error);
     const navigate = useNavigate();
     const status = useSelector((state) => state.user.statusLogin);
 
     useEffect(() => {
         if (status === "succeeded") {
+            Toastsuccess("Bonjour !");
             setTimeout(() => {
                 navigate("/dashboard");
                 window.location.reload();
             }, 3000);
         }
+
+        if (status === "failed") {
+            Toastfailed(error);
+        }
+
+        if (status == "loading") {
+            ToastLoading("Login ...");
+        }
     }, [status]);
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
+
         dispatch(showAlert());
         setTimeout(() => {
             dispatch(closeAlert());
         }, 3000);
         if (!email || !password) {
+            ToastWarn("Veuillez remplir toutes les champs !");
             return;
         }
-        console.log(email, password);
+
         dispatch(loginUser({ email, password }));
     };
     const myToken = document.head
@@ -85,26 +101,7 @@ const Login = () => {
                             <h2 class=" pb-2 intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                                 Sign In
                             </h2>
-                            {alertVisibility && status === "" && (
-                                <AlertForm
-                                    message="Veuillez remplir toutes les champs"
-                                    type="failed"
-                                />
-                            )}
 
-                            {alertVisibility && status === "failed" && (
-                                <AlertForm message={error} type="failed" />
-                            )}
-
-                            {alertVisibility && status === "loading" && (
-                                <AlertForm
-                                    message="en cours ...."
-                                    type="success"
-                                />
-                            )}
-                            {alertVisibility && status === "succeeded" && (
-                                <AlertForm message="Bonjour !" type="success" />
-                            )}
                             <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">
                                 A few more clicks to sign in to your account.
                                 Manage all your e-commerce accounts in one place

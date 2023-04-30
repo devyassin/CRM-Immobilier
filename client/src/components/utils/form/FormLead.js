@@ -3,9 +3,9 @@ import React from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import SelectMultipleChoicesStatus from "./SelectMultipleChoicesStatus";
 import SelectOneChoiceSource from "./SelectOneChoiceSource";
-import AlertForm from "../alerts/AlertForm";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-
+import { Toastsuccess, Toastfailed, ToastLoading } from "../toast/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import { hide } from "../../../store/overlaySlice";
 import {
@@ -17,6 +17,7 @@ import {
     closeAlert,
     showAlertUpdate,
     closeAlertUpdate,
+    initialStatus,
 } from "../../../store/leadSlice";
 const FormLead = ({ lead }) => {
     const dispatch = useDispatch();
@@ -24,16 +25,41 @@ const FormLead = ({ lead }) => {
     const statusUpdateLead = useSelector(
         (state) => state.leads.statusUpdateLead
     );
-    const alertVisibility = useSelector((state) => state.leads.showAlert);
-    const alertUpdateVisibility = useSelector(
-        (state) => state.leads.showAlertUpdate
-    );
+
     const errorMessage = useSelector((state) => state.leads.error);
     const handleChange = (event) => {
         const { name, value } = event.target;
 
         dispatch(handleLeadForm({ name, value }));
     };
+
+    useEffect(() => {
+        if (statusAddLead === "succeeded") {
+            Toastsuccess("Prospect Ajouter !");
+        }
+
+        if (statusAddLead === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusAddLead === "loading") {
+            ToastLoading("Prospect en cours d'ajout .....");
+        }
+
+        if (statusUpdateLead === "succeeded") {
+            Toastsuccess("Prospect Modifier !");
+        }
+
+        if (statusUpdateLead === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusUpdateLead === "loading") {
+            ToastLoading("Prospect en cours de modification .....");
+        }
+
+        dispatch(initialStatus());
+    }, [statusAddLead, statusUpdateLead]);
     return (
         <motion.div
             animate={{
@@ -67,34 +93,6 @@ const FormLead = ({ lead }) => {
                 />
             </div>
 
-            {statusAddLead === "loading" && alertVisibility && (
-                <AlertForm
-                    message="Prospect en cours d'ajout ....."
-                    type="success"
-                />
-            )}
-
-            {statusAddLead === "succeeded" && alertVisibility && (
-                <AlertForm message="Prospect Ajouter !" type="success" />
-            )}
-            {statusAddLead === "failed" && alertVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
-
-            {statusUpdateLead === "loading" && alertUpdateVisibility && (
-                <AlertForm
-                    message="Prospect en cours de modification ....."
-                    type="success"
-                />
-            )}
-
-            {statusUpdateLead === "succeeded" && alertUpdateVisibility && (
-                <AlertForm message="Prospect Modifier !" type="success" />
-            )}
-
-            {statusUpdateLead === "failed" && alertUpdateVisibility && (
-                <AlertForm message={errorMessage} type="failed" />
-            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

@@ -10,10 +10,16 @@ import {
     FaDollarSign,
     FaPhoneAlt,
     FaRegCalendar,
+    FaSignOutAlt,
 } from "react-icons/fa";
 
 export const categories = [
-    { name: "Dashboard", path: "/dashboard", icon: <FaChartPie size={25} /> },
+    {
+        name: "Dashboard",
+        hover: "/dashboard",
+        path: "/dashboard",
+        icon: <FaChartPie size={25} />,
+    },
     {
         name: "Clients",
         path: "/clients",
@@ -32,4 +38,5 @@ export const categories = [
     { name: "Transaction", path: "/post", icon: <FaDollarSign size={23} /> },
     { name: "Calander", path: "/calander", icon: <FaRegCalendar size={23} /> },
     { name: "Rendez-vous", path: "/calander", icon: <FaPhoneAlt size={23} /> },
+    { name: "Logout", path: "/logout", icon: <FaSignOutAlt size={23} /> },
 ];

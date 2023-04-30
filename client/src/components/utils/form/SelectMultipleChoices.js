@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { handleClientForm } from "../../../store/clientSlice";
 const colourOptions = [
-    { value: "Renter", label: "Renter" },
-    { value: "Seller", label: "Seller" },
-    { value: "Big company", label: "Big company" },
-    { value: "Buyer", label: "Buyer" },
+    { value: "Locataire", label: "Locataire" },
+    { value: "Vendeur", label: "Vendeur" },
+    { value: "Grande entreprise", label: "Grande entreprise" },
+    { value: "Acheteur", label: "Acheteur" },
 ];
 const SelectMultipleChoices = ({ client }) => {
     let name = "type";

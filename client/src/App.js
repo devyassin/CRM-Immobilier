@@ -13,7 +13,9 @@ import {
     Taches,
     Post,
     Error,
+    DevisDetail,
     Leads,
+    Logout
 } from "./pages";
 
 const App = () => {
@@ -34,11 +36,16 @@ const App = () => {
                     <Route path="leads" element={<Leads />} />
                     <Route path="biens" element={<Biens />} />
                     <Route path="taches" element={<Taches />} />
-                    <Route path="devis" element={<Devis />} />
+                   
+                    <Route path="devis">
+                        <Route path="/devis" element={<Devis />} />
+                        <Route path=":id" element={<DevisDetail />} />
+                    </Route>
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Error />} />
             </Routes>
         </BrowserRouter>

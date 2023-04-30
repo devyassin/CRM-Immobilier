@@ -2,6 +2,7 @@ import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Feed from "./Dashboard/Feed";
 import Calander from "./Dashboard/Calander";
+import Logout from "./Dashboard/logout";
 import Devis from "./Dashboard/Devis";
 import Dashborad from "./Dashboard/Dashborad";
 import Biens from "./Dashboard/Biens";
@@ -9,6 +10,7 @@ import Leads from "./Dashboard/Leads";
 import Taches from "./Dashboard/Taches";
 import Clients from "./Dashboard/Clients";
 import Post from "./Dashboard/Post";
+import DevisDetail from "./NestedRoutes/DevisDetail";
 import Error from "./Error";
 
 export {
@@ -23,5 +25,7 @@ export {
     Taches,
     Clients,
     Post,
+    DevisDetail,
     Error,
+    Logout,
 };

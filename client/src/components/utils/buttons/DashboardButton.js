@@ -12,7 +12,10 @@ const DashboardButton = ({ name, icon, path }) => {
     return (
         <li>
             <Link
-                onClick={() => dispatch(setPageName({ name }))}
+                onClick={() => {
+                    localStorage.setItem("route", name);
+                    dispatch(setPageName({ name }));
+                }}
                 to={path}
                 class={`side-menu ${
                     selectedPage === name ? " side-menu--active" : ""
