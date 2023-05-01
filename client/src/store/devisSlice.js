@@ -109,11 +109,20 @@ const devisSlice = createSlice({
         setReference: (state, { payload }) => {
             state.devis.reference = payload.finalResult;
         },
+        clearBiens: (state) => {
+            state.devis.biens = initialState.devis.biens;
+        },
         addBienToDevis: (state, { payload }) => {
-            state.devis.biens.push(payload.id);
+            if (!state.devis.biens.includes(payload.id)) {
+                state.devis.biens.push(payload.id);
+            }
         },
         setDevisEstimation: (state, { payload }) => {
             state.devis.estimation = payload.price;
+        },
+        initialStatus: (state) => {
+            state.statusUpdateDevis = initialState.statusUpdateDevis;
+            state.statusAddDevis = initialState.statusAddDevis;
         },
     },
     extraReducers: (builder) => {
@@ -141,11 +150,11 @@ const devisSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addDevis.pending, (state) => {
-                state.statusAddLead = "loading";
+                state.statusAddDevis = "loading";
             })
             .addCase(addDevis.fulfilled, (state, { payload }) => {
                 state.statusAddDevis = "succeeded";
-                state.data.devis = [...state.data.devis, state.devis];
+                state.data.devis = [...state.data.devis, payload.data];
                 state.devis = initialState.devis;
                 state.data.count = state.data.count + 1;
             })
@@ -196,5 +205,7 @@ export const {
     setReference,
     addBienToDevis,
     setDevisEstimation,
+    clearBiens,
+    initialStatus,
 } = devisSlice.actions;
 export default devisSlice.reducer;

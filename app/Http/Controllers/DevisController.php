@@ -72,10 +72,14 @@ use App\Models\Devis;
             
                 // Attach the biens to the devis
                 $devis->biens()->attach($validatedData['biens']);
-            
+                $devis = Devis::with('client', 'biens')
+                ->where('id', $devis->id)
+                ->first();
+                
                 // Return a response indicating success
-                return response()->json(['message' => 'Devis created successfully'], 201);
+                return response()->json(['data' => $devis], 201);
             }
+        
         
             
             public function show(Devis $devis)

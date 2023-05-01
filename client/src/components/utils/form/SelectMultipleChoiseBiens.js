@@ -3,7 +3,11 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchAllBiens } from "../../../store/bienSlice";
-import { addBienToDevis, setDevisEstimation } from "../../../store/devisSlice";
+import {
+    addBienToDevis,
+    setDevisEstimation,
+    clearBiens,
+} from "../../../store/devisSlice";
 const SelectMultipleChoiseBiens = () => {
     const dispatch = useDispatch();
     const filterName = useSelector((state) => state.biens.filterName);
@@ -29,15 +33,19 @@ const SelectMultipleChoiseBiens = () => {
         );
     }, []);
     const handleSelectedOptions = (selected) => {
+        // const id = selected[selected.length - 1].bien.id;
         console.log(selected);
-        const id = selected[selected.length - 1].bien.id;
-        dispatch(addBienToDevis({ id }));
+        dispatch(clearBiens());
+        selected.map((item) => {
+            const { id } = item.bien;
+            dispatch(addBienToDevis({ id }));
+        });
     };
     if (status === "succeeded") {
         const biensObj = biens.biens.map((bien) => {
             return { bien: bien, value: bien.NomBien, label: bien.NomBien };
         });
-        console.log(devi.biens);
+
         const selectedBiens = biensObj.filter((item) => {
             if (devi.biens.includes(item.bien.id)) {
                 return item;

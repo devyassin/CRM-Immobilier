@@ -4,12 +4,32 @@ import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SelectMultipleChoiseBiens from "../../components/utils/form/SelectMultipleChoiseBiens";
-import { handleDevisForm, setReference } from "../../store/devisSlice";
+import {
+    Toastsuccess,
+    ToastLoading,
+    Toastfailed,
+} from "../../components/utils/toast/Toast";
+import {
+    handleDevisForm,
+    addDevis,
+    UpdateOneDevis,
+    setReference,
+    closeAlert,
+    closeAlertUpdate,
+    initialStatus,
+} from "../../store/devisSlice";
 
 const AddDevis = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const devi = useSelector((state) => state.devis.devis);
+    const statusAddDevis = useSelector((state) => state.devis.statusAddDevis);
+    const statusUpdateDevis = useSelector(
+        (state) => state.devis.statusUpdateDevis
+    );
+    const errorMessage = useSelector((state) => state.devis.error);
     let finalResult = null;
 
     useEffect(() => {
@@ -20,8 +40,49 @@ const AddDevis = () => {
             dispatch(setReference({ finalResult }));
         }
     }, []);
+
+    useEffect(() => {
+        if (statusAddDevis === "succeeded") {
+            Toastsuccess("Devis Ajouter !");
+            setTimeout(() => {
+                navigate("/devis");
+            }, [1000]);
+        }
+
+        if (statusAddDevis === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusAddDevis === "loading") {
+            ToastLoading("Devis en cours d'ajout .....");
+        }
+
+        if (statusUpdateDevis === "succeeded") {
+            Toastsuccess("Devis Modifier !");
+        }
+
+        if (statusUpdateDevis === "failed") {
+            Toastfailed(errorMessage);
+        }
+
+        if (statusUpdateDevis === "loading") {
+            ToastLoading("Devis en cours de modification .....");
+        }
+
+        dispatch(initialStatus());
+    }, [statusAddDevis, statusUpdateDevis]);
     const submitHandler = (e) => {
         e.preventDefault();
+        if (!devi?.id) {
+            dispatch(addDevis(devi));
+        } else {
+            dispatch(UpdateOneDevis([devi.id, devi]));
+        }
+
+        setTimeout(() => {
+            dispatch(closeAlert());
+            dispatch(closeAlertUpdate());
+        }, 3000);
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -100,6 +161,15 @@ const AddDevis = () => {
                         disabled
                         class="intro-x login__input form-control text-2xl  px-4 block mt-4 focus:outline-none"
                     />
+                </div>
+                <div className="flex flex-col items-start col-span-1">
+                    {/* <label className="text-xl text-blue-300">Estimation</label> */}
+                    <button
+                        type="submit"
+                        class="btn btn-primary mt-8 py-4 text-2xl px-8 w-full xl:w-48 xl:mr-3 align-top"
+                    >
+                        {devi?.id ? "Modifier" : "Ajouter"}
+                    </button>
                 </div>
             </form>
         </div>
