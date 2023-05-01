@@ -70,7 +70,7 @@ const initialState = {
         estimation: "",
         description: "",
         reference: "",
-        client_id: "",
+        client_email: "",
         biens: [],
         user_id: user?.id || "",
     },
@@ -105,6 +105,15 @@ const devisSlice = createSlice({
         },
         closeAlertUpdate: (state) => {
             state.showAlertUpdate = false;
+        },
+        setReference: (state, { payload }) => {
+            state.devis.reference = payload.finalResult;
+        },
+        addBienToDevis: (state, { payload }) => {
+            state.devis.biens.push(payload.id);
+        },
+        setDevisEstimation: (state, { payload }) => {
+            state.devis.estimation = payload.price;
         },
     },
     extraReducers: (builder) => {
@@ -163,7 +172,7 @@ const devisSlice = createSlice({
             })
             .addCase(deleteDevis.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
-                const {id}=payload;
+                const { id } = payload;
                 state.data.devis = state.data.devis.filter((devi) => {
                     return devi.id !== id;
                 });
@@ -184,5 +193,8 @@ export const {
     setNameDevis,
     showAlert,
     showAlertUpdate,
+    setReference,
+    addBienToDevis,
+    setDevisEstimation,
 } = devisSlice.actions;
 export default devisSlice.reducer;

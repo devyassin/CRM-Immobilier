@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import SearchBar from "../../components/utils/searchbar/SearchBar";
-import { IconStyleOne, IconStyleTwo } from "../../components/utils/icons";
+import { IconStyleOne, IconStyleTree } from "../../components/utils/icons";
 import IconDevisStyle from "../../components/utils/icons/IconDevisStyle";
 import { CSVLink } from "react-csv";
 import TableDevis from "../../components/utils/tables/TableDevis";
@@ -48,9 +48,9 @@ const Devis = () => {
                         <TfiExport size={25} />
                     </IconStyleOne>
 
-                    <IconStyleTwo>
+                    <IconStyleTree route="/devis/AddDevis">
                         <TfiPlus size={25} />
-                    </IconStyleTwo>
+                    </IconStyleTree>
                 </div>
                 <div className="flex items-center justify-center mt-40">
                     <div class="loading-spinner"></div>
@@ -78,9 +78,9 @@ const Devis = () => {
                             <TfiExport size={25} />
                         </IconStyleOne>
                     </CSVLink>
-                    <IconStyleTwo>
+                    <IconStyleTree route="/devis/AddDevis">
                         <TfiPlus size={25} />
-                    </IconStyleTwo>
+                    </IconStyleTree>
                 </div>
                 <TableDevis fields={tableDevisFields} />
                 {/* {visibility && <FormLead lead={lead} />} */}

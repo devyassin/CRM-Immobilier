@@ -66,7 +66,7 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'NomBien' => 'required|string|max:255',
+                'NomBien' => 'required|string|max:255|unique:biens,NomBien,NULL,id,user_id,' . $request->user_id,
                 'address' => 'required|string|max:255',
                 'type' => 'required|string|max:255',
                 'description' => 'required|string|max:255',
@@ -88,8 +88,9 @@ class BienController extends Controller
             return response()->json(['errors' => $errorMessages], 400);
         }
     
+            $user = auth()->user();
             // Find the client based on the provided client email
-            $client = Client::where('email', $validatedData['client_email'])->first();
+            $client = Client::where('email', $validatedData['client_email'])->where('user_id', $user->id)->first();
 
             // If the client is not found, return an error response
             if (!$client) {

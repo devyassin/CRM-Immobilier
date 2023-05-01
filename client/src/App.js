@@ -14,6 +14,7 @@ import {
     Post,
     Error,
     DevisDetail,
+    AddDevis,
     Leads,
 } from "./pages";
 
@@ -35,10 +36,11 @@ const App = () => {
                     <Route path="leads" element={<Leads />} />
                     <Route path="biens" element={<Biens />} />
                     <Route path="taches" element={<Taches />} />
-                   
+
                     <Route path="devis">
                         <Route path="/devis" element={<Devis />} />
                         <Route path=":id" element={<DevisDetail />} />
+                        <Route path="/devis/AddDevis" element={<AddDevis />} />
                     </Route>
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />

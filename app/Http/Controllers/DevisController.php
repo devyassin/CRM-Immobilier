@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Client;
 use Illuminate\Validation\ValidationException;
 
         namespace App\Http\Controllers;
-        
-        use App\Models\Devis;
+
+use App\Models\Client;
+use App\Models\Devis;
         use Illuminate\Http\Request;
         use Illuminate\Http\Response;
         use Illuminate\Support\Facades\DB;
@@ -39,29 +41,38 @@ use Illuminate\Validation\ValidationException;
              */
             public function store(Request $request)
             {
-                            // Validate the request data
+                // Validate the request data
                 $validatedData = $request->validate([
                     'estimation' => 'required|string',
                     'description' => 'required|string',
                     'reference' => 'required|string',
-                    'client_id' => 'required|integer|exists:clients,id',
+                    'client_email' => 'required|email',
                     'user_id' => 'required|integer|exists:users,id',
                     'biens' => 'required|array',
                     'biens.*' => 'integer|exists:biens,id'
                 ]);
-
+            
+                $user = auth()->user();
+                // Find the client based on the provided client email
+                $client = Client::where('email', $validatedData['client_email'])->where('user_id', $user->id)->first();
+            
+                // If the client is not found, return an error response
+                if (!$client) {
+                    return response()->json(['errors' => "Email n'appartient a aucune client"], 404);
+                }
+            
                 // Create a new devis instance
                 $devis = new Devis();
                 $devis->estimation = $validatedData['estimation'];
                 $devis->description = $validatedData['description'];
                 $devis->reference = $validatedData['reference'];
-                $devis->client_id = $validatedData['client_id'];
+                $devis->client_id = $client->id;
                 $devis->user_id = $validatedData['user_id'];
                 $devis->save();
-
+            
                 // Attach the biens to the devis
                 $devis->biens()->attach($validatedData['biens']);
-
+            
                 // Return a response indicating success
                 return response()->json(['message' => 'Devis created successfully'], 201);
             }
