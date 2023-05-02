@@ -16,8 +16,8 @@ class CreateDevisTable extends Migration
         Schema::create('devis', function (Blueprint $table) {
             $table->id();
             $table->string('estimation');
-            $table->longText('description');
-            $table->string('reference');
+            $table->dateTime('date_creation');
+            $table->dateTime('date_experation');
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->bigInteger('user_id')->unsigned();

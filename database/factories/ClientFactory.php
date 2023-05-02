@@ -18,7 +18,7 @@ class ClientFactory extends Factory
         return [
             'nom' => $this->faker->firstName,
             'prenom' => $this->faker->lastName,
-            'type' => implode(',', $this->faker->randomElements(['Buyer', 'Seller', 'Renter', 'Big company'], $count)),
+            'type' => implode(',', $this->faker->randomElements(['Acheteur', 'Vendeur', 'Locataire', 'Grande entreprise'], $count)),
             'tel' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
             'email' => $this->faker->email,

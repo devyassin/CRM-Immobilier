@@ -12,6 +12,8 @@ class Devis extends Model
     protected $fillable = [
         'estimation',
         'description',
+        'date_creation',
+        'date_experation',
         'reference',
         'client_id',
         'user_id'

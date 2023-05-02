@@ -14,7 +14,7 @@ import {
     Post,
     Error,
     DevisDetail,
-    AddDevis,
+    FormDevis,
     Leads,
 } from "./pages";
 
@@ -40,7 +40,7 @@ const App = () => {
                     <Route path="devis">
                         <Route path="/devis" element={<Devis />} />
                         <Route path=":id" element={<DevisDetail />} />
-                        <Route path="/devis/AddDevis" element={<AddDevis />} />
+                        <Route path="/devis/FormDevis" element={<FormDevis />} />
                     </Route>
                     <Route path="post" element={<Post />} />
                     <Route path="calander" element={<Calander />} />

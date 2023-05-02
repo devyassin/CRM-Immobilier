@@ -78,12 +78,12 @@ const Devis = () => {
                             <TfiExport size={25} />
                         </IconStyleOne>
                     </CSVLink>
-                    <IconStyleTree route="/devis/AddDevis">
+                    <IconStyleTree route="/devis/FormDevis">
                         <TfiPlus size={25} />
                     </IconStyleTree>
                 </div>
                 <TableDevis fields={tableDevisFields} />
-                {/* {visibility && <FormLead lead={lead} />} */}
+             
             </div>
         );
     }

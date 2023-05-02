@@ -68,8 +68,9 @@ const initialState = {
     statusUpdateDevis: "",
     devis: {
         estimation: "",
-        description: "",
         reference: "",
+        date_creation: "",
+        date_experation: "",
         client_email: "",
         biens: [],
         user_id: user?.id || "",
@@ -120,6 +121,13 @@ const devisSlice = createSlice({
         setDevisEstimation: (state, { payload }) => {
             state.devis.estimation = payload.price;
         },
+        setEmail: (state, { payload }) => {
+            console.log(payload.email);
+            state.devis.client_email = payload.email;
+        },
+        setReference: (state, { payload }) => {
+            state.devis.reference = "#0000" + payload.id;
+        },
         initialStatus: (state) => {
             state.statusUpdateDevis = initialState.statusUpdateDevis;
             state.statusAddDevis = initialState.statusAddDevis;
@@ -144,6 +152,16 @@ const devisSlice = createSlice({
             .addCase(fetchOneDevis.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.devis = action.payload;
+
+                action.payload.biens.map((bien) => {
+                    state.devis.biens.push(bien.id);
+                });
+
+                state.devis.biens = state.devis.biens.filter((bien) => {
+                    if (!bien?.NomBien) {
+                        return bien;
+                    }
+                });
             })
             .addCase(fetchOneDevis.rejected, (state, action) => {
                 state.status = "failed";
@@ -170,6 +188,7 @@ const devisSlice = createSlice({
                     (element) => element.id === state.devis.id
                 );
                 state.data.devis[index] = state.devis;
+                state.devis = initialState.devis;
                 state.statusUpdateDevis = "succeeded";
             })
             .addCase(UpdateOneDevis.rejected, (state, action) => {
@@ -207,5 +226,6 @@ export const {
     setDevisEstimation,
     clearBiens,
     initialStatus,
+    setEmail,
 } = devisSlice.actions;
 export default devisSlice.reducer;

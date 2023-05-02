@@ -44,9 +44,9 @@ use App\Models\Devis;
                 // Validate the request data
                 $validatedData = $request->validate([
                     'estimation' => 'required|string',
-                    'description' => 'required|string',
-                    'reference' => 'required|string',
                     'client_email' => 'required|email',
+                    'date_creation' => 'required|date_format:Y-m-d',
+                    'date_experation' => 'required|date_format:Y-m-d',
                     'user_id' => 'required|integer|exists:users,id',
                     'biens' => 'required|array',
                     'biens.*' => 'integer|exists:biens,id'
@@ -64,8 +64,9 @@ use App\Models\Devis;
                 // Create a new devis instance
                 $devis = new Devis();
                 $devis->estimation = $validatedData['estimation'];
-                $devis->description = $validatedData['description'];
-                $devis->reference = $validatedData['reference'];
+                $devis->date_creation = $validatedData['date_creation'];
+                $devis->date_experation = $validatedData['date_experation'];
+                // $devis->reference = $reference; 
                 $devis->client_id = $client->id;
                 $devis->user_id = $validatedData['user_id'];
                 $devis->save();

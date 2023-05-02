@@ -42,8 +42,8 @@ export const tableDevisFields = [
     "Numero",
     "Email",
     "Estimation",
-    "Description",
     "Total Biens",
-    "Date",
+    "Date de creation",
+    "Date d'experation",
     "Action",
 ];

@@ -2,9 +2,11 @@ import React from "react";
 import { MdDelete, MdEmail, MdCreate } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteDevis, fetchOneDevis } from "../../../store/devisSlice";
+import { useNavigate } from "react-router-dom";
 import { show } from "../../../store/overlaySlice";
 import { notFound } from "../../../assets/images";
 const TableDevis = ({ fields }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const devisGlobal = useSelector((state) => state.devis.data);
 
@@ -45,7 +47,7 @@ const TableDevis = ({ fields }) => {
                                 class="bg-white border-b hover:bg-gray-100 duration-150 "
                             >
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {devi.reference}
+                                    {"#0000" + devi.id}
                                 </td>
                                 <td class="px-6 py-4">{devi.client.nom}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -56,12 +58,14 @@ const TableDevis = ({ fields }) => {
                                     {devi.estimation + "DH"}
                                 </td>
 
-                                <td class="px-6 py-4">
-                                    {devi.description + "..."}
-                                </td>
                                 <td class="px-6 py-4">{devi.biens.length}</td>
 
-                                <td class="px-6 py-4">{devi.updated_at}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {devi.date_creation.substring(0, 10)}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {devi.date_experation.substring(0, 10)}
+                                </td>
 
                                 <td class="px-6 py-4 flex space-x-2 mt-4">
                                     <MdDelete
@@ -76,9 +80,11 @@ const TableDevis = ({ fields }) => {
                                         className="duration-150 cursor-pointer hover:opacity-60"
                                         size={20}
                                         color="blue"
-                                        onClick={() => {
-                                            dispatch(fetchOneDevis(devi.id));
-                                            dispatch(dispatch(show()));
+                                        onClick={async () => {
+                                            await dispatch(
+                                                fetchOneDevis(devi.id)
+                                            );
+                                            navigate("/devis/FormDevis");
                                         }}
                                     />
                                     <a href={`mailto:${devi.client.email}`}>

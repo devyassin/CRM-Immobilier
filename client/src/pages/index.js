@@ -4,7 +4,7 @@ import Feed from "./Dashboard/Feed";
 import Calander from "./Dashboard/Calander";
 import Devis from "./Dashboard/Devis";
 import DevisDetail from "./NestedRoutes/DevisDetail";
-import AddDevis from "./NestedRoutes/AddDevis";
+import FormDevis from "./NestedRoutes/FormDevis";
 import Dashborad from "./Dashboard/Dashborad";
 import Biens from "./Dashboard/Biens";
 import Leads from "./Dashboard/Leads";
@@ -26,6 +26,6 @@ export {
     Clients,
     Post,
     DevisDetail,
-    AddDevis,
+    FormDevis,
     Error,
 };
