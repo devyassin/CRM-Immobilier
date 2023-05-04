@@ -68,9 +68,15 @@ html {
 
 .tableScroll::-webkit-scrollbar {
     height: 8px;
-    width:1px;
+    width: 1px;
     margin-top: 20px;
     opacity: 40%;
+}
+
+@media print {
+    .thead {
+        display: table-header-group;
+    }
 }
 
 .tableScroll::-webkit-scrollbar-thumb {
@@ -3323,17 +3329,19 @@ select {
 }
 
 .loading-spinner {
-  display: inline-block;
-  width: 150px;
-  height: 150px;
-  border: 10px solid rgba(230, 230, 230, .3);
-  border-radius: 50%;
-  border-top-color: #3dc9e5;
-  animation: spin 1s ease-in-out infinite;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border: 10px solid rgba(230, 230, 230, 0.3);
+    border-radius: 50%;
+    border-top-color: #3dc9e5;
+    animation: spin 1s ease-in-out infinite;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .inline {

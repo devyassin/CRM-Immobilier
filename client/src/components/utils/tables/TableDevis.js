@@ -1,11 +1,14 @@
 import React from "react";
-import { MdDelete, MdEmail, MdCreate } from "react-icons/md";
+import { MdDelete, MdLocalPrintshop, MdCreate } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteDevis, fetchOneDevis } from "../../../store/devisSlice";
 import { useNavigate } from "react-router-dom";
-import { show } from "../../../store/overlaySlice";
+import { useRef } from "react";
 import { notFound } from "../../../assets/images";
+import { fetchAllBiens } from "../../../store/bienSlice";
+
 const TableDevis = ({ fields }) => {
+    const ref = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const devisGlobal = useSelector((state) => state.devis.data);
@@ -87,11 +90,15 @@ const TableDevis = ({ fields }) => {
                                             navigate("/devis/FormDevis");
                                         }}
                                     />
-                                    <a href={`mailto:${devi.client.email}`}>
-                                        <MdEmail
+
+                                    <a>
+                                        <MdLocalPrintshop
                                             className="duration-150 cursor-pointer hover:opacity-60"
                                             size={20}
                                             color="orange"
+                                            onClick={() => {
+                                                navigate(`/devis/${devi.id}`);
+                                            }}
                                         />
                                     </a>
                                 </td>
