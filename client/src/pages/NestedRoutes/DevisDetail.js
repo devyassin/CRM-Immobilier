@@ -2,6 +2,8 @@ import React from "react";
 import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import { logo, icon, pngwing } from "../../assets/images";
 import { useEffect } from "react";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllBiens } from "../../store/bienSlice";
@@ -29,6 +31,12 @@ const DevisDetail = () => {
             <div>
                 <div className="flex items-center justify-between">
                     <HeaderTitle title="Imprimer Devis" />
+                    <Link to="/devis">
+                        <IoArrowBackCircleSharp
+                            size={50}
+                            className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
+                        />
+                    </Link>
                 </div>
                 <div className="flex items-center justify-center mt-40 ">
                     <div class="loading-spinner"></div>
@@ -42,6 +50,12 @@ const DevisDetail = () => {
             <div>
                 <div className="flex items-center justify-between">
                     <HeaderTitle title="Imprimer Devis" />
+                    <Link to="/devis">
+                        <IoArrowBackCircleSharp
+                            size={50}
+                            className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
+                        />
+                    </Link>
                 </div>
                 <div
                     ref={ref}

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectMultipleChoiseBiens from "../../components/utils/form/SelectMultipleChoiseBiens";
+import SelectOneChoiceStatFacture from "../../components/utils/form/SelectOneChoiceStatFacture";
+import SelectOneChoicePaiFacture from "../../components/utils/form/SelectOneChoicePaiFacture";
 import SelectOneChoiceClient from "../../components/utils/form/SelectOneChoiceClient";
 import { MdDelete, MdSettings } from "react-icons/md";
 import {
@@ -14,72 +16,74 @@ import {
     Toastfailed,
 } from "../../components/utils/toast/Toast";
 import {
-    handleDevisForm,
-    addDevis,
-    UpdateOneDevis,
+    handleFactureForm,
+    addFacture,
+    UpdateOneFacture,
     closeAlert,
     closeAlertUpdate,
     initialStatus,
     setEmail,
-    fetchAllDevis,
-} from "../../store/devisSlice";
+    fetchAllFacture,
+} from "../../store/factureSlice";
 
 import { fetchOneBien } from "../../store/bienSlice";
 
-const FormDevis = () => {
+const FormFacture = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const devi = useSelector((state) => state.devis.devis);
+    const facture = useSelector((state) => state.factures.facture);
     const bien = useSelector((state) => state.biens.bien);
     const status = useSelector((state) => state.biens.status);
     const biens = useSelector((state) => state.biens.data);
     const client = useSelector((state) => state.clients.client);
-    const statusAddDevis = useSelector((state) => state.devis.statusAddDevis);
-    const statusUpdateDevis = useSelector(
-        (state) => state.devis.statusUpdateDevis
+    const statusAddFacture = useSelector(
+        (state) => state.factures.statusAddFacture
     );
-    const errorMessage = useSelector((state) => state.devis.error);
+    const statusUpdateFacture = useSelector(
+        (state) => state.factures.statusUpdateFacture
+    );
+    const errorMessage = useSelector((state) => state.factures.error);
 
     useEffect(() => {
-        if (statusAddDevis === "succeeded") {
-            Toastsuccess("Devis Ajouter !");
+        if (statusAddFacture === "succeeded") {
+            Toastsuccess("Facture Ajouter !");
             setTimeout(() => {
-                navigate("/devis");
+                navigate("/facture");
             }, [1000]);
         }
 
-        if (statusAddDevis === "failed") {
+        if (statusAddFacture === "failed") {
             Toastfailed(errorMessage);
         }
 
-        if (statusAddDevis === "loading") {
-            ToastLoading("Devis en cours d'ajout .....");
+        if (statusAddFacture === "loading") {
+            ToastLoading("Facture en cours d'ajout .....");
         }
 
-        if (statusUpdateDevis === "succeeded") {
-            Toastsuccess("Devis Modifier !");
+        if (statusUpdateFacture === "succeeded") {
+            Toastsuccess("Facture Modifier !");
             setTimeout(() => {
-                navigate("/devis");
+                navigate("/facture");
             }, [1000]);
         }
 
-        if (statusUpdateDevis === "failed") {
+        if (statusUpdateFacture === "failed") {
             Toastfailed(errorMessage);
         }
 
-        if (statusUpdateDevis === "loading") {
-            ToastLoading("Devis en cours de modification .....");
+        if (statusUpdateFacture === "loading") {
+            ToastLoading("Facture en cours de modification .....");
         }
 
         dispatch(initialStatus());
-    }, [statusAddDevis, statusUpdateDevis]);
+    }, [statusAddFacture, statusUpdateFacture]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if (!devi?.id) {
-            dispatch(addDevis(devi));
+        if (!facture?.id) {
+            dispatch(addFacture(facture));
         } else {
-            dispatch(UpdateOneDevis([devi.id, devi]));
+            dispatch(UpdateOneFacture([facture.id, facture]));
         }
 
         setTimeout(() => {
@@ -90,16 +94,16 @@ const FormDevis = () => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        dispatch(handleDevisForm({ name, value }));
+        dispatch(handleFactureForm({ name, value }));
     };
 
     return (
         <div>
             <div className="flex items-center justify-between">
                 <HeaderTitle
-                    title={devi?.id ? "Modifier devis" : "Ajouter devis"}
+                    title={facture?.id ? "Modifier facture" : "Ajouter facture"}
                 />
-                <Link to="/devis">
+                <Link to="/facture">
                     <IoArrowBackCircleSharp
                         size={50}
                         className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
@@ -111,43 +115,73 @@ const FormDevis = () => {
                     onSubmit={submitHandler}
                     className="grid grid-cols-1 gap-x-32 gap-y-10 mt-16 px-4 md:grid-cols-2"
                 >
-                    {!devi?.id && (
-                        <div className="flex flex-col col-span-2 w-full items-start">
-                            <label className="text-xl text-blue-300">
-                                Client
-                            </label>
-                            <SelectOneChoiceClient />
-                            {client?.id && (
-                                <div className="flex flex-row h-[100px] ml-2 mt-8 space-x-6">
-                                    <div className="flex flex-col space-y-4">
-                                        <h1>tel :</h1>
-                                        <h1>email :</h1>
-                                        <h1>address :</h1>
+                    <div className="flex flex-col col-span-2 w-full items-start">
+                        <div className="flex flex-col space-y-10 lg:flex-row lg:space-y-0  justify-between w-full">
+                            {!facture?.id && (
+                                <div>
+                                    <label className="text-xl text-blue-300">
+                                        Client
+                                    </label>
+                                    <div className="w-[400px]">
+                                        <SelectOneChoiceClient type="facture" />
                                     </div>
-                                    <div className="flex flex-col space-y-4">
-                                        <h1 className="max-w-[300px] opacity-70 break-words">
-                                            {client.tel}
-                                        </h1>
-                                        <h1 className="max-w-[300px] opacity-70 break-words">
-                                            {client.email}
-                                        </h1>
-                                        <h1 className="max-w-[300px] opacity-70 break-words">
-                                            {client.address}
-                                        </h1>
-                                    </div>
-                                </div>
-                            )}
 
-                            {client?.id && (
-                                <div className="flex space-x-12 mt-4 ml-2">
-                                    <h1>type :</h1>
-                                    <h1 className="max-w-[300px] opacity-70 break-words">
-                                        {client.type}
-                                    </h1>
+                                    {client?.id && (
+                                        <div className="flex flex-row h-[100px] ml-2 mt-8 space-x-6">
+                                            <div className="flex flex-col space-y-4">
+                                                <h1>tel :</h1>
+                                                <h1>email :</h1>
+                                                <h1>address :</h1>
+                                            </div>
+                                            <div className="flex flex-col space-y-4">
+                                                <h1 className="max-w-[300px] opacity-70 break-words">
+                                                    {client.tel}
+                                                </h1>
+                                                <h1 className="max-w-[300px] opacity-70 break-words">
+                                                    {client.email}
+                                                </h1>
+                                                <h1 className="max-w-[300px] opacity-70 break-words">
+                                                    {client.address}
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {client?.id && (
+                                        <div className="flex space-x-12 mt-4 ml-2">
+                                            <h1>type :</h1>
+                                            <h1 className="max-w-[300px] opacity-70 break-words">
+                                                {client.type}
+                                            </h1>
+                                        </div>
+                                    )}
                                 </div>
                             )}
+                            <div>
+                                <div>
+                                    <label className="text-xl text-blue-300">
+                                        Status
+                                    </label>
+                                    <div className="lg:w-[400px]">
+                                        <SelectOneChoiceStatFacture
+                                            facture={facture}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-24">
+                                    <label className="text-xl text-blue-300">
+                                        Mode paiement
+                                    </label>
+                                    <div className="lg:w-[400px]">
+                                        <SelectOneChoicePaiFacture
+                                            facture={facture}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    )}
+                    </div>
+
                     <div className="flex w-full justify-between">
                         <div className="flex flex-col space-y-2">
                             <label className="text-md text-blue-300">
@@ -157,7 +191,7 @@ const FormDevis = () => {
                                 required
                                 onChange={handleChange}
                                 type="date"
-                                value={devi.date_creation.substring(0, 10)}
+                                value={facture.date_creation.substring(0, 10)}
                                 name="date_creation"
                             />
                         </div>
@@ -169,7 +203,7 @@ const FormDevis = () => {
                                 required
                                 onChange={handleChange}
                                 type="date"
-                                value={devi.date_experation.substring(0, 10)}
+                                value={facture.date_experation.substring(0, 10)}
                                 name="date_experation"
                             />
                         </div>
@@ -177,7 +211,7 @@ const FormDevis = () => {
                     <hr className="col-span-2"></hr>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">Biens</label>
-                        <SelectMultipleChoiseBiens type="devis" />
+                        <SelectMultipleChoiseBiens type="" />
                     </div>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">
@@ -186,8 +220,8 @@ const FormDevis = () => {
                         <input
                             required
                             onChange={handleChange}
-                            name="estimation"
-                            value={devi.estimation}
+                            name="prix_total"
+                            value={facture.prix_total}
                             type="number"
                             disabled
                             class="intro-x login__input form-control text-2xl  px-4 block mt-4 focus:outline-none"
@@ -232,7 +266,7 @@ const FormDevis = () => {
                             </thead>
                             <tbody>
                                 {status === "succeeded" &&
-                                    devi.biens.map((id) => {
+                                    facture.biens.map((id) => {
                                         const bien = biens.biens.filter(
                                             (bien) => bien.id === id
                                         );
@@ -286,12 +320,11 @@ const FormDevis = () => {
                     </div>
 
                     <div className="flex flex-col items-start col-span-1">
-                        {/* <label className="text-xl text-blue-300">Estimation</label> */}
                         <button
                             type="submit"
                             class="btn btn-primary mt-8 py-4 text-2xl px-8 w-full xl:w-48 xl:mr-3 align-top"
                         >
-                            {devi?.id ? "Modifier" : "Ajouter"}
+                            {facture?.id ? "Modifier" : "Ajouter"}
                         </button>
                     </div>
                 </form>
@@ -300,4 +333,4 @@ const FormDevis = () => {
     );
 };
 
-export default FormDevis;
+export default FormFacture;

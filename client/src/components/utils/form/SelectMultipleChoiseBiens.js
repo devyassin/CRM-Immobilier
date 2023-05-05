@@ -8,7 +8,12 @@ import {
     setDevisEstimation,
     clearBiens,
 } from "../../../store/devisSlice";
-const SelectMultipleChoiseBiens = () => {
+import {
+    addBienToFacture,
+    setFacturePrice,
+    clearBiensFac,
+} from "../../../store/factureSlice";
+const SelectMultipleChoiseBiens = ({ type }) => {
     const dispatch = useDispatch();
     const filterName = useSelector((state) => state.biens.filterName);
     const filterStatus = useSelector((state) => state.biens.filterStatus);
@@ -19,6 +24,7 @@ const SelectMultipleChoiseBiens = () => {
     const status = useSelector((state) => state.biens.status);
     const biens = useSelector((state) => state.biens.data);
     const devi = useSelector((state) => state.devis.devis);
+    const facture = useSelector((state) => state.factures.facture);
 
     useEffect(() => {
         dispatch(
@@ -33,12 +39,15 @@ const SelectMultipleChoiseBiens = () => {
         );
     }, []);
     const handleSelectedOptions = (selected) => {
-        // const id = selected[selected.length - 1].bien.id;
-        console.log(selected);
         dispatch(clearBiens());
+        dispatch(clearBiensFac());
         selected.map((item) => {
             const { id } = item.bien;
-            dispatch(addBienToDevis({ id }));
+            if (type === "devis") {
+                dispatch(addBienToDevis({ id }));
+            } else {
+                dispatch(addBienToFacture({ id }));
+            }
         });
     };
     if (status === "succeeded") {
@@ -47,8 +56,14 @@ const SelectMultipleChoiseBiens = () => {
         });
 
         const selectedBiens = biensObj.filter((item) => {
-            if (devi.biens.includes(item.bien.id)) {
-                return item;
+            if (type === "devis") {
+                if (devi.biens.includes(item.bien.id)) {
+                    return item;
+                }
+            } else {
+                if (facture.biens.includes(item.bien.id)) {
+                    return item;
+                }
             }
         });
         const price = selectedBiens
@@ -57,7 +72,11 @@ const SelectMultipleChoiseBiens = () => {
             }, 0)
             .toFixed(2);
 
-        dispatch(setDevisEstimation({ price }));
+        if (type === "devis") {
+            dispatch(setDevisEstimation({ price }));
+        } else {
+            dispatch(setFacturePrice({ price }));
+        }
         return (
             <div className=" mt-5 z-40 w-full ">
                 <Select

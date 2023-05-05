@@ -11,10 +11,12 @@ import {
     Devis,
     Biens,
     Taches,
-    Post,
+    Facture,
     Error,
     DevisDetail,
     FormDevis,
+    FactureDetail,
+    FormFacture,
     Leads,
 } from "./pages";
 
@@ -45,7 +47,15 @@ const App = () => {
                             element={<FormDevis />}
                         />
                     </Route>
-                    <Route path="post" element={<Post />} />
+                    <Route path="facture">
+                        <Route path="/facture" element={<Facture />} />
+                        <Route path=":id" element={<FactureDetail />} />
+                        <Route
+                            path="/facture/FormFacture"
+                            element={<FormFacture />}
+                        />
+                    </Route>
+
                     <Route path="calander" element={<Calander />} />
                 </Route>
                 <Route path="/login" element={<Login />} />

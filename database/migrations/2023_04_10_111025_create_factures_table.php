@@ -16,10 +16,10 @@ class CreateFacturesTable extends Migration
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->string('prix_total');
-            $table->dateTime('date');
-            $table->string('mode_payment');
-            $table->string('status');
-            $table->string('description');
+            $table->dateTime('date_creation');
+            $table->dateTime('date_experation');
+            $table->enum('status',['payé','non réglé']);
+            $table->enum('mode_payment',['espèces','carte de crédit','virement bancaire']);
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->bigInteger('user_id')->unsigned();

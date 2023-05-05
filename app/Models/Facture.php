@@ -10,7 +10,8 @@ class Facture extends Model
     use HasFactory;
     protected $fillable = [
         'prix_total',
-        'date',
+        'date_creation',
+        'date_experation',
         'mode_payment',
         'status',
         'description',
@@ -23,7 +24,13 @@ class Facture extends Model
     public function client(){
         return $this->belongsTo(Client::class);
     }
-    public function bien(){
-        return $this->hasMany(Bien::class);
+
+    public function biens()
+    {
+        return $this->belongsToMany(Bien::class, 'facture_biens', 'facture_id', 'bien_id');
     }
+    public function factures_biens()
+  {
+    return $this->hasMany(facture_biens::class);
+  }
 }

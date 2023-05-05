@@ -7,7 +7,7 @@ import leadSlice from "./leadSlice";
 import tacheSlice from "./tacheSlice";
 import bienSlice from "./bienSlice";
 import devisSlice from "./devisSlice";
-
+import factureSlice from "./factureSlice";
 const store = configureStore({
     reducer: {
         selectedPage: selectedPageSlice,
@@ -17,6 +17,7 @@ const store = configureStore({
         biens: bienSlice,
         taches: tacheSlice,
         devis: devisSlice,
+        factures: factureSlice,
         user: userSlice,
     },
 });

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchAllClients, fetchOneClient } from "../../../store/clientSlice";
 import { setEmail } from "../../../store/devisSlice";
+import { setEmailFac } from "../../../store/factureSlice";
 
-const SelectOneChoiceClient = () => {
+const SelectOneChoiceClient = ({ type }) => {
     const dispatch = useDispatch();
     const clients = useSelector((state) => state.clients.data);
     const client = useSelector((state) => state.clients.client);
@@ -16,7 +17,11 @@ const SelectOneChoiceClient = () => {
 
     const handleSelectedOptions = (selected) => {
         const { id, email } = selected.client;
-        dispatch(setEmail({ email }));
+        if (type === "facture") {
+            dispatch(setEmailFac({ email }));
+        } else {
+            dispatch(setEmail({ email }));
+        }
         dispatch(fetchOneClient(id));
     };
 
@@ -30,7 +35,7 @@ const SelectOneChoiceClient = () => {
         });
 
         return (
-            <div className=" mt-5 z-50 w-1/2 md:w-1/4 ">
+            <div className=" mt-5 z-50 w-full ">
                 <Select
                     required
                     name="type"
@@ -48,7 +53,7 @@ const SelectOneChoiceClient = () => {
         );
     } else {
         return (
-            <div className=" mt-5 z-50 w-1/2 md:w-1/4 ">
+            <div className=" mt-5 z-50 w-full">
                 <Select
                     required
                     name="type"

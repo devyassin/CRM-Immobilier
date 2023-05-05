@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { clearDevisUpdate } from "../../../store/devisSlice";
+import { clearFactureUpdate } from "../../../store/factureSlice";
+import { clearClientUpdate } from "../../../store/clientSlice";
 
 const IconStyleTree = ({ children, route }) => {
     const dispatch = useDispatch();
@@ -9,6 +11,8 @@ const IconStyleTree = ({ children, route }) => {
         <Link
             onClick={() => {
                 dispatch(clearDevisUpdate());
+                dispatch(clearFactureUpdate());
+                dispatch(clearClientUpdate());
             }}
             to={route}
             className="  p-3 md:p-4 bg-blue-700 w-fit rounded-full cursor-pointer text-white hover:opacity-70 duration-150 shadow-sm"
