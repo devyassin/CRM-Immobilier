@@ -103,6 +103,8 @@ use App\Models\Devis;
                     $validatedData = $request->validate([
                         'estimation' => 'string',
                         'description' => 'string',
+                        'date_creation' => 'required',
+                        'date_experation' => 'required',
                         'reference' => 'string',
                         'client_id' => 'integer|exists:clients,id',
                         'user_id' => 'integer|exists:users,id',

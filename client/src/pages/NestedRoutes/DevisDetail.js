@@ -14,7 +14,7 @@ import ReactPrint from "react-to-print";
 const DevisDetail = () => {
     const ref = useRef();
     const { id } = useParams();
-    console.log(id);
+  
     const dispatch = useDispatch();
     const devi = useSelector((state) => state.devis.devis);
     const user = useSelector((state) => state.user.user);
@@ -103,7 +103,7 @@ const DevisDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex space-x-24 translate-y-28 bg-neutral-800 font-medium  text-white">
+                    <div className="flex space-x-24  bg-neutral-800 font-medium  text-white">
                         <div class="text-center  flex justify-start  px-6   py-4">
                             Nom Bien
                         </div>
@@ -117,7 +117,7 @@ const DevisDetail = () => {
                             comission
                         </div>
                     </div>
-                    <table class="min-w-full  text-center text-sm font-light ">
+                    <table class="min-w-full -translate-y-28  text-center text-sm font-light ">
                         <thead class="border-b thed opacity-0 bg-neutral-800 font-medium  text-white dark:border-neutral-500 dark:bg-neutral-900">
                             <tr className="">
                                 <th scope="col" class="text-left px-6  py-4">

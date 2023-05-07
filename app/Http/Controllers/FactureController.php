@@ -105,9 +105,8 @@ use App\Models\Facture;
                 try {
                     $validatedData = $request->validate([
                         'prix_total' => 'required|string',
-                        'client_email' => 'required|email',
-                        'date_creation' => 'required|date_format:Y-m-d',
-                        'date_experation' => 'required|date_format:Y-m-d',
+                        'date_creation' => 'required',
+                        'date_experation' => 'required',
                         'status' => 'required|string|max:255',
                         'mode_payment' => 'required|string|max:255',
                         'user_id' => 'required|integer|exists:users,id',
