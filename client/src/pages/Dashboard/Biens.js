@@ -119,6 +119,41 @@ const Biens = () => {
             </div>
         );
     }
+
+    if (status === "failed") {
+        return (
+            <div>
+                <div className="flex items-center justify-between">
+                    <HeaderTitle title={title} />
+                    <IconBienStyle number={biens.count} />
+                </div>
+                <div className="flex items-center justify-end mt-4 space-x-4">
+                    <SearchBar
+                        dipatcherFunction={searchClientDispatcher}
+                        searchValue={filterName}
+                        placeHolder="Chercher un client ..."
+                    />
+                    <IconStyleOne type="filter">
+                        <TfiFilter size={25} />
+                    </IconStyleOne>
+                    <CSVLink data={biens.biens} filename="biens.csv">
+                        <IconStyleOne>
+                            <TfiExport size={25} />
+                        </IconStyleOne>
+                    </CSVLink>
+                    <IconStyleTwo>
+                        <TfiPlus size={25} />
+                    </IconStyleTwo>
+                </div>
+
+                <div className="flex items-center justify-center mt-40">
+                    <div class="text-3xl text-red-500">
+                        Tu peux pas supprimer ce bien
+                    </div>
+                </div>
+            </div>
+        );
+    }
 };
 
 export default Biens;
