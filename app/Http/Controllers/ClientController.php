@@ -121,6 +121,7 @@ class ClientController extends Controller
                 'type' => 'required|string|max:255',
                 'tel' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
+                'last_contacted' => 'required|date_format:Y-m-d',
                 'email' => 'required|email|max:255|unique:clients,email,'.$client->id,
                 'user_id'=>'required'
             ]);

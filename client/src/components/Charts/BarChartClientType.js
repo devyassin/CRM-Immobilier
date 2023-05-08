@@ -41,9 +41,7 @@ const labels = [
 const filterByMonth = (desiredMonth, data) => {
     const filteredData = data.filter((obj) => {
         const date = new Date(obj.last_contacted);
-        console.log(date);
         const monthName = labels[date.getMonth()];
-        console.log(monthName);
         return monthName === desiredMonth;
     });
     return filteredData;
@@ -71,7 +69,7 @@ const BarChartClientType = () => {
 
     if (status === "succeeded") {
         const clientsCurrentYear = clients.clients.filter((client) => {
-            return client.created_at.substring(0, 4) == currentYear;
+            return client.last_contacted.substring(0, 4) == currentYear;
         });
 
         const getThesumOfClientsbyTypeInMonth = (label, data, type) => {
