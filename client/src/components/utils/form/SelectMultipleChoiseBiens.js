@@ -15,31 +15,14 @@ import {
 } from "../../../store/factureSlice";
 const SelectMultipleChoiseBiens = ({ type }) => {
     const dispatch = useDispatch();
-    const filterName = useSelector((state) => state.biens.filterName);
-    const filterStatus = useSelector((state) => state.biens.filterStatus);
-    const filterPrice = useSelector((state) => state.biens.filterPrice);
-    const filterOrder = useSelector((state) => state.biens.filterOrder);
-    const filterMinPrice = useSelector((state) => state.biens.filterMinPrice);
-    const filterMaxPrice = useSelector((state) => state.biens.filterMaxPrice);
     const status = useSelector((state) => state.biens.status);
     const biens = useSelector((state) => state.biens.data);
     const devi = useSelector((state) => state.devis.devis);
+
     const facture = useSelector((state) => state.factures.facture);
 
-    useEffect(() => {
-        dispatch(
-            fetchAllBiens([
-                filterName,
-                filterStatus,
-                filterPrice,
-                filterOrder,
-                filterMinPrice,
-                filterMaxPrice,
-            ])
-        );
-    }, []);
     const handleSelectedOptions = (selected) => {
-        dispatch(clearBiens());
+        dispatch(clearBiens({ biens }));
         dispatch(clearBiensFac());
         selected.map((item) => {
             const { id } = item.bien;
@@ -51,7 +34,11 @@ const SelectMultipleChoiseBiens = ({ type }) => {
         });
     };
     if (status === "succeeded") {
-        const biensObj = biens.biens.map((bien) => {
+        const bienLocal = biens.biens.filter((bien) => bien.exict === "local");
+        const bienNonLocal = biens.biens.filter(
+            (bien) => bien.exict === "nonlocal"
+        );
+        const biensObj = bienLocal.map((bien) => {
             return { bien: bien, value: bien.NomBien, label: bien.NomBien };
         });
 
@@ -66,13 +53,23 @@ const SelectMultipleChoiseBiens = ({ type }) => {
                 }
             }
         });
-        const price = selectedBiens
+        let price = selectedBiens
             .reduce((acc, cur) => {
                 return acc + Number(cur.bien.price);
             }, 0)
             .toFixed(2);
 
+        // get the biens with nonlocal exict :
+        if (bienNonLocal.length != 0) {
+            bienNonLocal.map((bien) => {
+                if (devi.biens.includes(bien.id)) {
+                    price = Number(price) + Number(bien.price);
+                }
+            });
+        }
+
         if (type === "devis") {
+            price = price.toString();
             dispatch(setDevisEstimation({ price }));
         } else {
             dispatch(setFacturePrice({ price }));

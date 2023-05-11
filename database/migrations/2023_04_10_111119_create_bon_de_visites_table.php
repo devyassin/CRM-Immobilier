@@ -16,8 +16,10 @@ class CreateBonDeVisitesTable extends Migration
         Schema::create('bon_de_visites', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date_visite');
-            $table->longText('description');
-            $table->bigInteger('bien_id');
+            $table->string('raison');
+            $table->string('accompagnateur');
+            $table->bigInteger('bien_id')->unsigned();
+            $table->foreign('bien_id')->references('id')->on('biens');
             $table->bigInteger('lead_id')->unsigned();
             $table->foreign('lead_id')->references('id')->on('leads');
             $table->bigInteger('user_id')->unsigned();

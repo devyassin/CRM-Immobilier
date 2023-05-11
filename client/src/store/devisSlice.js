@@ -110,12 +110,32 @@ const devisSlice = createSlice({
         setReference: (state, { payload }) => {
             state.devis.reference = payload.finalResult;
         },
-        clearBiens: (state) => {
-            state.devis.biens = initialState.devis.biens;
+        clearBiens: (state, { payload }) => {
+            const biens = payload.biens;
+
+            biens.biens.map((bien) => {
+                if (
+                    bien.exict === "local" &&
+                    state.devis.biens.includes(bien.id)
+                ) {
+                    let index = state.devis.biens.indexOf(bien.id);
+
+                    state.devis.biens.splice(index, 1);
+                }
+            });
+            // need some changes
+            // state.devis.biens = initialState.devis.biens;
         },
         addBienToDevis: (state, { payload }) => {
             if (!state.devis.biens.includes(payload.id)) {
                 state.devis.biens.push(payload.id);
+            }
+        },
+        removeBienFromDevis: (state, { payload }) => {
+            if (state.devis.biens.includes(payload)) {
+                let index = state.devis.biens.indexOf(payload);
+
+                state.devis.biens.splice(index, 1);
             }
         },
         setDevisEstimation: (state, { payload }) => {
@@ -223,6 +243,7 @@ export const {
     showAlertUpdate,
     setReference,
     addBienToDevis,
+    removeBienFromDevis,
     setDevisEstimation,
     clearBiens,
     initialStatus,

@@ -16,8 +16,7 @@ const instance = axios.create({
 // Fetch all biens
 export const fetchAllBiens = createAsyncThunk(
     "biens/fetchAll",
-    async ([name, status, price, order, min, max]) => {
-        console.log();
+    async ([name, status, price, order, min, max, bienName]) => {
         let queryString = "/biens?";
         if (name !== "") {
             queryString += `client_name=${name}&`;
@@ -33,6 +32,9 @@ export const fetchAllBiens = createAsyncThunk(
         }
         if (min !== "") {
             queryString += `min_price=${min}&`;
+        }
+        if (bienName === "nonlocal") {
+            queryString += `exict=${bienName}&`;
         }
         if (max !== "") {
             queryString += `max_price=${max}&`;
@@ -94,6 +96,7 @@ const initialState = {
         type: "",
         description: "",
         location: "",
+        exict: "local",
         price: "",
         status: "",
         comission: "",
@@ -141,6 +144,15 @@ const bienSlice = createSlice({
             state.bien = initialState.bien;
         },
 
+        setEmailCl: (state, { payload }) => {
+            state.bien.client_email = payload.email;
+            state.bien.exict = "nonlocal";
+            state.bien.type = "Autres";
+            state.bien.status = "disponible";
+            state.bien.location = "random";
+            state.bien.address = "random";
+        },
+
         handleBienForm: (state, { payload }) => {
             const { name, value } = payload;
 
@@ -159,6 +171,10 @@ const bienSlice = createSlice({
             state.showAlertUpdate = false;
         },
         initialStatus: (state) => {
+            state.statusUpdateBien = initialState.statusUpdateBien;
+            state.statusAddBien = initialState.statusAddBien;
+        },
+        initialStatusTwo: (state) => {
             state.statusUpdateBien = initialState.statusUpdateBien;
             state.statusAddBien = initialState.statusAddBien;
         },
@@ -219,8 +235,8 @@ const bienSlice = createSlice({
             })
             .addCase(deleteBien.fulfilled, (state, { payload }) => {
                 state.status = "succeeded";
-                const id = payload.bien.id;
 
+                const id = payload.bien.id;
                 state.data.biens = state.data.biens.filter((bien) => {
                     return bien.id !== id;
                 });
@@ -240,6 +256,7 @@ export const {
     setFilterStatus,
     setFilterMinPrice,
     setFilterMaxPrice,
+    setEmailCl,
     clearBienUpdate,
     closeAlert,
     closeAlertUpdate,
@@ -247,6 +264,7 @@ export const {
     showAlert,
     showAlertUpdate,
     initialStatus,
+    initialStatusTwo,
 } = bienSlice.actions;
 
 export default bienSlice.reducer;

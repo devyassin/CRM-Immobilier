@@ -2,6 +2,7 @@ import React from "react";
 import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import { logo, icon, pngwing } from "../../assets/images";
 import { useEffect } from "react";
+import { MdDelete } from "react-icons/md";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -14,7 +15,7 @@ import ReactPrint from "react-to-print";
 const DevisDetail = () => {
     const ref = useRef();
     const { id } = useParams();
-  
+
     const dispatch = useDispatch();
     const devi = useSelector((state) => state.devis.devis);
     const user = useSelector((state) => state.user.user);
@@ -23,7 +24,7 @@ const DevisDetail = () => {
     const biens = useSelector((state) => state.biens.data);
 
     useEffect(() => {
-        dispatch(fetchAllBiens(["", "", "", "", "", ""]));
+        dispatch(fetchAllBiens(["", "", "", "", "", "", "nonlocal"]));
         dispatch(fetchOneDevis(id));
     }, []);
     if (status === "loading") {

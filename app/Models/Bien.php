@@ -12,6 +12,7 @@ class Bien extends Model
         'NomBien',
         'address',
         'type',
+        'exict',
         'description',
         'location',
         'price',
@@ -36,5 +37,9 @@ class Bien extends Model
     }
     public function facture(){
         return $this->belongsTo(Facture::class);
+    }
+
+    public function bon(){
+        return $this->hasMany(BonDeVisite::class);
     }
 }

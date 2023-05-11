@@ -1,13 +1,18 @@
 import React from "react";
 import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import SelectMultipleChoiseBiens from "../../components/utils/form/SelectMultipleChoiseBiens";
 import SelectOneChoiceClient from "../../components/utils/form/SelectOneChoiceClient";
-import { MdDelete, MdSettings } from "react-icons/md";
+import { MdAddBox } from "react-icons/md";
+import { FaCheckSquare } from "react-icons/fa";
+import { AiFillCloseSquare } from "react-icons/ai";
+
 import {
     Toastsuccess,
     ToastLoading,
@@ -20,11 +25,21 @@ import {
     closeAlert,
     closeAlertUpdate,
     initialStatus,
+    addBienToDevis,
+    removeBienFromDevis,
     setEmail,
     fetchAllDevis,
 } from "../../store/devisSlice";
 
-import { fetchOneBien } from "../../store/bienSlice";
+import {
+    fetchOneBien,
+    deleteBien,
+    fetchAllBiens,
+    handleBienForm,
+    initialStatusTwo,
+    addBien,
+    setEmailCl,
+} from "../../store/bienSlice";
 
 const FormDevis = () => {
     const navigate = useNavigate();
@@ -32,6 +47,7 @@ const FormDevis = () => {
     const devi = useSelector((state) => state.devis.devis);
     const bien = useSelector((state) => state.biens.bien);
     const status = useSelector((state) => state.biens.status);
+    const statusAddBien = useSelector((state) => state.biens.statusAddBien);
     const biens = useSelector((state) => state.biens.data);
     const client = useSelector((state) => state.clients.client);
     const statusAddDevis = useSelector((state) => state.devis.statusAddDevis);
@@ -39,9 +55,13 @@ const FormDevis = () => {
         (state) => state.devis.statusUpdateDevis
     );
     const errorMessage = useSelector((state) => state.devis.error);
+    const error = useSelector((state) => state.biens.error);
 
     useEffect(() => {
+        dispatch(fetchAllBiens(["", "", "", "", "", "", "nonlocal"]));
+
         if (statusAddDevis === "succeeded") {
+            console.log("nice ------->");
             Toastsuccess("Devis Ajouter !");
             setTimeout(() => {
                 navigate("/devis");
@@ -74,6 +94,24 @@ const FormDevis = () => {
         dispatch(initialStatus());
     }, [statusAddDevis, statusUpdateDevis]);
 
+    useEffect(() => {
+        if (statusAddBien === "failed") {
+            Toastfailed(error);
+        }
+        if (statusAddBien === "succeeded") {
+            console.log(title);
+            //now i will search the bien by title then get the id and add it to the array in the devis sclice
+            biens.biens.map((bien) => {
+                if (bien.NomBien == title) {
+                    const id = bien.id;
+                    dispatch(addBienToDevis({ id }));
+                }
+            });
+        }
+
+        dispatch(initialStatusTwo());
+    }, [statusAddBien]);
+
     const submitHandler = (e) => {
         e.preventDefault();
         if (!devi?.id) {
@@ -92,6 +130,30 @@ const FormDevis = () => {
 
         dispatch(handleDevisForm({ name, value }));
     };
+
+    const submitHandlerNonLocalDevis = (e) => {
+        e.preventDefault();
+        setTitle(bien.NomBien);
+        dispatch(addBien(bien));
+    };
+
+    const handleChangeNonLocalBien = (event) => {
+        const { name, value } = event.target;
+
+        dispatch(handleBienForm({ name, value }));
+        if (!devi?.id) {
+            console.log(devi);
+            const email = client.email;
+            dispatch(setEmailCl({ email }));
+        } else {
+            const email = devi.client.email;
+            console.log(email);
+            dispatch(setEmailCl({ email }));
+        }
+    };
+
+    const [isShow, setisShow] = useState(false);
+    const [title, setTitle] = useState("");
 
     return (
         <div>
@@ -177,7 +239,26 @@ const FormDevis = () => {
                     <hr className="col-span-2"></hr>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">Biens</label>
-                        <SelectMultipleChoiseBiens type="devis" />
+                        <div className="w-full flex items-center">
+                            <SelectMultipleChoiseBiens type="devis" />
+                            {isShow === true ? (
+                                <AiFillCloseSquare
+                                    onClick={() => {
+                                        setisShow((prev) => !prev);
+                                    }}
+                                    size={59}
+                                    className="text-red-500 cursor-pointer hover:opacity-80 duration-150 mt-5"
+                                />
+                            ) : (
+                                <MdAddBox
+                                    onClick={() => {
+                                        setisShow((prev) => !prev);
+                                    }}
+                                    size={59}
+                                    className="text-blue-500 cursor-pointer hover:opacity-80 duration-150 mt-5"
+                                />
+                            )}
+                        </div>
                     </div>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">
@@ -190,9 +271,82 @@ const FormDevis = () => {
                             value={devi.estimation}
                             type="number"
                             disabled
-                            class="intro-x login__input form-control text-2xl  px-4 block mt-4 focus:outline-none"
+                            class=" login__input form-control text-2xl  px-4 block mt-4 focus:outline-none"
                         />
                     </div>
+
+                    <motion.div
+                        animate={{
+                            y: isShow === true ? 0 : "-70%",
+                            opacity: isShow === true ? 1 : 0,
+                        }}
+                        initial={{
+                            y: "-70%",
+                            opacity: 0,
+                        }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 120,
+                        }}
+                        className="w-full col-span-2 "
+                    >
+                        <div className="flex flex-col md:flex-row items-center w-full space-x-4">
+                            <input
+                                onChange={handleChangeNonLocalBien}
+                                name="NomBien"
+                                value={bien.NomBien}
+                                type="text"
+                                class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                                placeholder="Nom Bien"
+                            />
+                            <textarea
+                                className="w-full md:w-fit mt-4 md:mt-0"
+                                onChange={handleChangeNonLocalBien}
+                                cols="200"
+                                maxlength="1000"
+                                name="description"
+                                value={bien.description}
+                                placeholder="Description"
+                            ></textarea>
+                            <input
+                                onChange={handleChangeNonLocalBien}
+                                name="price"
+                                value={bien.price}
+                                type="number"
+                                class=" login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                                placeholder="Prix en Dirham"
+                            />
+                            <input
+                                onChange={handleChangeNonLocalBien}
+                                max="0.4"
+                                min="0"
+                                step="0.01"
+                                name="comission"
+                                value={bien.comission}
+                                type="number"
+                                class="login__input form-control py-3 px-4 block mt-4 focus:outline-none"
+                                placeholder="Comission"
+                            />
+                            {client.email !== "" && (
+                                <button onClick={submitHandlerNonLocalDevis}>
+                                    <FaCheckSquare
+                                        type="button"
+                                        className="mt-4 text-blue-500 cursor-pointer "
+                                        size={40}
+                                    />
+                                </button>
+                            )}
+                            {devi.id && client.email === "" && (
+                                <button onClick={submitHandlerNonLocalDevis}>
+                                    <FaCheckSquare
+                                        type="button"
+                                        className="mt-4 text-blue-500 cursor-pointer "
+                                        size={40}
+                                    />
+                                </button>
+                            )}
+                        </div>
+                    </motion.div>
                     <div class="col-span-2  mt-10 shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left  text-gray-500 ">
                             <thead class="text-md text-blue-400  bg-gray-50 ">
@@ -275,8 +429,27 @@ const FormDevis = () => {
                                                 <td class="px-6 py-4">
                                                     {bien[0].price + "DH"}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="flex items-center px-6 py-4">
                                                     {bien[0].comission}
+
+                                                    {bien[0].exict ===
+                                                        "nonlocal" && (
+                                                        <MdDelete
+                                                            className="duration-150 ml-4 cursor-pointer hover:opacity-60"
+                                                            size={20}
+                                                            color="red"
+                                                            onClick={() => {
+                                                                const { id } =
+                                                                    bien[0];
+
+                                                                dispatch(
+                                                                    removeBienFromDevis(
+                                                                        id
+                                                                    )
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
                                                 </td>
                                             </tr>
                                         );

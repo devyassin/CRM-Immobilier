@@ -20,6 +20,7 @@ class CreateBiensTable extends Migration
             $table->enum('type', ['Appartement', 'Maison individuelle', 'Maison mitoyenne', 'Maison de ville', 'Maison de campagne', 'Ferme', 'Studio', 'Duplex', 'Triplex', 'Loft', 'Penthouse', 'Château', 'Manoir', 'Villa', 'Bungalow', 'Terrain', 'Garage', 'Parking','Autres']);
             $table->text('description');
             $table->string('location');
+            $table->string('exict')->default('local');
             $table->string('price');
             $table->enum('status',['disponible','en location','vendu']);
             $table->string('comission');

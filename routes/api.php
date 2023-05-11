@@ -5,9 +5,11 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\TacheController;
 use App\Http\Controllers\BienController;
+use App\Http\Controllers\BonDeVisiteController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\UserController;
+use App\Models\BonDeVisite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +82,14 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::post('devis', [DevisController::class, 'store']);
     Route::put('devis/{devis}', [DevisController::class, 'update']);
     Route::delete('devis/{devis}', [DevisController::class, 'destroy']);
+
+        //Devis Route 
+
+        Route::get('bons', [BonDeVisiteController::class, 'index']);
+        Route::get('bons/{bons}', [BonDeVisiteController::class, 'show']);
+        Route::post('bons', [BonDeVisiteController::class, 'store']);
+        Route::put('bons/{bons}', [BonDeVisiteController::class, 'update']);
+        Route::delete('bons/{bons}', [BonDeVisiteController::class, 'destroy']);
 
 });
 

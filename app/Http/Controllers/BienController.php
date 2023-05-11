@@ -20,20 +20,34 @@ class BienController extends Controller
         $user = auth()->user();
         $address = $request->input('address');
         $clientName = $request->input('client_name');
+        $nomBien=$request->input('nomBien');
         $status = $request->input('status');
+        $exict=$request->input('exict');
         $sort = $request->input('sort');
         $order = $request->input('order');
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
-    
-        $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
-            $query->where('nom', 'like', "%$clientName%");
-        })->with('client')->where('address', 'like', "%$address%");
+        
+
+        if ($exict) {
+            $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
+                $query->where('nom', 'like', "%$clientName%");
+            })->with('client')->where('address', 'like', "%$address%");
+        }else{
+            $biens = $user->biens()->whereHas('client', function ($query) use ($clientName) {
+                $query->where('nom', 'like', "%$clientName%");
+            })->with('client')->where('address', 'like', "%$address%")->where('exict', 'local');
+        }
+        
+        
     
         if ($status) {
             $biens = $biens->where('status', $status);
         }
     
+        if ($nomBien) {
+            $biens = $biens->where('NomBien', $nomBien);
+        }
         if ($minPrice) {
             $biens = $biens->where('price', '>=', $minPrice);
         }
@@ -67,12 +81,13 @@ class BienController extends Controller
         try {
             $validatedData = $request->validate([
                 'NomBien' => 'required|string|max:255|unique:biens,NomBien,NULL,id,user_id,' . $request->user_id,
-                'address' => 'required|string|max:255',
-                'type' => 'required|string|max:255',
+                'address' => 'string|max:255',
+                'type' => 'string|max:255',
+                'exict' => 'string|max:255',
                 'description' => 'required|string|max:255',
-                'location' => 'required|string|max:255',
+                'location' => 'string|max:255',
                 'price' => 'required|string|max:255',
-                'status' => 'required|string|max:255',
+                'status' => 'string|max:255',
                 'comission' => 'required|string|max:255',
                 'client_email' => 'string|email|max:255',
                 'user_id' => 'required',

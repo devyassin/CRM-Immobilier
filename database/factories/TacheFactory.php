@@ -17,7 +17,7 @@ class TacheFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'status' => $this->faker->randomElement(['À faire', 'En cours', 'Terminé']),
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->text(),
             'deadline' => $this->faker->date(),
             'user_id' => User::factory()->create()->id,
         ];
