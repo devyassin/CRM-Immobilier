@@ -48,6 +48,17 @@ export const tableDevisFields = [
     "Action",
 ];
 
+export const tableBonsFields = [
+    "Nom Prospect",
+    "Numero",
+    "Email",
+    "accompagnateur",
+    "Bien visité",
+    "raison",
+    "date_visite",
+    "Action",
+];
+
 export const tableFactureFields = [
     "Reference",
     "Nom Client",

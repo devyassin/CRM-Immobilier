@@ -7,6 +7,9 @@ import DevisDetail from "./NestedRoutes/DevisDetail";
 import FormDevis from "./NestedRoutes/FormDevis";
 import FactureDetail from "./NestedRoutes/FactureDetail";
 import FormFacture from "./NestedRoutes/FormFacture";
+import Bon from "./Dashboard/Bon";
+import BonDetail from "./NestedRoutes/BonDetail";
+import FormBon from "./NestedRoutes/FormBon";
 import Dashborad from "./Dashboard/Dashborad";
 import Biens from "./Dashboard/Biens";
 import Leads from "./Dashboard/Leads";
@@ -22,6 +25,9 @@ export {
     Calander,
     Devis,
     Dashborad,
+    Bon,
+    BonDetail,
+    FormBon,
     Biens,
     Leads,
     Taches,

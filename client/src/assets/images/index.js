@@ -5,6 +5,7 @@ import notFound from "./not-found.svg";
 import icon from "./favicon.ico";
 import toDoList from "./to-do-list.png";
 import pngwing from "./pngwing.png";
+import pxfuel from "./pxfuel.jpg";
 
 export {
     illustration,
@@ -13,5 +14,6 @@ export {
     notFound,
     icon,
     toDoList,
+    pxfuel,
     pngwing,
 };

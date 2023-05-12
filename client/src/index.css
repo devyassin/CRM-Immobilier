@@ -79,6 +79,14 @@ html {
     }
 }
 
+.custom-background {
+    background-image: url("./assets/images/pxfuel.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 .tableScroll::-webkit-scrollbar-thumb {
     border-radius: 25px;
     background-color: #dee2e6;

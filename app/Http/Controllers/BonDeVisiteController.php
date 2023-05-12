@@ -133,11 +133,11 @@ class BonDeVisiteController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'date_visite' => 'required|date_format:Y-m-d',
-            'lead_email' => 'required|email',
+            'date_visite' => 'required',
+            'lead_id' => 'integer|exists:leads,id',
+            'bien_id' => 'integer|exists:biens,id',
             'raison' => 'required|string',
             'accompagnateur' => 'required|string',
-            'NomBien' => 'required|string',
             'user_id' => 'required|integer|exists:users,id',
         ]);
         
@@ -151,31 +151,17 @@ class BonDeVisiteController extends Controller
             return response()->json(['errors' => "Bon de visite non trouvé !"], 404);
         }
         
-        // Find the lead based on the provided lead email
-        $lead = Lead::where('email', $validatedData['lead_email'])
-            ->where('user_id', $user->id)
-            ->first();
+     
+     
         
-        // If the lead is not found, return an error response
-        if (!$lead) {
-            return response()->json(['errors' => "Email n'appartient à aucun prospect !"], 404);
-        }
-        
-        $bien = Bien::where('NomBien', $validatedData['NomBien'])
-            ->where('user_id', $user->id)
-            ->first();
-        
-        // If the bien is not found, return an error response
-        if (!$bien) {
-            return response()->json(['errors' => "Bien non trouvé !"], 404);
-        }
+    
         
         // Update the bon de visite with the new data
         $bon->raison = $validatedData['raison'];
         $bon->accompagnateur = $validatedData['accompagnateur'];
         $bon->date_visite = $validatedData['date_visite'];
-        $bon->lead_id = $lead->id;
-        $bon->bien_id = $bien->id;
+        $bon->lead_id = $validatedData['lead_id'];
+        $bon->bien_id = $validatedData['bien_id'];
         $bon->user_id = $validatedData['user_id'];
         $bon->save();
         
