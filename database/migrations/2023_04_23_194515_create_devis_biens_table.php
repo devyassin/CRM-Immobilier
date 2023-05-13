@@ -16,9 +16,9 @@ class CreateDevisBiensTable extends Migration
         Schema::create('devis_biens', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('devis_id')->unsigned();
-            $table->foreign('devis_id')->references('id')->on('devis');
+            $table->foreign('devis_id')->references('id')->on('devis')->onDelete('cascade');
             $table->bigInteger('bien_id')->unsigned();
-            $table->foreign('bien_id')->references('id')->on('biens');
+            $table->foreign('bien_id')->references('id')->on('biens')->onDelete('cascade');
             $table->timestamps();
         });
     }

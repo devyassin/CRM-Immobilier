@@ -17,12 +17,11 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('prix');
             $table->string('mode_payement');
-            $table->string('comition');
+            $table->string('comission');
+            $table->enum('type', ['gain', 'lost']);
             $table->dateTime('date_transaction');
             $table->bigInteger('bien_id')->unsigned();
-            $table->foreign('bien_id')->references('id')->on('biens');
-            $table->bigInteger('client_id')->unsigned();
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('bien_id')->references('id')->on('biens')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

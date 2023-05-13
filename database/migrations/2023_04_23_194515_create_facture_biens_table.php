@@ -16,9 +16,9 @@ class CreateFactureBiensTable extends Migration
         Schema::create('facture_biens', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('facture_id')->unsigned();
-            $table->foreign('facture_id')->references('id')->on('factures');
+            $table->foreign('facture_id')->references('id')->on('factures')->onDelete('cascade');
             $table->bigInteger('bien_id')->unsigned();
-            $table->foreign('bien_id')->references('id')->on('biens');
+            $table->foreign('bien_id')->references('id')->on('biens')->onDelete('cascade');
             $table->timestamps();
         });
     }

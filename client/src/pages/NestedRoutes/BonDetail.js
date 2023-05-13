@@ -11,10 +11,12 @@ import { fetchAllBiens } from "../../store/bienSlice";
 import { fetchOneBon } from "../../store/BonSlice";
 import { useRef } from "react";
 import { pxfuel } from "../../assets/images";
+import { useState } from "react";
 import ReactPrint from "react-to-print";
 
 const BonDetail = () => {
     const ref = useRef();
+    const [active, setActive] = useState(false);
     const { id } = useParams();
 
     const dispatch = useDispatch();
@@ -50,7 +52,7 @@ const BonDetail = () => {
     if (bon.raison !== "" && statusBiens === "succeeded") {
         return (
             <div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center mb-4 justify-between">
                     <HeaderTitle title="Imprimer Bon de visite" />
                     <Link to="/bons">
                         <IoArrowBackCircleSharp
@@ -61,7 +63,9 @@ const BonDetail = () => {
                 </div>
                 <div
                     ref={ref}
-                    className="flex p-6 mx-32 flex-col space-y-14  custom-background rounded-lg"
+                    className={`flex p-6 ${
+                        active === false ? "mx-0" : "mx-32"
+                    }  flex-col space-y-14  custom-background `}
                 >
                     <div className="flex space-x-4">
                         {/* part 1 */}
@@ -72,13 +76,13 @@ const BonDetail = () => {
                                     Bon de visite
                                 </h1>
                                 <div className="flex text-[8px] font-bold text-blue-900 items-center space-x-2">
-                                    <p>Réf : #00001 &#174;</p>
-                                    <p>Agence@gmail.com</p>
+                                    <p>Réf : #0000{bon.id} &#174;</p>
+                                    <p>{user.email}</p>
                                 </div>
                                 <div className="flex text-[8px] font-bold text-blue-900 items-center space-x-2">
                                     <p>
                                         Modèle déposé&#169; - Reproduction
-                                        Interdite - Tél :06 45 54 54 54
+                                        Interdite - Tél : {user.tel}
                                     </p>
                                 </div>
                             </div>
@@ -90,7 +94,7 @@ const BonDetail = () => {
                                 <h1 className="text-md mt-4 font-bold text-blue-900 ">
                                     Représentée par :{"  "}
                                     <span className="text-black uppercase opacity-75 font-semibold text-[12px] ml-2">
-                                        Agence Riad garden
+                                        {user.name}
                                     </span>
                                 </h1>
                                 <img
@@ -106,13 +110,15 @@ const BonDetail = () => {
                                         <span className="text-md  font-bold text-blue-900">
                                             à{" "}
                                             <span className="text-black uppercase opacity-75 font-semibold text-[12px] ml-2">
-                                                casablanca
+                                                {user.address}
                                             </span>
                                         </span>
                                         <span className="text-md  font-bold text-blue-900">
                                             le{" "}
                                             <span className="text-black uppercase opacity-75 font-semibold text-[12px] ml-2">
-                                                2023-04-26
+                                                {bon.created_at
+                                                    .substring(0, 10)
+                                                    .replace(/-/g, "/")}
                                             </span>
                                         </span>
                                     </div>
@@ -144,7 +150,7 @@ const BonDetail = () => {
                                         Accompagnateur :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        yassine lamouadden
+                                        {bon.accompagnateur}
                                     </span>
                                 </div>
                                 <div className="flex space-x-2 mt-4">
@@ -152,7 +158,7 @@ const BonDetail = () => {
                                         Client :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        Mohammed ben said
+                                        {bon.lead.nom} {bon.lead.prenom}
                                     </span>
                                 </div>
                                 <div className="flex space-x-2 mt-4">
@@ -160,7 +166,7 @@ const BonDetail = () => {
                                         Tel :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        06 54 54 57 12
+                                        {bon.lead.tel}
                                     </span>
                                 </div>
                                 <div className="flex space-x-2 mt-4">
@@ -168,7 +174,7 @@ const BonDetail = () => {
                                         Raison :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        voir l'appartement
+                                        {bon.raison}
                                     </span>
                                 </div>
                             </div>
@@ -179,7 +185,17 @@ const BonDetail = () => {
                                         Bien visité :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        appartement doha 80 m2 casablanca
+                                        {bon.bien.NomBien}
+                                    </span>
+                                </div>
+                                <div className="flex space-x-2 mt-4">
+                                    <h1 className="text-md  font-bold text-blue-900 ">
+                                        Date de visite :
+                                    </h1>
+                                    <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
+                                        {bon.date_visite
+                                            .substring(0, 10)
+                                            .replace(/-/g, "/")}
                                     </span>
                                 </div>
                                 <div className="flex space-x-2 mt-4">
@@ -187,8 +203,7 @@ const BonDetail = () => {
                                         Address :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                        89190 Turcotte Glen Suite 397 Port
-                                        Vernie, SD 96904-6879
+                                       {bon.bien.address}
                                     </span>
                                 </div>
                             </div>

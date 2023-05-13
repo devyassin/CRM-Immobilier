@@ -42,4 +42,8 @@ class Bien extends Model
     public function bon(){
         return $this->hasMany(BonDeVisite::class);
     }
+    
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
 }

@@ -21,6 +21,7 @@ import {
     FactureDetail,
     FormFacture,
     Leads,
+    Transactions,
 } from "./pages";
 
 const App = () => {
@@ -65,6 +66,7 @@ const App = () => {
                         />
                     </Route>
 
+                    <Route path="transactions" element={<Transactions />} />
                     <Route path="calander" element={<Calander />} />
                 </Route>
                 <Route path="/login" element={<Login />} />

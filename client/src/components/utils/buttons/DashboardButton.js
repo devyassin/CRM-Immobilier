@@ -14,6 +14,7 @@ const DashboardButton = ({ name, icon, path }) => {
             <Link
                 onClick={() => {
                     localStorage.setItem("route", name);
+                    localStorage.setItem("routed", path);
                     dispatch(setPageName({ name }));
                 }}
                 to={path}

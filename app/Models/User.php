@@ -56,6 +56,10 @@ class User extends Authenticatable
     public function bons(){
         return $this->hasMany(BonDeVisite::class);
     }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
     // public function bonDeVisits(){
     //     return $this->hasMany(BonDeVisite::class);
     // }

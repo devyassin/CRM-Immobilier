@@ -16,6 +16,7 @@ import Leads from "./Dashboard/Leads";
 import Taches from "./Dashboard/Taches";
 import Clients from "./Dashboard/Clients";
 import Facture from "./Dashboard/Facture";
+import Transactions from "./Dashboard/Transactions";
 import Error from "./Error";
 
 export {
@@ -37,5 +38,6 @@ export {
     FormFacture,
     DevisDetail,
     FormDevis,
+    Transactions,
     Error,
 };

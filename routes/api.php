@@ -8,6 +8,7 @@ use App\Http\Controllers\BienController;
 use App\Http\Controllers\BonDeVisiteController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Models\BonDeVisite;
 use Illuminate\Http\Request;
@@ -83,13 +84,21 @@ Route::group(['prefix' => 'v1','middleware'=>['auth:sanctum']],function () {
     Route::put('devis/{devis}', [DevisController::class, 'update']);
     Route::delete('devis/{devis}', [DevisController::class, 'destroy']);
 
-        //Devis Route 
+    //Bon Route 
 
-        Route::get('bons', [BonDeVisiteController::class, 'index']);
-        Route::get('bons/{bons}', [BonDeVisiteController::class, 'show']);
-        Route::post('bons', [BonDeVisiteController::class, 'store']);
-        Route::put('bons/{bons}', [BonDeVisiteController::class, 'update']);
-        Route::delete('bons/{bons}', [BonDeVisiteController::class, 'destroy']);
+    Route::get('bons', [BonDeVisiteController::class, 'index']);
+    Route::get('bons/{bons}', [BonDeVisiteController::class, 'show']);
+    Route::post('bons', [BonDeVisiteController::class, 'store']);
+    Route::put('bons/{bons}', [BonDeVisiteController::class, 'update']);
+    Route::delete('bons/{bons}', [BonDeVisiteController::class, 'destroy']);
+
+    //Bon Route 
+
+    Route::get('transactions', [TransactionController::class, 'index']);
+    Route::get('transactions/{transactions}', [TransactionController::class, 'show']);
+    Route::post('transactions', [TransactionController::class, 'store']);
+    Route::put('transactions/{transactions}', [TransactionController::class, 'update']);
+    Route::delete('transactions/{transactions}', [TransactionController::class, 'destroy']);
 
 });
 

@@ -11,10 +11,19 @@ class Transaction extends Model
     protected $fillable = [
         'prix',
         'mode_payement',
-        'comition',
-        'date de transaction',
+        'type',
+        'comission',
+        'date_transaction',
         'bien_id',
-        'client_id',
         'user_id',
     ];
+
+    public function biens(){
+        return $this->belongsTo(Bien::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    
 }
