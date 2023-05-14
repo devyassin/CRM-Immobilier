@@ -15,6 +15,8 @@ import {
     fetchOneFacture,
 } from "../../store/factureSlice";
 
+import { fetchAllBiens } from "../../store/bienSlice";
+
 const Facture = () => {
     const dispatch = useDispatch();
     const factures = useSelector((state) => state.factures.data);
@@ -28,6 +30,10 @@ const Facture = () => {
     useEffect(() => {
         dispatch(fetchAllFacture(`${searchFacture}`));
     }, [searchFacture]);
+
+    useEffect(() => {
+        dispatch(fetchAllBiens(["", "", "", "", "", "", "nonlocal"]));
+    }, []);
 
     const searchFactureDispatcher = (e) => {
         let searchFacture = e.target.value;

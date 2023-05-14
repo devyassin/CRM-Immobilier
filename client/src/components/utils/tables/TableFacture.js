@@ -5,13 +5,15 @@ import { deleteFacture, fetchOneFacture } from "../../../store/factureSlice";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { notFound } from "../../../assets/images";
-import { fetchAllBiens } from "../../../store/bienSlice";
+
+import { addTransaction } from "../../../store/transactionSlice";
 
 const TableFacture = ({ fields }) => {
     const ref = useRef();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const factureGlobal = useSelector((state) => state.factures.data);
+    const biens = useSelector((state) => state.biens.data);
 
     const { factures, count } = factureGlobal;
 
@@ -104,6 +106,35 @@ const TableFacture = ({ fields }) => {
                                         size={20}
                                         color="red"
                                         onClick={() => {
+                                            let biensObj = [];
+                                            facture.biens.map((bien) =>
+                                                biensObj.push(bien.id)
+                                            );
+
+                                            biens.biens.map((bien) => {
+                                                if (
+                                                    biensObj.includes(bien.id)
+                                                ) {
+                                                    const transaction = {
+                                                        prix: bien.price,
+                                                        mode_payement:
+                                                            facture.mode_payment,
+                                                        comission:
+                                                            bien.comission,
+                                                        type: "lost",
+                                                        date_transaction:
+                                                            facture.date_creation,
+                                                        bien_id: bien.id,
+                                                        user_id: bien.user_id,
+                                                    };
+                                                    dispatch(
+                                                        addTransaction(
+                                                            transaction
+                                                        )
+                                                    );
+                                                }
+                                            });
+
                                             dispatch(deleteFacture(facture.id));
                                         }}
                                     />

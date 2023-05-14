@@ -9,6 +9,7 @@ import BarChartClientType from "../../components/Charts/BarChartClientType";
 import PieChartBienStatus from "../../components/Charts/PieChartBienStatus";
 import RadarChartTypeBien from "../../components/Charts/RadarChartTypeBien";
 import PieChartTacheStatus from "../../components/Charts/PieChartTacheStatus";
+import TransactionsTracking from "../../components/Charts/TransactionsTracking";
 
 const Dashborad = () => {
     const title = useSelector((state) => state.selectedPage.selectedPage);
@@ -22,6 +23,7 @@ const Dashborad = () => {
                 <LineChartCompanyGain />
                 <PieChartLeadSource />
                 <PieChartLeadStatus />
+                <TransactionsTracking />
                 <BarChartClientType />
                 <PieChartBienStatus />
                 <PieChartTacheStatus />

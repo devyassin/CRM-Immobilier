@@ -9,6 +9,7 @@ import bienSlice from "./bienSlice";
 import devisSlice from "./devisSlice";
 import bonsSlice from "./BonSlice";
 import factureSlice from "./factureSlice";
+import transactionSlice from "./transactionSlice";
 
 const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
         devis: devisSlice,
         bons: bonsSlice,
         factures: factureSlice,
+        transactions: transactionSlice,
         user: userSlice,
     },
 });

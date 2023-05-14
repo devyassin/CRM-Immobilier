@@ -3,7 +3,7 @@ import HeaderTitle from "../../components/utils/titles/HeaderTitle";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectMultipleChoiseBiens from "../../components/utils/form/SelectMultipleChoiseBiens";
 import SelectOneChoiceStatFacture from "../../components/utils/form/SelectOneChoiceStatFacture";
@@ -25,14 +25,22 @@ import {
     setEmail,
     fetchAllFacture,
 } from "../../store/factureSlice";
+import {
+    addTransaction,
+    fetchAllTransactions,
+    UpdateOneTransaction,
+} from "../../store/transactionSlice";
+import { fetchAllBiens } from "../../store/bienSlice";
 
 import { fetchOneBien } from "../../store/bienSlice";
 
 const FormFacture = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [factureObj, setFactureObj] = useState(null);
     const facture = useSelector((state) => state.factures.facture);
     const bien = useSelector((state) => state.biens.bien);
+    const transactions = useSelector((state) => state.transactions.data);
     const status = useSelector((state) => state.biens.status);
     const biens = useSelector((state) => state.biens.data);
     const client = useSelector((state) => state.clients.client);
@@ -45,8 +53,25 @@ const FormFacture = () => {
     const errorMessage = useSelector((state) => state.factures.error);
 
     useEffect(() => {
+        dispatch(fetchAllBiens(["", "", "", "", "", "", "nonlocal"]));
+        dispatch(fetchAllTransactions(``));
         if (statusAddFacture === "succeeded") {
             Toastsuccess("Facture Ajouter !");
+
+            biens.biens.map((bien) => {
+                if (factureObj.biens.includes(bien.id)) {
+                    const transaction = {
+                        prix: bien.price,
+                        mode_payement: factureObj.mode_payment,
+                        comission: bien.comission,
+                        type: "gain",
+                        date_transaction: factureObj.date_creation,
+                        bien_id: bien.id,
+                        user_id: bien.user_id,
+                    };
+                    dispatch(addTransaction(transaction));
+                }
+            });
             setTimeout(() => {
                 navigate("/facture");
             }, [1000]);
@@ -61,6 +86,12 @@ const FormFacture = () => {
         }
 
         if (statusUpdateFacture === "succeeded") {
+            const localTransactions = transactions.transactions.filter(
+                (transaction) => factureObj.biens.includes(transaction.bien_id)
+            );
+
+            // need some improvements to update transactions . i will return to it later
+
             Toastsuccess("Facture Modifier !");
             setTimeout(() => {
                 navigate("/facture");
@@ -81,8 +112,11 @@ const FormFacture = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         if (!facture?.id) {
+            setFactureObj(facture);
+
             dispatch(addFacture(facture));
         } else {
+            setFactureObj(facture);
             dispatch(UpdateOneFacture([facture.id, facture]));
         }
 
@@ -211,7 +245,7 @@ const FormFacture = () => {
                     <hr className="col-span-2"></hr>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">Biens</label>
-                        <SelectMultipleChoiseBiens type="" />
+                        <SelectMultipleChoiseBiens type="facture" />
                     </div>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">

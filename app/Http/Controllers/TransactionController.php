@@ -46,7 +46,7 @@ class TransactionController extends Controller
             }
 
             return response()->json([
-                'data' => $transactions,
+                'transactions' => $transactions,
             ]);
     }
 
