@@ -26,7 +26,7 @@ use App\Models\Facture;
                 $facture = Facture::with('client', 'biens')
                             ->where('user_id', $userId)
                             ->whereHas('client', function ($query) use ($request) {
-                                $query->where('nom', 'LIKE', '%'.$request->input('nom').'%');
+                                $query->where('reference_paiement', 'LIKE', '%'.$request->input('nom').'%');
                             })
                             ->get();
                 $count=$facture->count();
@@ -49,6 +49,7 @@ use App\Models\Facture;
                     'date_experation' => 'required|date_format:Y-m-d',
                     'status' => 'required|string|max:255',
                     'mode_payment' => 'required|string|max:255',
+                    'reference_paiement' => 'string',
                     'user_id' => 'required|integer|exists:users,id',
                     'biens' => 'required|array',
                     'biens.*' => 'integer|exists:biens,id'
@@ -70,6 +71,9 @@ use App\Models\Facture;
                 $facture->mode_payment = $validatedData['mode_payment'];
                 $facture->date_creation = $validatedData['date_creation'];
                 $facture->date_experation = $validatedData['date_experation'];
+                if (isset($validatedData['reference_paiement'])) {
+                    $facture->reference_paiement = $validatedData['reference_paiement'];
+                }
             
                 $facture->client_id = $client->id;
                 $facture->user_id = $validatedData['user_id'];
@@ -109,6 +113,7 @@ use App\Models\Facture;
                         'date_experation' => 'required',
                         'status' => 'required|string|max:255',
                         'mode_payment' => 'required|string|max:255',
+                        'reference_paiement' => 'string',
                         'user_id' => 'required|integer|exists:users,id',
                         'biens' => 'required|array',
                         'biens.*' => 'integer|exists:biens,id'

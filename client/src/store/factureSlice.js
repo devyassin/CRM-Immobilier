@@ -136,6 +136,9 @@ const factureSlice = createSlice({
             state.statusUpdateFacture = initialState.statusUpdateFacture;
             state.statusAddFacture = initialState.statusAddFacture;
         },
+        setGlobalStatus: (state) => {
+            state.status = initialState.status;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -177,7 +180,15 @@ const factureSlice = createSlice({
             })
             .addCase(addFacture.fulfilled, (state, { payload }) => {
                 state.statusAddFacture = "succeeded";
-                state.data.factures = [...state.data.factures, payload.data];
+                if (state.data.factures !== []) {
+                    state.data.factures = [
+                        ...state.data.factures,
+                        payload.data,
+                    ];
+                } else {
+                    state.data.factures = [payload.data];
+                }
+
                 state.facture = initialState.facture;
                 state.data.count = state.data.count + 1;
             })
@@ -231,6 +242,7 @@ export const {
     setFacturePrice,
     clearBiensFac,
     initialStatus,
+    setGlobalStatus,
     setEmailFac,
 } = factureSlice.actions;
 export default factureSlice.reducer;

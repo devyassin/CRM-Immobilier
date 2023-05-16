@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { fetchAllTransactions } from "../../store/transactionSlice";
+import {
+    fetchAllTransactions,
+    setGlobalState,
+} from "../../store/transactionSlice";
 
 import TransactionCard from "../utils/cards/TransactionCard";
 
@@ -23,6 +26,7 @@ const TransactionsTracking = () => {
         dispatch(fetchAllTransactions(""));
     }, []);
     if (status === "loading") {
+        console.log("-------------------------->"); 
         return (
             <div className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">
@@ -33,7 +37,6 @@ const TransactionsTracking = () => {
     }
 
     if (status === "succeeded") {
-        console.log("");
         const todayTransactions = transactions.transactions.filter(
             (transaction) =>
                 transaction.created_at.substring(0, 10) == currentDate
@@ -41,7 +44,7 @@ const TransactionsTracking = () => {
 
         console.log(todayTransactions);
         return (
-            <div className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg h-[400px]">
+            <div className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg ">
                 <h1 className="text-center font-semibold opacity-70 mt-4 mb-2">
                     Les transactions d'aujourd'hui
                 </h1>

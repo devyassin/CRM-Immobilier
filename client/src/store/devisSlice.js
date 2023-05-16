@@ -152,6 +152,9 @@ const devisSlice = createSlice({
             state.statusUpdateDevis = initialState.statusUpdateDevis;
             state.statusAddDevis = initialState.statusAddDevis;
         },
+        setGlobalStatus: (state) => {
+            state.status = initialState.status;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -248,5 +251,6 @@ export const {
     clearBiens,
     initialStatus,
     setEmail,
+    setGlobalStatus,
 } = devisSlice.actions;
 export default devisSlice.reducer;

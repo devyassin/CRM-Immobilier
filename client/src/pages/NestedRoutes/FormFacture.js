@@ -206,17 +206,32 @@ const FormFacture = () => {
                                     <label className="text-xl text-blue-300">
                                         Mode paiement
                                     </label>
-                                    <div className="lg:w-[400px]">
+                                    <div className="lg:w-[400px] relative">
                                         <SelectOneChoicePaiFacture
                                             facture={facture}
                                         />
+                                        {facture.mode_payment !==
+                                            "" && facture.mode_payment !==
+                                            "espèces" && (
+                                            <input
+                                                required
+                                                onChange={handleChange}
+                                                name="reference_paiement"
+                                                value={
+                                                    facture.reference_paiement
+                                                }
+                                                type="text"
+                                                class="absolute form-control py-3 px-4 block mt-4 focus:outline-none"
+                                                placeholder="reference paiement"
+                                            />
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex w-full justify-between">
+                    <div className="flex justify-between">
                         <div className="flex flex-col space-y-2">
                             <label className="text-md text-blue-300">
                                 Date de creation
@@ -242,6 +257,7 @@ const FormFacture = () => {
                             />
                         </div>
                     </div>
+
                     <hr className="col-span-2"></hr>
                     <div className="flex flex-col items-start col-span-2 md:col-span-1">
                         <label className="text-xl text-blue-300">Biens</label>

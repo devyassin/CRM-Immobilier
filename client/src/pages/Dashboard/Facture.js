@@ -70,7 +70,6 @@ const Facture = () => {
     }
 
     if (status === "succeeded") {
-        console.log(factures);
         return (
             <div>
                 <div className="flex items-center justify-between">
@@ -81,10 +80,10 @@ const Facture = () => {
                     <SearchBar
                         dipatcherFunction={searchFactureDispatcher}
                         searchValue={searchFacture}
-                        placeHolder="Chercher un client ..."
+                        placeHolder="Chercher par reference de paiement ..."
                     />
 
-                    <CSVLink data={factures.factures} filename="devis.csv">
+                    <CSVLink data={factures.factures} filename="factures.csv">
                         <IconStyleOne>
                             <TfiExport size={25} />
                         </IconStyleOne>

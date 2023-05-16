@@ -143,15 +143,15 @@ class BienController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'NomBien' => 'required|string|max:255',
-                'address' => 'required|string|max:255',
-                'type' => 'required|string|max:255',
-                'description' => 'required|string|max:255',
-                'location' => 'required|string|max:255',
-                'price' => 'required|string|max:255',
-                'status' => 'required|string|max:255',
-                'comission' => 'required|string|max:255',
-                'user_id'=>'required'
+                'NomBien' => 'string|max:255',
+                'address' => 'string|max:255',
+                'type' => 'string|max:255',
+                'description' => 'string|max:255',
+                'location' => 'string|max:255',
+                'price' => 'string|max:255',
+                'status' => 'string|max:255',
+                'comission' => 'string|max:255',
+                'user_id'=>''
                 ]);
     
             $bien->update($validatedData);

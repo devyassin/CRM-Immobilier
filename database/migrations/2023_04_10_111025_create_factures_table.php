@@ -19,7 +19,8 @@ class CreateFacturesTable extends Migration
             $table->dateTime('date_creation');
             $table->dateTime('date_experation');
             $table->enum('status',['payé','non réglé']);
-            $table->enum('mode_payment',['espèces','carte de crédit','virement bancaire']);
+            $table->enum('mode_payment',['espèces','carte de crédit','virement bancaire','chèque']);
+            $table->string('reference_paiement')->default('vide');
             $table->bigInteger('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();

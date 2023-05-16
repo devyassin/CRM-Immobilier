@@ -22,7 +22,9 @@ const SelectMultipleChoiseBienForBon = ({ type }) => {
         setSelectedBien(selected);
     };
     if (status === "succeeded") {
-        const bienLocal = biens.biens.filter((bien) => bien.exict === "local");
+        const bienLocal = biens.biens.filter(
+            (bien) => bien.exict === "local" && bien.status !== "vendu"
+        );
 
         const biensObj = bienLocal.map((bien) => {
             return { bien: bien, value: bien.NomBien, label: bien.NomBien };

@@ -10,10 +10,10 @@ import PieChartBienStatus from "../../components/Charts/PieChartBienStatus";
 import RadarChartTypeBien from "../../components/Charts/RadarChartTypeBien";
 import PieChartTacheStatus from "../../components/Charts/PieChartTacheStatus";
 import TransactionsTracking from "../../components/Charts/TransactionsTracking";
+import BarChartMethodePaiement from "../../components/Charts/BarChartMethodePaiement";
 
 const Dashborad = () => {
     const title = useSelector((state) => state.selectedPage.selectedPage);
-    console.log("nice");
     return (
         <div>
             <div>
@@ -24,6 +24,7 @@ const Dashborad = () => {
                 <PieChartLeadSource />
                 <PieChartLeadStatus />
                 <TransactionsTracking />
+                <BarChartMethodePaiement />
                 <BarChartClientType />
                 <PieChartBienStatus />
                 <PieChartTacheStatus />

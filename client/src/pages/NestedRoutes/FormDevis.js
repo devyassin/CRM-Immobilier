@@ -35,6 +35,7 @@ import {
     fetchOneBien,
     deleteBien,
     fetchAllBiens,
+    UpdateOneBien,
     handleBienForm,
     initialStatusTwo,
     addBien,
@@ -61,8 +62,8 @@ const FormDevis = () => {
         dispatch(fetchAllBiens(["", "", "", "", "", "", "nonlocal"]));
 
         if (statusAddDevis === "succeeded") {
-            console.log("nice ------->");
             Toastsuccess("Devis Ajouter !");
+
             setTimeout(() => {
                 navigate("/devis");
             }, [1000]);

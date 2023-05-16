@@ -60,7 +60,7 @@ export const tableBonsFields = [
 ];
 
 export const tableFactureFields = [
-    "Reference",
+    "Reference paiement",
     "Nom Client",
     "Numero",
     "Email",

@@ -25,7 +25,7 @@ const options = {
         },
         title: {
             display: true,
-            text: "Répartition des biens par status",
+            text: "Répartition des types biens par status",
         },
     },
 };
@@ -63,9 +63,6 @@ const RadarChartTypeBien = () => {
     const biens = useSelector((state) => state.biens.data);
     const status = useSelector((state) => state.biens.status);
     const error = useSelector((state) => state.biens.error);
-    useEffect(() => {
-        dispatch(fetchAllBiens(["", "", "", "", ""]));
-    }, []);
 
     if (status === "loading") {
         return (

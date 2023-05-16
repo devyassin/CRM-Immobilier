@@ -8,6 +8,7 @@ const colourOptions = [
     { value: "espèces", label: "espèces" },
     { value: "carte de crédit", label: "carte de crédit" },
     { value: "virement bancaire", label: "virement bancaire" },
+    { value: "chèque", label: "chèque" },
 ];
 const SelectOneChoicePaiFacture = ({ facture }) => {
     let name = "mode_payment";

@@ -116,6 +116,9 @@ const transactionSlice = createSlice({
                 initialState.statusUpdateTransaction;
             state.statusAddTransaction = initialState.statusAddTransaction;
         },
+        setGlobalState: (state) => {
+            state.status = initialState.status;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -149,7 +152,7 @@ const transactionSlice = createSlice({
                 state.statusAddTransaction = "succeeded";
                 state.data.transactions = [
                     ...state.data.transactions,
-                    state.transaction,
+                    payload.data,
                 ];
                 state.transaction = initialState.transaction;
                 state.data.count = state.data.count + 1;
@@ -180,9 +183,7 @@ const transactionSlice = createSlice({
                 const id = payload.transaction.id;
 
                 state.data.transactions = state.data.transactions.filter(
-                    (transaction) => {
-                        return transaction.id !== id;
-                    }
+                    (transaction) => transaction.id !== id
                 );
                 state.data.count = state.data.count - 1;
             })
@@ -200,5 +201,6 @@ export const {
     initialStatus,
     showAlert,
     showAlertUpdate,
+    setGlobalState,
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

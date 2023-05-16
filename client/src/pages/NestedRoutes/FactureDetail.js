@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllBiens } from "../../store/bienSlice";
-import { fetchOneFacture } from "../../store/factureSlice";
+import { fetchOneFacture, setGlobalStatus } from "../../store/factureSlice";
 import { useRef } from "react";
 import ReactPrint from "react-to-print";
 
@@ -50,7 +50,12 @@ const FactureDetail = () => {
             <div>
                 <div className="flex items-center justify-between">
                     <HeaderTitle title="Imprimer Facture" />
-                    <Link to="/facture">
+                    <Link
+                        to="/facture"
+                        onClick={() => {
+                            dispatch(setGlobalStatus({}));
+                        }}
+                    >
                         <IoArrowBackCircleSharp
                             size={50}
                             className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
@@ -71,7 +76,9 @@ const FactureDetail = () => {
                             {facture.status === "payé" ? (
                                 <h1 className="text-xl text-green-400">payé</h1>
                             ) : (
-                                <h1 className="text-xl text-red-400">non réglé</h1>
+                                <h1 className="text-xl text-red-400">
+                                    non réglé
+                                </h1>
                             )}
                         </div>
                     </div>

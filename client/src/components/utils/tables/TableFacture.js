@@ -3,13 +3,12 @@ import { MdDelete, MdLocalPrintshop, MdCreate } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteFacture, fetchOneFacture } from "../../../store/factureSlice";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
 import { notFound } from "../../../assets/images";
 
 import { addTransaction } from "../../../store/transactionSlice";
 
 const TableFacture = ({ fields }) => {
-    const ref = useRef();
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const factureGlobal = useSelector((state) => state.factures.data);
@@ -65,8 +64,11 @@ const TableFacture = ({ fields }) => {
                                 key={facture.id}
                                 class="bg-white border-b hover:bg-gray-100 duration-150 "
                             >
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                {/* <td class="px-6 py-4 whitespace-nowrap">
                                     {"#0000" + facture.id}
+                                </td> */}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {facture.reference_paiement}
                                 </td>
                                 <td class="px-6 py-4">{facture.client.nom}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">

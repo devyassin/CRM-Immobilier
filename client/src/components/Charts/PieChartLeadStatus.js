@@ -35,9 +35,7 @@ const PieChartLeadStatus = () => {
     const leads = useSelector((state) => state.leads.data);
     const status = useSelector((state) => state.leads.status);
     const error = useSelector((state) => state.leads.error);
-    useEffect(() => {
-        dispatch(fetchAllLeads(""));
-    }, []);
+   
 
     if (status === "loading") {
         return (

@@ -7,11 +7,11 @@ const ColumnSkelton = ({ type }) => {
         <SkeletonTheme
             highlightColor={`${
                 type === "red"
-                    ? "#ff8787"
+                    ? "#ffe3e3  "
                     : type === "blue"
-                    ? "#91a7ff"
+                    ? "#d0ebff"
                     : type === "green"
-                    ? "#63e6be"
+                    ? "#d3f9d8"
                     : ""
             }`}
             className="flex flex-col drop-shadow-xl  "
@@ -26,11 +26,11 @@ const ColumnSkelton = ({ type }) => {
             <SkeletonTheme
                 className={`flex flex-col p-2 space-y-2 overflow-x-auto overflow-scroll tableScroll ${
                     type === "red"
-                        ? "#ffa8a8"
+                        ? "#ffe3e3"
                         : type === "blue"
-                        ? "#91a7ff"
+                        ? "#d0ebff"
                         : type === "green"
-                        ? "#63e6be"
+                        ? "#d3f9d8"
                         : ""
                 }   h-[400px]`}
             ></SkeletonTheme>

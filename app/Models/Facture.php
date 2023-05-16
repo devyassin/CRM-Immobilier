@@ -14,6 +14,7 @@ class Facture extends Model
         'date_experation',
         'mode_payment',
         'status',
+        'reference_paiement',
         'description',
         'client_id',
         'user_id',

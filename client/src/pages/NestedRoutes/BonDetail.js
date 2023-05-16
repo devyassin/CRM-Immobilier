@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllBiens } from "../../store/bienSlice";
-import { fetchOneBon } from "../../store/BonSlice";
+import { fetchOneBon, setGlobalStatus } from "../../store/BonSlice";
 import { useRef } from "react";
 import { pxfuel } from "../../assets/images";
 import { useState } from "react";
@@ -54,7 +54,12 @@ const BonDetail = () => {
             <div>
                 <div className="flex items-center mb-4 justify-between">
                     <HeaderTitle title="Imprimer Bon de visite" />
-                    <Link to="/bons">
+                    <Link
+                        to="/bons"
+                        onClick={() => {
+                            dispatch(setGlobalStatus({}));
+                        }}
+                    >
                         <IoArrowBackCircleSharp
                             size={50}
                             className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
@@ -65,7 +70,7 @@ const BonDetail = () => {
                     ref={ref}
                     className={`flex p-6 ${
                         active === false ? "mx-0" : "mx-32"
-                    }  flex-col space-y-14  custom-background `}
+                    }  flex-col space-y-14   `}
                 >
                     <div className="flex space-x-4">
                         {/* part 1 */}
@@ -203,7 +208,7 @@ const BonDetail = () => {
                                         Address :
                                     </h1>
                                     <span className="text-black uppercase opacity-75 font-semibold text-[10px] ">
-                                       {bon.bien.address}
+                                        {bon.bien.address}
                                     </span>
                                 </div>
                             </div>

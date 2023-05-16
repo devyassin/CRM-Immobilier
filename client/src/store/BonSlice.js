@@ -117,6 +117,9 @@ const bonsSlice = createSlice({
             state.statusUpdateBon = initialState.statusUpdateBon;
             state.statusAddBon = initialState.statusAddBon;
         },
+        setGlobalStatus: (state) => {
+            state.status = initialState.status;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -200,5 +203,6 @@ export const {
     showAlert,
     setBienId,
     showAlertUpdate,
+    setGlobalStatus,
 } = bonsSlice.actions;
 export default bonsSlice.reducer;

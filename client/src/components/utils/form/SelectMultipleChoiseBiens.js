@@ -34,7 +34,9 @@ const SelectMultipleChoiseBiens = ({ type }) => {
         });
     };
     if (status === "succeeded") {
-        const bienLocal = biens.biens.filter((bien) => bien.exict === "local");
+        const bienLocal = biens.biens.filter(
+            (bien) => bien.exict === "local" && bien.status !== "vendu"
+        );
         const bienNonLocal = biens.biens.filter(
             (bien) => bien.exict === "nonlocal"
         );

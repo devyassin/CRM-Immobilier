@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllBiens } from "../../store/bienSlice";
-import { fetchOneDevis } from "../../store/devisSlice";
+import { fetchOneDevis, setGlobalStatus } from "../../store/devisSlice";
 import { useRef } from "react";
 import ReactPrint from "react-to-print";
 
@@ -51,7 +51,12 @@ const DevisDetail = () => {
             <div>
                 <div className="flex items-center justify-between">
                     <HeaderTitle title="Imprimer Devis" />
-                    <Link to="/devis">
+                    <Link
+                        to="/devis"
+                        onClick={() => {
+                            dispatch(setGlobalStatus({}));
+                        }}
+                    >
                         <IoArrowBackCircleSharp
                             size={50}
                             className="cursor-pointer text-blue-400 hover:opacity-80 duration-150"
