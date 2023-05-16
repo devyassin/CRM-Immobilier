@@ -86,23 +86,7 @@ html {
     background-size: cover;
 }
 
-.custom-background--2 {
-    background-image: url("./assets/images/abstract-surface-textures-white-concrete-stone-wall.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
-.custom-background--3 {
-    background-image: url("./assets/images/AdobeStock_582783845_Preview.jpeg");
-}
-
-.custom-background--4 {
-    background-image: url("./assets/images/old-cement-wall-texture.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 .tableScroll::-webkit-scrollbar-thumb {
     border-radius: 25px;
