@@ -65,6 +65,7 @@ const RadarChartTypeBien = () => {
     const error = useSelector((state) => state.biens.error);
 
     if (status === "loading") {
+        console.log("loading");
         return (
             <div className="col-span-2 ">
                 <SkeletonTheme highlightColor="#f1f3f5">
