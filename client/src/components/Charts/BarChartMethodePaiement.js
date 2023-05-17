@@ -27,8 +27,8 @@ const BarChartMethodePaiement = () => {
     const transactions = useSelector((state) => state.transactions.data);
     const status = useSelector((state) => state.transactions.status);
     const error = useSelector((state) => state.transactions.error);
-    
-    if (status === "loading") {
+
+    if (status !== "succeeded") {
         return (
             <div className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { fetchAllClients } from "../../store/clientSlice";
+import { useInView } from "react-intersection-observer";
 
 const currentYear = new Date().getFullYear();
 
@@ -49,17 +50,22 @@ const filterByMonth = (desiredMonth, data) => {
 
 const BarChartClientType = () => {
     const dispatch = useDispatch();
+    const [ref, inView] = useInView();
+    const [visible, setIsVisible] = useState(false);
 
     const clients = useSelector((state) => state.clients.data);
     const status = useSelector((state) => state.clients.status);
     const error = useSelector((state) => state.clients.error);
     useEffect(() => {
-        dispatch(fetchAllClients(""));
-    }, []);
+        if (inView && !visible) {
+            dispatch(fetchAllClients(""));
+            setIsVisible(true);
+        }
+    }, [inView]);
 
-    if (status === "loading") {
+    if (status !== "succeeded") {
         return (
-            <div className="col-span-2">
+            <div ref={ref} className="col-span-2">
                 <SkeletonTheme highlightColor="#f1f3f5">
                     <Skeleton height={400} />
                 </SkeletonTheme>
@@ -136,7 +142,7 @@ const BarChartClientType = () => {
         };
 
         return (
-            <div className="col-span-2">
+            <div ref={ref} className="col-span-2">
                 <div className="flex flex-col space-y-4  bg-white p-4 rounded-lg drop-shadow-lg">
                     <Bar
                         className="  max-h-[400px]"

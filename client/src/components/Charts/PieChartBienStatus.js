@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { fetchAllBiens } from "../../store/bienSlice";
+import { useInView } from "react-intersection-observer";
 
 const options = {
     responsive: true,
@@ -32,16 +33,21 @@ const numberByStatus = (desiredType, data) => {
 
 const PieChartBienStatus = () => {
     const dispatch = useDispatch();
+    const [ref, inView] = useInView();
+    const [visible, setIsVisible] = useState(false);
     const biens = useSelector((state) => state.biens.data);
     const status = useSelector((state) => state.biens.status);
     const error = useSelector((state) => state.biens.error);
     useEffect(() => {
-        dispatch(fetchAllBiens(["", "", "", "", ""]));
-    }, []);
+        if (inView && !visible) {
+            dispatch(fetchAllBiens(["", "", "", "", ""]));
+            setIsVisible(true);
+        }
+    }, [inView]);
 
-    if (status === "loading") {
+    if (status !== "succeeded") {
         return (
-            <div className="col-span-2 md:col-span-1">
+            <div ref={ref} className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">
                     <Skeleton height={400} />
                 </SkeletonTheme>
@@ -73,7 +79,7 @@ const PieChartBienStatus = () => {
         };
 
         return (
-            <div className="col-span-2 md:col-span-1">
+            <div ref={ref} className="col-span-2 md:col-span-1">
                 <Pie
                     className=" bg-white p-4 rounded-lg drop-shadow-lg"
                     options={options}

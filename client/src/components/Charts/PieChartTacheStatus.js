@@ -11,6 +11,7 @@ import {
     fetchAllTachesEnCours,
     fetchAllTachesTermine,
 } from "../../store/tacheSlice";
+import { useInView } from "react-intersection-observer";
 
 const options = {
     responsive: true,
@@ -33,6 +34,8 @@ const numberByStatus = (data) => {
 
 const PieChartTacheStatus = () => {
     const dispatch = useDispatch();
+    const [ref, inView] = useInView();
+    const [visible, setIsVisible] = useState(false);
     const progressList = useSelector((state) => state.taches.progress);
     const doneList = useSelector((state) => state.taches.done);
     const todosList = useSelector((state) => state.taches.todo);
@@ -43,18 +46,21 @@ const PieChartTacheStatus = () => {
     const statusDone = useSelector((state) => state.taches.statusDone);
     const error = useSelector((state) => state.taches.error);
     useEffect(() => {
-        dispatch(fetchAllTachesEnCours());
-        dispatch(fetchAllTachesAfaire());
-        dispatch(fetchAllTachesTermine());
-    }, []);
+        if (inView && !visible) {
+            dispatch(fetchAllTachesEnCours());
+            dispatch(fetchAllTachesAfaire());
+            dispatch(fetchAllTachesTermine());
+            setIsVisible(true);
+        }
+    }, [inView]);
 
     if (
-        statusTodo === "loading" ||
-        statusProgress === "loading" ||
-        statusDone === "loading"
+        statusTodo !== "succeeded" ||
+        statusProgress !== "succeeded" ||
+        statusDone !== "succeeded"
     ) {
         return (
-            <div className="col-span-2 md:col-span-1">
+            <div ref={ref} className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">
                     <Skeleton height={400} />
                 </SkeletonTheme>
@@ -96,7 +102,7 @@ const PieChartTacheStatus = () => {
         };
 
         return (
-            <div className="col-span-2 md:col-span-1">
+            <div ref={ref} className="col-span-2 md:col-span-1">
                 <Doughnut
                     className=" bg-white p-4 rounded-lg drop-shadow-lg"
                     options={options}
