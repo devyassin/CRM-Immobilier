@@ -1,6 +1,6 @@
 import React from "react";
 import ChartJS from "chart.js/auto";
-import { Line, Pie,Doughnut } from "react-chartjs-2";
+import { Line, Pie, Doughnut } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,9 +35,8 @@ const PieChartLeadStatus = () => {
     const leads = useSelector((state) => state.leads.data);
     const status = useSelector((state) => state.leads.status);
     const error = useSelector((state) => state.leads.error);
-   
 
-    if (status === "loading") {
+    if (status !== "succeeded") {
         return (
             <div className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">
@@ -48,9 +47,7 @@ const PieChartLeadStatus = () => {
     }
 
     if (status === "succeeded") {
-       
         const number = numberByStatus("Programmé une visite", leads.leads);
-    
 
         const data = {
             labels,

@@ -39,7 +39,7 @@ const PieChartLeadSource = () => {
         dispatch(fetchAllLeads(""));
     }, []);
 
-    if (status === "loading") {
+    if (status !== "succeeded") {
         return (
             <div className="col-span-2 md:col-span-1">
                 <SkeletonTheme highlightColor="#f1f3f5">

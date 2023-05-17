@@ -65,10 +65,20 @@ export const tableFactureFields = [
     "Numero",
     "Email",
     "status",
-    "mode_payment",
+    "mode payment",
     "Prix total",
     "Total Biens",
     "Date de creation",
     "Date d'experation",
     "Action",
+];
+
+export const tableTransacionFields = [
+    "Reference",
+    "prix",
+    "mode paiement",
+    "type",
+    "comission",
+    "Date transaction",
+    "Detail",
 ];

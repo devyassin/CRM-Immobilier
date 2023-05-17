@@ -59,7 +59,7 @@ const LineChartCompanyGain = () => {
         dispatch(fetchAllFacture(""));
     }, []);
 
-    if (status === "loading") {
+    if (status !== "succeeded") {
         return (
             <div className="col-span-3">
                 <SkeletonTheme highlightColor="#f1f3f5">

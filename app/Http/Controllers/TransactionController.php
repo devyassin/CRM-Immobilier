@@ -9,6 +9,7 @@ use App\Models\Bien;
 use App\Models\Client;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -22,9 +23,9 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
             $user = auth()->user();
-
+            $name = $request->input('name');
             $transactions = Transaction::where('user_id', $user->id)->get();
-
+            
             foreach ($transactions as $transaction) {
                 $bien = Bien::where('id', $transaction->bien_id)->first();
 
@@ -32,22 +33,21 @@ class TransactionController extends Controller
                 if (!$bien) {
                     $bien = null;
                 } else {
-                    $client = Client::where('id', $bien->client_id)->first();
+                    $client = Client::where('id', $bien->client_id)->where('nom', 'like', "%$name%")->first();
 
                     // If the client is not found, set it to null
                     if (!$client) {
-                        $client = null;
+                        $count=0;
+                        return response()->json(['count'=> $count],201);
                     }
                 }
-
+                $count = $transactions->count();
                 // Include bien and client information within the transaction
                 $transaction->bien = $bien;
                 $transaction->client = $client;
             }
-
-            return response()->json([
-                'transactions' => $transactions,
-            ]);
+           
+            return response()->json(['count' => $count,'transactions' => $transactions], Response::HTTP_OK);
     }
 
     /**
