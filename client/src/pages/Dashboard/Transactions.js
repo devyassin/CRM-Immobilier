@@ -76,6 +76,10 @@ const Transactions = () => {
             </div>
         );
     }
+
+    if (status === "failed") {
+        return <div className="text-4xl text-red-400 text-center">Error</div>;
+    }
 };
 
 export default Transactions;
