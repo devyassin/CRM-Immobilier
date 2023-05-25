@@ -56,7 +56,7 @@ const TableTransaction = ({ fields }) => {
                                 class="bg-white border-b hover:bg-gray-100 duration-150 "
                             >
                                 <td class="px-6 py-4">#0000{transaction.id}</td>
-                                <td class="px-6 py-4">{transaction.prix}</td>
+                                <td class="px-6 py-4">{transaction.prix} DH</td>
                                 <td class="px-6 py-4">
                                     {transaction.mode_payement}
                                 </td>

@@ -41,7 +41,6 @@ export const fetchAllBiens = createAsyncThunk(
             queryString += `max_price=${max}&`;
         }
         queryString = queryString.slice(0, -1).replaceAll(",", "");
-        console.log(queryString);
         const response = await instance.get(queryString);
         return response.data;
     }

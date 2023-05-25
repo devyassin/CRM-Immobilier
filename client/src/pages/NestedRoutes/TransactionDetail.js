@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchOneTransaction } from "../../store/transactionSlice";
 import { FaUserAlt, FaBuilding, FaDollarSign } from "react-icons/fa";
 import Label from "../../components/utils/titles/Label";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const TransactionDetail = () => {
     const { id } = useParams();
@@ -177,7 +178,7 @@ const TransactionDetail = () => {
                                         .replace("T", " ")}
                                 />
                                 <Label
-                                    title="Profit"
+                                    title="Somme"
                                     content={`${Math.floor(
                                         transaction.prix * transaction.comission
                                     )} DH`}
@@ -185,6 +186,9 @@ const TransactionDetail = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="mt-20 text-[12px] ">
+                    <CopyRight />
                 </div>
             </div>
         );

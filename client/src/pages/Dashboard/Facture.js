@@ -16,6 +16,7 @@ import {
 } from "../../store/factureSlice";
 
 import { fetchAllBiens } from "../../store/bienSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Facture = () => {
     const dispatch = useDispatch();
@@ -93,6 +94,9 @@ const Facture = () => {
                     </IconStyleTree>
                 </div>
                 <TableFacture fields={tableFactureFields} />
+                <div className="mt-20 text-[12px] ">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

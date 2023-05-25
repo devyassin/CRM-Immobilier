@@ -10,6 +10,7 @@ import { tableDevisFields } from "../../constants/tablesConstants";
 import { TfiImport, TfiExport, TfiPlus } from "react-icons/tfi";
 import { useEffect } from "react";
 import { fetchAllDevis, setNameDevis } from "../../store/devisSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Devis = () => {
     const dispatch = useDispatch();
@@ -83,7 +84,9 @@ const Devis = () => {
                     </IconStyleTree>
                 </div>
                 <TableDevis fields={tableDevisFields} />
-             
+                <div className="mt-20 text-[12px] ">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

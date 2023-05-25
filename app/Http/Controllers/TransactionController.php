@@ -25,7 +25,10 @@ class TransactionController extends Controller
             $user = auth()->user();
             $name = $request->input('name');
             $transactions = Transaction::where('user_id', $user->id)->get();
-            
+            $clientName = $request->input('client_name');
+            $minPrice = $request->input('min_price');
+            $maxPrice = $request->input('max_price');
+
             foreach ($transactions as $transaction) {
                 $bien = Bien::where('id', $transaction->bien_id)->first();
 
@@ -41,12 +44,40 @@ class TransactionController extends Controller
                         return response()->json(['count'=> $count],201);
                     }
                 }
-                $count = $transactions->count();
+
+                
                 // Include bien and client information within the transaction
                 $transaction->bien = $bien;
                 $transaction->client = $client;
             }
            
+            if ($minPrice) {
+                $transactions = $transactions->where('prix', '>=', $minPrice);
+            }
+        
+            if ($maxPrice) {
+                $transactions = $transactions->where('prix', '<=', $maxPrice);
+            }
+
+            if ($clientName) {
+                $filteredTransactions = [];
+    
+                foreach ($transactions as $transaction) {
+                    // Check if the transaction has a client associated with it
+                    if ($transaction->client) {
+                        $clientNameMatches = str_contains(strtolower($transaction->client->nom), strtolower($clientName));
+                        
+                        // If the client name matches, include the transaction in the filtered results
+                        if ($clientNameMatches) {
+                            $filteredTransactions[] = $transaction;
+                        }
+                    }
+                }
+                
+                $transactions = collect($filteredTransactions);
+            }
+            $count = $transactions->count();
+            $transactions = $transactions->values()->toArray();
             return response()->json(['count' => $count,'transactions' => $transactions], Response::HTTP_OK);
     }
 

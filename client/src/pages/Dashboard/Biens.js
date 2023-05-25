@@ -13,6 +13,7 @@ import IconBienStyle from "../../components/utils/icons/IconBienStyle";
 import { CSVLink } from "react-csv";
 import { useEffect } from "react";
 import { fetchAllBiens, setFilterName } from "../../store/bienSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 const Biens = () => {
     const dispatch = useDispatch();
     const biens = useSelector((state) => state.biens.data);
@@ -116,6 +117,9 @@ const Biens = () => {
                 <TableBien fields={tableBienFields} />
                 {visibility && <FormBien bien={bien} />}
                 {visibilityFilter && <FilterBien />}
+                <div className="mt-20 text-[12px]">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

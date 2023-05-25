@@ -41,6 +41,7 @@ import {
     addBien,
     setEmailCl,
 } from "../../store/bienSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const FormDevis = () => {
     const navigate = useNavigate();
@@ -469,6 +470,9 @@ const FormDevis = () => {
                         </button>
                     </div>
                 </form>
+            </div>
+            <div className="mt-20 text-[12px] ">
+                <CopyRight />
             </div>
         </div>
     );

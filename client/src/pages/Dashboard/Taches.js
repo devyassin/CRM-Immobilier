@@ -15,6 +15,7 @@ import {
     fetchAllTachesEnCours,
     fetchAllTachesTermine,
 } from "../../store/tacheSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Taches = () => {
     const dispatch = useDispatch();
@@ -116,6 +117,9 @@ const Taches = () => {
                     })}
                 </div>
                 {visibility && <FormTache tache={tache} />}
+                <div className="mt-6 text-[12px]">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

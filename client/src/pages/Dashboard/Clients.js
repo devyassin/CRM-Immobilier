@@ -13,6 +13,7 @@ import TableOne from "../../components/utils/tables/TableOne";
 import { useEffect } from "react";
 import { fetchAllClients, setNameClient } from "../../store/clientSlice";
 import IconUserStyle from "../../components/utils/icons/IconUserStyle";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Clients = () => {
     const dispatch = useDispatch();
@@ -99,6 +100,9 @@ const Clients = () => {
                 </div>
                 <TableOne fields={tableClientFields} />
                 {visibility && <FormClient client={client} />}
+                <div className="mt-20 text-[12px]">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

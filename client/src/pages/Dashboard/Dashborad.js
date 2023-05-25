@@ -11,6 +11,7 @@ import RadarChartTypeBien from "../../components/Charts/RadarChartTypeBien";
 import PieChartTacheStatus from "../../components/Charts/PieChartTacheStatus";
 import TransactionsTracking from "../../components/Charts/TransactionsTracking";
 import BarChartMethodePaiement from "../../components/Charts/BarChartMethodePaiement";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Dashborad = () => {
     const title = useSelector((state) => state.selectedPage.selectedPage);
@@ -29,6 +30,9 @@ const Dashborad = () => {
                 <PieChartBienStatus />
                 <PieChartTacheStatus />
                 <RadarChartTypeBien />
+            </div>
+            <div className="mt-6 text-[12px]">
+                <CopyRight />
             </div>
         </div>
     );

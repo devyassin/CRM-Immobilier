@@ -18,8 +18,21 @@ const instance = axios.create({
 // Fetch all transactions
 export const fetchAllTransactions = createAsyncThunk(
     "transactions/fetchAll",
-    async () => {
-        const response = await instance.get(`/transactions`);
+    async ([min, max, name]) => {
+        let queryString = "/transactions?";
+        if (name !== "") {
+            queryString += `client_name=${name}&`;
+        }
+
+        if (min !== "") {
+            queryString += `min_price=${min}&`;
+        }
+
+        if (max !== "") {
+            queryString += `max_price=${max}&`;
+        }
+        queryString = queryString.slice(0, -1).replaceAll(",", "");
+        const response = await instance.get(queryString);
         return response.data;
     }
 );
@@ -75,6 +88,7 @@ export const UpdateOneTransaction = createAsyncThunk(
 
 const initialState = {
     data: [],
+    fakeData: [],
     status: "idle",
     showAlert: false,
     showAlertUpdate: false,
@@ -92,6 +106,9 @@ const initialState = {
     },
     error: null,
     searchClient: "",
+    filterMaxPrice: "",
+    filterMinPrice: "",
+    filterName: "",
 };
 
 const transactionSlice = createSlice({
@@ -101,6 +118,9 @@ const transactionSlice = createSlice({
         handleTransactionForm: (state, { payload }) => {
             const { name, value } = payload;
             state.transaction[name] = value;
+        },
+        setFilterName: (state, { payload }) => {
+            state.filterName = payload.filterName;
         },
         showAlert: (state) => {
             state.showAlert = true;
@@ -122,6 +142,41 @@ const transactionSlice = createSlice({
         setGlobalState: (state) => {
             state.status = initialState.status;
         },
+        setFilterType: (state, { payload }) => {
+            if (
+                payload.sortType !== "Default" &&
+                payload.sortModePaiement !== "Default"
+            ) {
+                state.data.transactions = state.fakeData.transactions.filter(
+                    (transaction) =>
+                        transaction.type === payload.sortType.toLowerCase() &&
+                        transaction.mode_payement ===
+                            payload.sortModePaiement.toLowerCase()
+                );
+                state.data.count = state.data.transactions.length;
+            } else if (payload.sortType !== "Default") {
+                state.data.transactions = state.fakeData.transactions.filter(
+                    (transaction) =>
+                        transaction.type === payload.sortType.toLowerCase()
+                );
+                state.data.count = state.data.transactions.length;
+            } else if (payload.sortModePaiement !== "Default") {
+                state.data.transactions = state.fakeData.transactions.filter(
+                    (transaction) =>
+                        transaction.mode_payement ===
+                        payload.sortModePaiement.toLowerCase()
+                );
+                state.data.count = state.data.transactions.length;
+            } else {
+                state.data = state.fakeData;
+            }
+        },
+        setFilterMinPrice: (state, { payload }) => {
+            state.filterMinPrice = payload.min;
+        },
+        setFilterMaxPrice: (state, { payload }) => {
+            state.filterMaxPrice = payload.max;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -131,6 +186,7 @@ const transactionSlice = createSlice({
             .addCase(fetchAllTransactions.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.data = action.payload;
+                state.fakeData = action.payload;
             })
             .addCase(fetchAllTransactions.rejected, (state, action) => {
                 state.status = "failed";
@@ -205,5 +261,10 @@ export const {
     showAlert,
     showAlertUpdate,
     setGlobalState,
+    setFilterType,
+    setFilterMinPrice,
+    setFilterMaxPrice,
+    setFilterModePaiement,
+    setFilterName,
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

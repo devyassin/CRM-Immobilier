@@ -8,17 +8,16 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideFilter } from "../../../store/overlaySlice";
 import {
-    setFilterPrice,
-    setFilterStatus,
-    setFilterOrder,
-    setFilterMaxPrice,
+    setFilterType,
     setFilterMinPrice,
-} from "../../../store/bienSlice";
+    setFilterMaxPrice,
+} from "../../../store/transactionSlice";
 
-const FilterBien = () => {
+const FilterTransaction = () => {
     const dispatch = useDispatch();
-    const [sortOrder, setSortOrder] = useState("Asc");
-    const [sortStatus, setSortStatus] = useState("");
+
+    const [sortType, setSortType] = useState("Default");
+    const [sortModePaiement, setSortModePaiement] = useState("Default");
     const [min, setMin] = useState("");
     const [max, setMax] = useState("");
     return (
@@ -51,86 +50,109 @@ const FilterBien = () => {
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    dispatch(setFilterPrice());
-                    dispatch(setFilterOrder({ sortOrder }));
-                    dispatch(setFilterStatus({ sortStatus }));
+
+                    dispatch(setFilterType({ sortType, sortModePaiement }));
                     dispatch(setFilterMinPrice({ min }));
                     dispatch(setFilterMaxPrice({ max }));
                     dispatch(hideFilter());
                 }}
                 className="grid grid-cols-2 gap-4 md:grid-cols-3"
             >
-                <h1 className="col-span-3">Prix :</h1>
+                <h1 className="col-span-3">Type :</h1>
                 <label>
                     <input
                         className="mr-4"
                         type="radio"
-                        value="Asc"
-                        checked={sortOrder === "Asc"}
+                        value="Gain"
+                        checked={sortType === "Gain"}
                         onChange={(e) => {
-                            setSortOrder(e.target.value);
+                            setSortType(e.target.value);
                         }}
                     />
-                    Asc
+                    Gain
                 </label>
                 <label>
                     <input
                         className="mr-4"
                         type="radio"
-                        value="Desc"
-                        checked={sortOrder === "Desc"}
+                        value="Lost"
+                        checked={sortType === "Lost"}
                         onChange={(e) => {
-                            setSortOrder(e.target.value);
+                            setSortType(e.target.value);
                         }}
                     />
-                    Desc
-                </label>
-                <hr className="col-span-3" />
-                <h1 className="col-span-3">Status :</h1>
-                <label>
-                    <input
-                        className="mr-4"
-                        type="radio"
-                        value="disponible"
-                        checked={sortStatus === "disponible"}
-                        onChange={(e) => {
-                            setSortStatus(e.target.value);
-                        }}
-                    />
-                    Disponible
-                </label>
-                <label>
-                    <input
-                        className="mr-4"
-                        type="radio"
-                        value="en location"
-                        checked={sortStatus === "en location"}
-                        onChange={(e) => {
-                            setSortStatus(e.target.value);
-                        }}
-                    />
-                    En location
-                </label>
-                <label>
-                    <input
-                        className="mr-4"
-                        type="radio"
-                        value="vendu"
-                        checked={sortStatus === "vendu"}
-                        onChange={(e) => {
-                            setSortStatus(e.target.value);
-                        }}
-                    />
-                    Vendu
+                    Lost
                 </label>
                 <label>
                     <input
                         className="mr-4"
                         type="radio"
                         value="Default"
-                        checked={sortStatus === "Default"}
+                        checked={sortType === "Default"}
                         onChange={(e) => {
-                            setSortStatus(e.target.value);
+                            setSortType(e.target.value);
+                        }}
+                    />
+                    Default
+                </label>
+                <hr className="col-span-3" />
+                <h1 className="col-span-3">Mode paiement :</h1>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Espèces"
+                        checked={sortModePaiement === "Espèces"}
+                        onChange={(e) => {
+                            setSortModePaiement(e.target.value);
+                        }}
+                    />
+                    Espèces
+                </label>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Carte de crédit"
+                        checked={sortModePaiement === "Carte de crédit"}
+                        onChange={(e) => {
+                            setSortModePaiement(e.target.value);
+                        }}
+                    />
+                    Carte de crédit
+                </label>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Virement bancaire"
+                        checked={sortModePaiement === "Virement bancaire"}
+                        onChange={(e) => {
+                            setSortModePaiement(e.target.value);
+                        }}
+                    />
+                    Virement bancaire
+                </label>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Chèque"
+                        checked={sortModePaiement === "Chèque"}
+                        onChange={(e) => {
+                            setSortModePaiement(e.target.value);
+                        }}
+                    />
+                    Chèque
+                </label>
+                <label>
+                    <input
+                        className="mr-4"
+                        type="radio"
+                        value="Default"
+                        checked={sortModePaiement === "Default"}
+                        onChange={(e) => {
+                            setSortModePaiement(e.target.value);
                         }}
                     />
                     Default
@@ -138,7 +160,7 @@ const FilterBien = () => {
                 <div></div>
                 <div></div>
                 <hr className="col-span-3" />
-                <h1 className="col-span-3">Budget :</h1>
+                <h1 className="col-span-3">Prix :</h1>
 
                 <input
                     className="mr-4"
@@ -175,4 +197,4 @@ const FilterBien = () => {
     );
 };
 
-export default FilterBien;
+export default FilterTransaction;

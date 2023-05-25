@@ -33,6 +33,7 @@ import {
 import { fetchAllBiens } from "../../store/bienSlice";
 
 import { fetchOneBien } from "../../store/bienSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const FormFacture = () => {
     const navigate = useNavigate();
@@ -210,21 +211,21 @@ const FormFacture = () => {
                                         <SelectOneChoicePaiFacture
                                             facture={facture}
                                         />
-                                        {facture.mode_payment !==
-                                            "" && facture.mode_payment !==
-                                            "espèces" && (
-                                            <input
-                                                required
-                                                onChange={handleChange}
-                                                name="reference_paiement"
-                                                value={
-                                                    facture.reference_paiement
-                                                }
-                                                type="text"
-                                                class="absolute form-control py-3 px-4 block mt-4 focus:outline-none"
-                                                placeholder="reference paiement"
-                                            />
-                                        )}
+                                        {facture.mode_payment !== "" &&
+                                            facture.mode_payment !==
+                                                "espèces" && (
+                                                <input
+                                                    required
+                                                    onChange={handleChange}
+                                                    name="reference_paiement"
+                                                    value={
+                                                        facture.reference_paiement
+                                                    }
+                                                    type="text"
+                                                    class="absolute form-control py-3 px-4 block mt-4 focus:outline-none"
+                                                    placeholder="reference paiement"
+                                                />
+                                            )}
                                     </div>
                                 </div>
                             </div>
@@ -378,6 +379,9 @@ const FormFacture = () => {
                         </button>
                     </div>
                 </form>
+            </div>
+            <div className="mt-20 text-[12px] ">
+                <CopyRight />
             </div>
         </div>
     );

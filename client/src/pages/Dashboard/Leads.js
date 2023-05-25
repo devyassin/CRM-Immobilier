@@ -12,6 +12,7 @@ import { TfiImport, TfiExport, TfiPlus } from "react-icons/tfi";
 import { useEffect } from "react";
 import { fetchAllLeads, setNameLead } from "../../store/leadSlice";
 import IconUserStyle from "../../components/utils/icons/IconUserStyle";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Leads = () => {
     const dispatch = useDispatch();
@@ -92,6 +93,9 @@ const Leads = () => {
                 </div>
                 <TableLead fields={tableLeadFields} />
                 {visibility && <FormLead lead={lead} />}
+                <div className="mt-20 text-[12px] ">
+                    <CopyRight />
+                </div>
             </div>
         );
     }

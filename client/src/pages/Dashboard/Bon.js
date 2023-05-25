@@ -10,6 +10,7 @@ import { tableBonsFields } from "../../constants/tablesConstants";
 import { TfiExport, TfiPlus } from "react-icons/tfi";
 import { useEffect } from "react";
 import { fetchAllBons, setNameBon } from "../../store/BonSlice";
+import CopyRight from "../../components/utils/Copyright/CopyRight";
 
 const Bon = () => {
     const dispatch = useDispatch();
@@ -83,6 +84,9 @@ const Bon = () => {
                     </IconStyleTree>
                 </div>
                 <TableBons fields={tableBonsFields} />
+                <div className="mt-20 text-[12px]">
+                    <CopyRight />
+                </div>
             </div>
         );
     }
