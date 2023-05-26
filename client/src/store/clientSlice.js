@@ -148,7 +148,8 @@ const clientSlice = createSlice({
             })
             .addCase(addClient.fulfilled, (state, { payload }) => {
                 state.statusAddClient = "succeeded";
-                state.data.clients = [...state.data.clients, state.client];
+
+                state.data.clients = [...state.data.clients, payload.data];
                 state.client = initialState.client;
                 state.data.count = state.data.count + 1;
             })

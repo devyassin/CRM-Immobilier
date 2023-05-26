@@ -24,7 +24,7 @@ const FilterBien = () => {
     return (
         <motion.div
             animate={{
-                y: "-70%",
+                y: "-55%",
                 scale: 1,
             }}
             initial={{

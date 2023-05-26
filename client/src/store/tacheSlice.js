@@ -189,16 +189,16 @@ const tacheSlice = createSlice({
                 state.statusAddTache = "succeeded";
 
                 if (state.tache.status === "À faire") {
-                    state.todo.taches = [...state.todo.taches, state.tache];
+                    state.todo.taches = [...state.todo.taches, payload.data];
                     state.todo.count = state.todo.count + 1;
                 } else if (state.tache.status === "En cours") {
                     state.progress.taches = [
                         ...state.progress.taches,
-                        state.tache,
+                        payload.data,
                     ];
                     state.progress.count = state.progress.count + 1;
                 } else {
-                    state.done.taches = [...state.done.taches, state.tache];
+                    state.done.taches = [...state.done.taches, payload.data];
                     state.done.count = state.done.count + 1;
                 }
 

@@ -144,7 +144,7 @@ const leadSlice = createSlice({
             })
             .addCase(addLead.fulfilled, (state, { payload }) => {
                 state.statusAddLead = "succeeded";
-                state.data.leads = [...state.data.leads, state.lead];
+                state.data.leads = [...state.data.leads, payload.data];
                 state.lead = initialState.lead;
                 state.data.count = state.data.count + 1;
             })

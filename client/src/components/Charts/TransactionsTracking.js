@@ -56,52 +56,52 @@ const TransactionsTracking = () => {
         );
     }
 
-    if (status === "succeeded" && transactions.count === 0) {
-        return (
-            <div
-                ref={ref}
-                className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg "
-            >
-                <h1 className="text-center font-semibold opacity-70 mt-4 mb-2">
-                    Les transactions d'aujourd'hui
-                </h1>
-                <div className="flex flex-col p-2 space-y-2 overflow-x-auto rounded-lg overflow-scroll tableScroll  bg-gray-100 h-[400px]">
-                    <div className="flex flex-col items-center justify-center space-y-10">
-                        <img className="w-48 mt-20" src={notFound} />
-                        <h1 className="text-2xl font-semibold text-red-500">
-                            Aucune transaction aujourd'hui
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        );
-    }
     if (status === "succeeded") {
         const todayTransactions = transactions.transactions.filter(
             (transaction) =>
                 transaction.created_at.substring(0, 10) == currentDate
         );
-
-        return (
-            <div
-                ref={ref}
-                className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg "
-            >
-                <h1 className="text-center font-semibold opacity-70 mt-4 mb-2">
-                    Les transactions d'aujourd'hui
-                </h1>
-                <div className="flex flex-col p-2 space-y-2 overflow-x-auto rounded-lg overflow-scroll tableScroll  bg-gray-100 h-[400px]">
-                    {todayTransactions.map((transaction) => {
-                        return (
-                            <TransactionCard
-                                key={transaction.id}
-                                transaction={transaction}
-                            />
-                        );
-                    })}
+        if (todayTransactions.length == 0) {
+            return (
+                <div
+                    ref={ref}
+                    className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg "
+                >
+                    <h1 className="text-center font-semibold opacity-70 mt-4 mb-2">
+                        Les transactions d'aujourd'hui
+                    </h1>
+                    <div className="flex flex-col p-2 space-y-2 overflow-x-auto rounded-lg overflow-scroll tableScroll  bg-gray-100 h-[400px]">
+                        <div className="flex flex-col items-center justify-center space-y-10">
+                            <img className="w-48 mt-20" src={notFound} />
+                            <h1 className="text-2xl font-semibold text-red-500">
+                                Aucune transaction aujourd'hui
+                            </h1>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div
+                    ref={ref}
+                    className="col-span-2 md:col-span-1 flex flex-col bg-white p-4 rounded-lg drop-shadow-lg "
+                >
+                    <h1 className="text-center font-semibold opacity-70 mt-4 mb-2">
+                        Les transactions d'aujourd'hui
+                    </h1>
+                    <div className="flex flex-col p-2 space-y-2 overflow-x-auto rounded-lg overflow-scroll tableScroll  bg-gray-100 h-[400px]">
+                        {todayTransactions.map((transaction) => {
+                            return (
+                                <TransactionCard
+                                    key={transaction.id}
+                                    transaction={transaction}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        }
     }
 };
 

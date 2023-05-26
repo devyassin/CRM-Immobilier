@@ -43,8 +43,9 @@ export const categories = [
         path: "/transactions",
         icon: <FaDollarSign size={23} />,
     },
-    { name: "Calendrier", path: "/calander", icon: <FaRegCalendar size={23} /> },
-    { name: "Rendez-vous", path: "/calander", icon: <FaPhoneAlt size={23} /> },
+    // { name: "Calendrier", path: "/calander", icon: <FaRegCalendar size={23} /> },
+    // { name: "Rendez-vous", path: "/calander", icon: <FaPhoneAlt size={23} /> },
 ];
 
-export const URL = "http://127.0.0.1:8000";
+export const URL = "https://api.tweadup.com";
+// export const URL = "https://api.tweadup.com;
