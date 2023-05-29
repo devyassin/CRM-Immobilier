@@ -34,8 +34,6 @@ const Clients = () => {
         dispatch(setNameClient({ searchClient }));
     };
 
-    
-
     if (status === "loading") {
         return (
             <div>
@@ -68,10 +66,6 @@ const Clients = () => {
         );
     }
 
-    // if (status === "failed") {
-    //     return <div>Error: {error}</div>;
-    // }
-
     if (status === "succeeded") {
         return (
             <div>
@@ -102,6 +96,41 @@ const Clients = () => {
                 {visibility && <FormClient client={client} />}
                 <div className="mt-20 text-[12px]">
                     <CopyRight />
+                </div>
+            </div>
+        );
+    }
+    if (status === "failed") {
+        return (
+            <div>
+                <div className="flex items-center justify-between">
+                    <HeaderTitle title={title} />
+                    <IconUserStyle number={clients.count} />
+                </div>
+
+                <div className="flex items-center justify-end space-x-4">
+                    <SearchBar
+                        dipatcherFunction={searchClientDispatcher}
+                        searchValue={searchClient}
+                        placeHolder="Chercher un client ..."
+                    />
+                    <CSVLink data={clients.clients} filename="clients.csv">
+                        <IconStyleOne>
+                            <TfiExport size={25} />
+                        </IconStyleOne>
+                    </CSVLink>
+                    <IconStyleOne>
+                        <TfiImport size={25} />
+                    </IconStyleOne>
+                    <IconStyleTwo>
+                        <TfiPlus size={25} />
+                    </IconStyleTwo>
+                </div>
+
+                <div className="flex items-center justify-center mt-40">
+                    <div class="text-3xl text-red-500">
+                        Tu peux pas supprimer ce client
+                    </div>
                 </div>
             </div>
         );

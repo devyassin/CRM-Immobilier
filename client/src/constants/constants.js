@@ -47,5 +47,5 @@ export const categories = [
     // { name: "Rendez-vous", path: "/calander", icon: <FaPhoneAlt size={23} /> },
 ];
 
+// export const URL = "http://127.0.0.1:8000";
 export const URL = "https://api.tweadup.com";
-// export const URL = "https://api.tweadup.com;

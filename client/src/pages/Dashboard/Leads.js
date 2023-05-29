@@ -99,6 +99,40 @@ const Leads = () => {
             </div>
         );
     }
+
+    if (status === "failed") {
+        return (
+            <div>
+                <div className="flex items-center justify-between">
+                    <HeaderTitle title={title} />
+                    <IconUserStyle number={leads.count} />
+                </div>
+                <div className="flex items-center justify-end space-x-4">
+                    <SearchBar
+                        dipatcherFunction={searchLeadDispatcher}
+                        searchValue={searchLead}
+                        placeHolder="Chercher un prospect ..."
+                    />
+                    <CSVLink data={leads.leads} filename="prospects.csv">
+                        <IconStyleOne>
+                            <TfiExport size={25} />
+                        </IconStyleOne>
+                    </CSVLink>
+                    <IconStyleOne>
+                        <TfiImport size={25} />
+                    </IconStyleOne>
+                    <IconStyleTwo>
+                        <TfiPlus size={25} />
+                    </IconStyleTwo>
+                </div>
+                <div className="flex items-center justify-center mt-40">
+                    <div class="text-3xl text-red-500">
+                        Tu peux pas supprimer ce prospect
+                    </div>
+                </div>
+            </div>
+        );
+    }
 };
 
 export default Leads;
